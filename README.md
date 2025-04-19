@@ -1,63 +1,61 @@
-# PFE
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-### Application de suivi de maintenance et d’entretien des montres
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-**Description générale :**
+## About Laravel
 
-L'application vise à aider les propriétaires de montres (de luxe ou standards) à mieux gérer l'entretien et la maintenance de leurs garde-temps. L'entretien régulier des montres est essentiel pour prolonger leur durée de vie et maintenir leur précision. Cette application permettra aux utilisateurs de suivre l'historique des entretiens et réparations, de recevoir des rappels pour les révisions et d'accéder à des services de réparation près de chez eux.
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-### Fonctionnalités principales :
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-1. **Gestion du profil utilisateur :**
-    - Les utilisateurs doivent créer un compte où ils peuvent enregistrer et suivre leurs différentes montres.
-    - Possibilité de se connecter via Google ou un simple e-mail/mot de passe.
-    - Personnalisation du profil avec les informations de contact, adresses préférées, et préférences de notifications.
-2. **Ajout et gestion des montres :**
-    - Les utilisateurs peuvent ajouter plusieurs montres à leur compte en renseignant les détails comme :
-        - Marque
-        - Modèle
-        - Numéro de série
-        - Type de mouvement (mécanique, quartz, automatique)
-        - Date d’achat
-        - Garantie (et durée restante)
-        - Preuves d’achat ou documents scannés (optionnel)
-    - Photo de la montre pour un suivi visuel.
-3. **Suivi des entretiens et réparations :**
-    - L’utilisateur peut enregistrer chaque événement de maintenance :
-        - Changement de batterie.
-        - Révision complète.
-        - Nettoyage.
-        - Changement de bracelet.
-        - Ajustement du mouvement (pour les montres mécaniques).
-    - Pour chaque événement, l’utilisateur pourra indiquer la date de l’entretien, la prestation effectuée, et l’horloger qui a effectué le service + ajout dans le calendrier.
-    - Téléchargement des factures ou des reçus pour chaque intervention.
-    - Historique de maintenance affiché sous forme de timeline.
-4. **Notifications et rappels :**
-    - En fonction des intervalles de temps définis par les marques ou les utilisateurs, l’application envoie des rappels pour :
-        - Les révisions régulières (tous les 3 à 5 ans par exemple).
-        - Les changements de batterie (tous les 2 à 3 ans).
-        - Les nettoyages ou entretiens divers.
-    - Notifications personnalisées : L’utilisateur peut choisir de recevoir les notifications via e-mail ou notifications push.
-5. **Localisation des horlogers :**
-    - Une carte intégrée permettra de localiser les horlogers ou réparateurs agréés les plus proches. Les utilisateurs pourront filtrer les résultats en fonction des services offerts, ou lister les horlogerie des marques des montres que l’utilisateur possède (réparation de mouvements mécaniques, changement de piles, etc.).
-    - Intégration avec Google Maps ou une API de géolocalisation pour fournir des itinéraires et des informations détaillées sur les horlogers.
-6. **Gestion des garanties :**
-    - L’application permet de suivre la durée de validité de la garantie de chaque montre. Un rappel est envoyé avant l'expiration de la garantie.
-    - Possibilité d'enregistrer les contrats de garantie en ligne (sous forme de documents PDF ou images).
-7. **Section éducative :**
-    - Tutoriels sur l’entretien des montres : vidéos et articles sur le nettoyage des bracelets, la protection contre l'eau, la manière de remonter une montre mécanique, etc.
-    - Conseils sur la manière de stocker correctement les montres pour les préserver.
-8. **Intégration avec des services de réparation :**
-    - Possibilité de réserver directement des services d’entretien via l’application, avec des horlogers partenaires (redirection vers site de SAV).
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-### Technologies à utiliser :
+## Learning Laravel
 
-- **Frontend :**
-    - Vue.js ou React pour créer une interface utilisateur interactive et réactive.
-    - Intégration de Google Maps API ou autre service de géolocalisation pour la localisation des horlogers.
-    - Notifications push via Firebase ou une autre solution pour les rappels de maintenance.
-- **Backend :**
-    - Laravel pour gérer la logique serveur, les utilisateurs, les montres enregistrées, et l’historique des entretiens.
-    - Base de données relationnelle (MySQL ou PostgreSQL) pour stocker les informations sur les utilisateurs, montres, réparations, et horlogers.
-- **Fonctionnalités supplémentaires potentielles :**
-    - **Module de statistiques :** Pour visualiser des statistiques telles que la fréquence des révisions, le coût total des réparations sur une certaine période, ou encore le nombre d’utilisations avant une intervention technique.
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+
+## Laravel Sponsors
+
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+
+### Premium Partners
+
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Redberry](https://redberry.international/laravel-development/)**
+- **[Active Logic](https://activelogic.com)**
+
+## Contributing
+
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+
+## Code of Conduct
+
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
