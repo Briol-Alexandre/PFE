@@ -1,0 +1,29 @@
+#callToScroll {
+    height: 68px;
+    width: 40px;
+    border: 1px #E0E0E0 solid;
+    border-radius: 22px;
+  }
+  
+  #callToScroll:after {
+    content: '';
+    display: block;
+    height: 12px;
+    width: 12px;
+    background-color: #E0E0E0;
+    border-radius: 100%;
+    margin: 2px auto;
+    opacity: 0;
+    animation: animateScroll 1.25s infinite;
+    will-change: transform;
+  }
+  
+  @keyframes animateScroll {
+    10% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(24px);
+      opacity: 0;
+    }
+  }

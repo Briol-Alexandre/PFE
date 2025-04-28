@@ -1,0 +1,60 @@
+@import url("./fonts.css");
+
+html {
+    height: 100%;
+}
+
+html, body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+  
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+  }
+  
+
+body {
+    display: block;
+    min-height: 100vh;
+    margin: 0;
+    background: black;
+    background-image: url('/img/background.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Erstoria', serif;
+    color: #333;
+    overflow-x: hidden;
+    padding-bottom: 100px;
+    
+}
+
+/* Styles pour l'objet SVG */
+object {
+    max-width: 900px;
+    position: relative;
+    z-index: 10;
+}
+
+.hover-underline {
+    @apply w-fit text-2xl border-brand bg-transparent transition-all ease-in-out duration-300 relative flex items-center justify-center px-4 py-2 overflow-hidden font-medium text-brand border-2 rounded-md;
+
+    &::after {
+        @apply content-[''] bg-brand absolute inset-0 scale-x-100 w-[102%] h-full transition-all ease-in-out duration-300 -translate-x-full -z-1;
+    }
+
+    &:hover,
+    &:focus-visible {
+        @apply text-black fill-black border-brand;
+        &::after {
+            @apply translate-x-0;
+        }
+    }
+}
+
+.animate-fade-in {
+    opacity: 1 !important;
+}

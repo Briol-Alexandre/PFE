@@ -1,0 +1,12 @@
+.form {
+    @apply font-just-sans w-full;
+    label{
+        @apply text-brand text-xl;  
+    }
+    input{
+        @apply bg-transparent border-brand border-2 rounded-md text-brand;
+        &:focus{
+            @apply border-brand-red ;
+        }
+    }
+}

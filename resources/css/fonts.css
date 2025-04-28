@@ -1,0 +1,71 @@
+@font-face {
+    font-family: 'Erstoria';
+    src: url('../fonts/Erstoria.otf') format('opentype'),
+         url('../fonts/Erstoria.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* JUST Sans - Regular */
+@font-face {
+    font-family: 'JUST Sans';
+    src: url('../fonts/JUST Sans Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* JUST Sans - Light */
+@font-face {
+    font-family: 'JUST Sans';
+    src: url('../fonts/JUST Sans Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* JUST Sans - ExLight */
+@font-face {
+    font-family: 'JUST Sans';
+    src: url('../fonts/JUST Sans ExLight.otf') format('opentype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* JUST Sans - Medium */
+@font-face {
+    font-family: 'JUST Sans';
+    src: url('../fonts/JUST Sans Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* JUST Sans - SemiBold */
+@font-face {
+    font-family: 'JUST Sans';
+    src: url('../fonts/JUST Sans SemiBold.otf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* JUST Sans - Bold */
+@font-face {
+    font-family: 'JUST Sans';
+    src: url('../fonts/JUST Sans Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* JUST Sans - ExBold */
+@font-face {
+    font-family: 'JUST Sans';
+    src: url('../fonts/JUST Sans ExBold.otf') format('opentype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
