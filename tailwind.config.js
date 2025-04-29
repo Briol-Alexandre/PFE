@@ -39,6 +39,15 @@ export default {
             zIndex: {
                 '-1': '-1',
             },
+            keyframes: {
+                'bg-subtle': {
+                    '0%, 100%': { backgroundPosition: '30% 30%' },
+                    '50%': { backgroundPosition: '60% 30%' },
+                },
+            },
+            animation: {
+                'bg-subtle': 'bg-subtle 30s ease-in-out infinite',
+            },
         },
     },
 

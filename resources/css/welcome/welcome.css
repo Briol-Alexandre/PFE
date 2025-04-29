@@ -1,29 +1,59 @@
 #callToScroll {
-    height: 68px;
-    width: 40px;
-    border: 1px #E0E0E0 solid;
-    border-radius: 22px;
+  height: 68px;
+  width: 40px;
+  border: 2px #E0E0E0 solid;
+  border-radius: 0.5rem; /* rounded-lg */
+}
+
+@media (min-width: 768px) {
+  #callToScroll {
+    border-radius: 1.5rem; /* md:rounded-3xl */
   }
-  
-  #callToScroll:after {
-    content: '';
-    display: block;
-    height: 12px;
-    width: 12px;
-    background-color: #E0E0E0;
-    border-radius: 100%;
-    margin: 2px auto;
+}
+
+#callToScroll::after {
+  content: '';
+  display: block;
+  height: 12px;
+  width: 12px; 
+  background-color: #E0E0E0;
+  border-radius: 100%;
+  margin: 2px auto;
+  opacity: 0;
+  animation: scroll-down 1.25s infinite;
+  will-change: transform;
+}
+
+@media (max-width: 767px) {
+  #callToScroll::after {
+    animation: scroll-up 1.25s infinite;
+  }
+}
+
+@keyframes scroll-down {
+  0% {
+    transform: translateY(0);
     opacity: 0;
-    animation: animateScroll 1.25s infinite;
-    will-change: transform;
   }
-  
-  @keyframes animateScroll {
-    10% {
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(24px);
-      opacity: 0;
-    }
+  10% {
+    opacity: 1;
   }
+  100% {
+    transform: translateY(24px); /* md:translate-y-6 */
+    opacity: 0;
+  }
+}
+
+@keyframes scroll-up {
+  0% {
+    transform: translateY(40px); /* simulate starting below */
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+}

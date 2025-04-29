@@ -65,6 +65,7 @@ export default function Login({ status, canResetPassword }) {
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
+
                 <div className="mt-4 block">
                     <label className="flex items-center">
                         <Checkbox
@@ -79,19 +80,26 @@ export default function Login({ status, canResetPassword }) {
                         </span>
                     </label>
                 </div>
-
-                <div className="mt-4 flex items-center justify-end gap-4">
-                    {canResetPassword && (
+                <div className='flex gap-4 items-center max-md:flex-wrap mt-10'>
+                    <div className='flex gap-2 items-center justify-between w-full'>
                         <Link
-                            href={route('password.request')}
+                            href={route('register')}
                             className="rounded-md text-sm text-brand underline hover:text-brand-red focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 transition-all ease-in-out duration-300"
                         >
-                            Mot de passe oublié?
+                            Pas encore de compte ?
                         </Link>
-                    )}
+                        {canResetPassword && (
+                            <Link
+                                href={route('password.request')}
+                                className="rounded-md text-sm text-brand underline hover:text-brand-red focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 transition-all ease-in-out duration-300"
+                            >
+                                Mot de passe oublié ?
+                            </Link>
+                        )}
+                    </div>
 
-                    <PrimaryButton className="hover-underline z-10 text-xl" disabled={processing}>
-                        Se connecter
+                    <PrimaryButton className="hover-underline px-10 max-md:px-10 w-fit max-md:ml-auto" disabled={processing}>
+                        Se&nbsp;connecter
                     </PrimaryButton>
                 </div>
             </form>

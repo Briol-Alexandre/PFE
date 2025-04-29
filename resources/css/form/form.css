@@ -1,7 +1,7 @@
 .form {
     @apply font-just-sans w-full;
     label{
-        @apply text-brand text-xl;  
+        @apply text-brand md:text-xl sm:text-base text-sm;  
     }
     input{
         @apply bg-transparent border-brand border-2 rounded-md text-brand;

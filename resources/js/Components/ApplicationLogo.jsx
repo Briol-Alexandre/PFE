@@ -1,4 +1,39 @@
+import { useState, useEffect, useRef } from 'react';
+
 export default function ApplicationLogo(props) {
+    const [hourAngle, setHourAngle] = useState(0);
+    const [minuteAngle, setMinuteAngle] = useState(0);
+    const [secondAngle, setSecondAngle] = useState(0);
+    const animationRef = useRef(null);
+
+    useEffect(() => {
+        const updateClock = () => {
+            const now = new Date();
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const milliseconds = now.getMilliseconds();
+            
+            const hourAngle = (hours * 30) + (minutes * 0.5);
+            const minuteAngle = (minutes * 6) + (seconds * 0.1);
+            const secondAngle = (seconds * 6) + (milliseconds * 0.006);
+            
+            setHourAngle(hourAngle);
+            setMinuteAngle(minuteAngle);
+            setSecondAngle(secondAngle);
+            
+            animationRef.current = requestAnimationFrame(updateClock);
+        };
+        
+        animationRef.current = requestAnimationFrame(updateClock);
+        
+        return () => {
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+            }
+        };
+    }, []);
+    
     return (
         <svg xmlns="http://www.w3.org/2000/svg" id="Calque_1" data-name="Calque 1" viewBox="0 0 827.92 154.31" {...props}>
             <defs>
@@ -27,11 +62,11 @@ export default function ApplicationLogo(props) {
             <path d="M601.37 21.54v9.36M656.98 77.16h-9.36M601.37 132.77v-9.36M545.75 77.16h9.36" className="cls-1" />
 
             <line id="hour-hand" x1="601.37" y1="77.16" x2="601.37" y2="50" className="cls-2"
-                transform="rotate(0 601.37 77.16)" />
+                transform={`rotate(${hourAngle} 601.37 77.16)`} />
             <line id="minute-hand" x1="601.37" y1="77.16" x2="601.37" y2="35" className="cls-2"
-                transform="rotate(0 601.37 77.16)" />
+                transform={`rotate(${minuteAngle} 601.37 77.16)`} />
             <line id="second-hand" x1="601.37" y1="77.16" x2="601.37" y2="30" stroke="#FF0000" strokeWidth="3"
-                transform="rotate(0 601.37 77.16)" />
+                transform={`rotate(${secondAngle} 601.37 77.16)`} />
             <circle cx="601.37" cy="77.16" r="7.87" className="cls-3" />
         </svg>
     );

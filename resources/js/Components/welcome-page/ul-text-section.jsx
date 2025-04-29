@@ -4,7 +4,7 @@ import { Link } from '@inertiajs/react';
 export default function ULTextSection() {
     return (
         <>
-            <ul className="flex flex-col gap-32 mb-40">
+            <ul className="flex flex-col gap-10 rg:gap-32 rg:mb-40">
                 <TextSection title="Enregistrez vos montres"
                     text="Enregistrez les informations essentielles telles que la marque, 
                 le modèle, le numéro de série, la date d’achat, l’état actuel, 
@@ -24,9 +24,9 @@ export default function ULTextSection() {
                     index={5} />
             </ul>
             <div className="flex flex-col justify-center mt-16 w-fit mx-auto text-center">
-                <p className="font-erstoria text-4.5xl underline decoration-brand-red text-brand">Rejoignez nous sans attendre</p>
-                <p className="font-just-sans text-2xl w-1/2 mx-auto text-brand">Connectez-vous et ou creez un compte afin que vos montres ne subissent plus l'effet du temps</p>
-                <Link href="/register" className="hover-underline text-2xl mx-auto w-fit mt-10">Créer un compte</Link>
+                <p className="font-erstoria rg:text-4.5xl md:text-3xl text-2xl underline decoration-brand-red text-brand">Rejoignez nous sans attendre</p>
+                <p className="font-just-sans rg:text-2xl md:text-xl text-base w-2/3 rg:w-1/2 mx-auto text-brand font-light">Connectez-vous et ou creez un compte afin que vos montres ne subissent plus l'effet du temps</p>
+                <Link href="/register" className="hover-underline mx-auto w-fit mt-10">Créer un compte</Link>
             </div>
         </>
     );
