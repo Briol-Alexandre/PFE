@@ -13,6 +13,8 @@ class Watches extends Model
         'purchase_date',
         'movement',
         'image',
+        'user_id',
+        'waranty_end_date',
     ];
 
     public function user(): BelongsTo

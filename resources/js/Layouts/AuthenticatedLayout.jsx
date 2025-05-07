@@ -12,50 +12,43 @@ export default function AuthenticatedLayout({ header, children }) {
         useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <nav className="border-b border-gray-100 bg-white">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-[url(img/background.png)] bg-cover bg-fixed text-white font-just-sans">
+            <nav className="py-10">
+                <div className="mx-20 max-w-7xl">
                     <div className="flex h-16 justify-between">
-                        <div className="flex">
+                        <div className="flex w-full">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                    <ApplicationLogo className="min-w-[200px] block h-9 w-auto fill-current text-gray-800" />
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex justify-end items-center w-full">
                                 <NavLink
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
-                                    Dashboard
+
+                                    <img src={`/img/svg/nav/dashboard/${route().current('dashboard') ? 'full' : 'empty'}.svg`} alt="Dashboard" className='w-6 h-6' />
+                                </NavLink>
+                                <NavLink
+                                    href={route('watch.index')}
+                                    active={route().current('watch.index')}
+                                >
+                                    <img src={`/img/svg/nav/watch/${route().current('watch.index') ? 'full' : 'empty'}.svg`} alt="Vos montres" className='w-6 h-6' />
                                 </NavLink>
                             </div>
                         </div>
 
-                        <div className="hidden sm:ms-6 sm:flex sm:items-center">
+                        <div className="hidden sm:ms-6 sm:flex sm:items-center mt-3">
                             <div className="relative ms-3">
                                 <Dropdown>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
                                             >
-                                                {user.first_name}
-
-                                                <svg
-                                                    className="-me-0.5 ms-2 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
+                                                <img src={`/img/svg/nav/profile/${route().current('profile.edit') ? 'full' : 'empty'}.svg`} alt="Profile" className='w-6 h-6' />
                                             </button>
                                         </span>
                                     </Dropdown.Trigger>

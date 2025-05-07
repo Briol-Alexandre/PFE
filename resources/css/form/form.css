@@ -9,4 +9,10 @@
             @apply border-brand-red ;
         }
     }
+    select{
+        @apply bg-transparent border-brand border-2 rounded-md text-brand;
+        &:focus{
+            @apply border-brand-red ;
+        }
+    }
 }

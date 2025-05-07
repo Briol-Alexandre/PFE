@@ -31,7 +31,7 @@ export default function Welcome({ auth }) {
                     <div className="flex gap-8 mt-8 font-just-sans">
                         {auth && auth.user ? (
                             <Link href="/dashboard" className="hover-underline rl:text-2xl md:text-xl sm:text-lg text-base font-light">
-                                <span>Dashboard</span>
+                                <span>Accèdez à votre espace</span>
                             </Link>
                         ) : (
                             <>

@@ -34,6 +34,7 @@ export default {
                 brand: {
                     DEFAULT: '#EAEAE5',
                     red: '#FF0000',
+                    text: '#7E7E7E',
                 },
             },
             zIndex: {
