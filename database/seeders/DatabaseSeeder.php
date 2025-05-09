@@ -19,6 +19,14 @@ class DatabaseSeeder extends Seeder
             'name' => 'Briol',
             'first_name' => 'Alexandre',
             'email' => 'alexandre.briol@gmail.com',
+            'role' => User::ROLE_USER,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Col&MacArthur',
+            'first_name' => 'Creator',
+            'email' => 'test@colmacarthur.com',
+            'role' => User::ROLE_CREATOR,
         ]);
     }
 }

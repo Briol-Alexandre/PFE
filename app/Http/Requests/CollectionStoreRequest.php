@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class WatchStoreRequest extends FormRequest
+class CollectionStoreRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -15,9 +15,9 @@ class WatchStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'model' => 'required|string|max:255',
-            'movement' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'purchase_date' => 'required|date',
+            'warranty_end_date' => 'required|date',
+            'watch_id' => 'required|exists:watches,id',
             'user_id' => 'required|exists:users,id',
         ];
     }

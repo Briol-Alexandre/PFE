@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WatchStoreRequest;
-use App\Models\Watches;
+use App\Models\Watch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -15,7 +15,7 @@ class WatchController extends Controller
      */
     public function index()
     {
-        $watches = Watches::all();
+        $watches = Watch::with('creator')->get();
 
         return Inertia::render('Watch/Index', [
             'watches' => $watches,
@@ -42,7 +42,7 @@ class WatchController extends Controller
             $validated['image'] = Storage::url($path);
         }
 
-        $watch = Watches::create($validated);
+        $watch = Watch::create($validated);
         return Inertia::location(route('watch.show', $watch->id));
     }
 
@@ -51,7 +51,7 @@ class WatchController extends Controller
      */
     public function show(string $id)
     {
-        $watch = Watches::findOrFail($id);
+        $watch = Watch::with('creator')->findOrFail($id);
         return Inertia::render('Watch/Single', [
             'watch' => $watch,
         ]);
@@ -62,7 +62,7 @@ class WatchController extends Controller
      */
     public function edit(string $id)
     {
-        $watch = Watches::findOrFail($id);
+        $watch = Watch::with('creator')->findOrFail($id);
         return Inertia::render('Watch/Edit', [
             'watch' => $watch,
         ]);
@@ -73,10 +73,10 @@ class WatchController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $watch = Watches::findOrFail($id);
-        
+        $watch = Watch::with('creator')->findOrFail($id);
+
         $data = $request->all();
-        
+
         // Gestion de l'image
         if ($request->hasFile('image')) {
             // Supprimer l'ancienne image si elle existe
@@ -84,12 +84,12 @@ class WatchController extends Controller
                 $oldPath = str_replace('/storage/', '', $watch->image);
                 Storage::disk('public')->delete($oldPath);
             }
-            
+
             // Sauvegarder la nouvelle image
             $path = $request->file('image')->store('watches', 'public');
             $data['image'] = '/storage/' . $path;
         }
-        
+
         $watch->update($data);
 
         return Inertia::location(route('watch.show', $watch->id));
@@ -100,7 +100,7 @@ class WatchController extends Controller
      */
     public function destroy(string $id)
     {
-        $watch = Watches::findOrFail($id);
+        $watch = Watch::with('creator')->findOrFail($id);
         if ($watch->image) {
             $path = str_replace('/storage/', '', $watch->image);
             Storage::disk('public')->delete($path);

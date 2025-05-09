@@ -10,11 +10,9 @@ import { useState, useEffect } from 'react';
 export default function Edit({ watch }) {
     const { data, setData, post, processing, errors, progress } = useForm({
         model: watch.model,
-        purchase_date: watch.purchase_date,
         movement: watch.movement,
         image: watch.image,
         _method: 'POST',
-        waranty_end_date: watch.waranty_end_date,
         user_id: usePage().props.auth.user.id,
     });
 
@@ -105,33 +103,6 @@ export default function Edit({ watch }) {
                                 className="w-full"
                             />
                             {errors.model && <InputError message={errors.model} />}
-                        </div>
-
-                        <div className="flex gap-4">
-                            <div className="w-1/2">
-                                <InputLabel htmlFor="purchase_date" value="Date d'achat" />
-                                <TextInput
-                                    id="purchase_date"
-                                    type="date"
-                                    name="purchase_date"
-                                    value={data.purchase_date}
-                                    onChange={handleChange}
-                                    className="w-full"
-                                />
-                                {errors.purchase_date && <InputError message={errors.purchase_date} />}
-                            </div>
-                            <div className="w-1/2">
-                                <InputLabel htmlFor="waranty_end_date" value="Date de fin de garantie" />
-                                <TextInput
-                                    id="waranty_end_date"
-                                    type="date"
-                                    name="waranty_end_date"
-                                    value={data.waranty_end_date}
-                                    onChange={handleChange}
-                                    className="w-full"
-                                />
-                                {errors.waranty_end_date && <InputError message={errors.waranty_end_date} />}
-                            </div>
                         </div>
 
                         <div>

@@ -12,6 +12,9 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    public const ROLE_CREATOR = 'creator';
+    public const ROLE_USER = 'user';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,6 +25,7 @@ class User extends Authenticatable
         'first_name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -45,5 +49,40 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get the watches created by this user (only for creators)
+     */
+    public function createdWatches()
+    {
+        return $this->hasMany(Watch::class, 'user_id');
+    }
+
+    /**
+     * Get the watches in the user's collection
+     */
+    public function collection()
+    {
+        return $this->belongsToMany(Watch::class, 'collections')
+            ->withPivot(['purchase_date', 'warranty_end_date'])
+            ->with('creator')
+            ->withTimestamps();
+    }
+
+    /**
+     * Check if the user is a creator
+     */
+    public function isCreator(): bool
+    {
+        return strtolower($this->role) === strtolower(self::ROLE_CREATOR);
+    }
+
+    /**
+     * Check if the user is a normal user
+     */
+    public function isUser(): bool
+    {
+        return $this->role === self::ROLE_USER;
     }
 }

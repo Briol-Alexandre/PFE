@@ -1,24 +1,24 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
+import DashboardLayoutCollection from '@/Components/Collection/Dashboard-Layout';
+import DashboardLayoutRepairs from '@/Components/Repairs/Dasboard-Layout';
 
-export default function Dashboard() {
+export default function Dashboard({ auth }) {
+    const user = auth.user;
     return (
         <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Dashboard
-                </h2>
-            }
+            user={user}
+            header={<h2 className="font-semibold font-erstoria text-3xl text-brand leading-tight">Bienvenue {user.first_name} {user.name}</h2>}
         >
             <Head title="Dashboard" />
-
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <Link href={route('watch.create')}>
-                            Créer une montre
-                        </Link>
-                    </div>
+            <div className="pb-12">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <DashboardLayoutCollection collections={user.collection} />
+                </div>
+            </div>
+            <div className="pb-12">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <DashboardLayoutRepairs />
                 </div>
             </div>
         </AuthenticatedLayout>

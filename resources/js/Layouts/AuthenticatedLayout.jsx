@@ -12,7 +12,7 @@ export default function AuthenticatedLayout({ header, children }) {
         useState(false);
 
     return (
-        <div className="min-h-screen bg-[url(img/background.png)] bg-cover bg-fixed text-white font-just-sans">
+        <div className="min-h-screen text-white font-just-sans">
             <nav className="py-10">
                 <div className="mx-20 max-w-7xl">
                     <div className="flex h-16 justify-between">
@@ -31,12 +31,31 @@ export default function AuthenticatedLayout({ header, children }) {
 
                                     <img src={`/img/svg/nav/dashboard/${route().current('dashboard') ? 'full' : 'empty'}.svg`} alt="Dashboard" className='w-6 h-6' />
                                 </NavLink>
-                                <NavLink
-                                    href={route('watch.index')}
-                                    active={route().current('watch.index')}
-                                >
-                                    <img src={`/img/svg/nav/watch/${route().current('watch.index') ? 'full' : 'empty'}.svg`} alt="Vos montres" className='w-6 h-6' />
-                                </NavLink>
+                                {user.role === 'creator' ? (
+                                    <NavLink
+                                        href={route('watch.index')}
+                                        active={route().current('watch.index')}
+                                    >
+                                        <img
+                                            src={`/img/svg/nav/watch/${route().current('watch.index') ? 'full' : 'empty'}.svg`}
+                                            alt="Vos montres"
+                                            className="w-6 h-6"
+                                        />
+                                    </NavLink>
+                                ) : (
+                                    <NavLink
+                                        href={route('collection.index')}
+                                        active={route().current('collection.index')}
+                                    >
+                                        <img
+                                            src={`/img/svg/nav/watch/${route().current('collection.index') ? 'full' : 'empty'}.svg`}
+                                            alt="Votre collection"
+                                            className="w-6 h-6"
+                                        />
+                                    </NavLink>
+                                )}
+
+
                             </div>
                         </div>
 
@@ -156,7 +175,7 @@ export default function AuthenticatedLayout({ header, children }) {
             </nav>
 
             {header && (
-                <header className="bg-white shadow">
+                <header className="">
                     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                         {header}
                     </div>
