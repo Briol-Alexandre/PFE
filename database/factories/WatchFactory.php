@@ -19,7 +19,7 @@ class WatchFactory extends Factory
     {
         return [
             'model' => fake()->words(3, true),
-            'movement' => fake()->randomElement(['quartz', 'mecanique', 'automatique']),
+            'movement' => fake()->randomElement(['quartz', 'automatique']),
             'image' => 'img/watches/default.jpg',
             'user_id' => User::factory()->create(['role' => 'creator'])->id,
         ];

@@ -64,10 +64,7 @@ class User extends Authenticatable
      */
     public function collection()
     {
-        return $this->belongsToMany(Watch::class, 'collections')
-            ->withPivot(['purchase_date', 'warranty_end_date'])
-            ->with('creator')
-            ->withTimestamps();
+        return $this->hasMany(Collection::class);
     }
 
     /**

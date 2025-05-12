@@ -52,7 +52,6 @@ export default function Create() {
                                 >
                                     <option value="">Sélectionnez un mouvement</option>
                                     <option value="quartz">Quartz</option>
-                                    <option value="mecanique">Mécanique</option>
                                     <option value="automatique">Automatique</option>
                                 </select>
                                 {errors.movement && <InputError message={errors.movement} />}

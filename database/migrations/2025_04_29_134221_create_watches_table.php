@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('model');
-            $table->enum('movement', ['quartz', 'mecanique', 'automatique']);
+            $table->enum('movement', ['quartz', 'automatique']);
             $table->string('image')->nullable();
             $table->timestamps();
         });

@@ -27,7 +27,14 @@ class DashboardController extends Controller
 
         return Inertia::render('Dashboard', [
             'auth' => [
-                'user' => $user->load('collection.creator')
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'first_name' => $user->first_name,
+                    'email' => $user->email,
+                    'role' => $user->role,
+                    'collection' => $user->collection()->with('watch.creator')->get()
+                ]
             ]
         ]);
     }

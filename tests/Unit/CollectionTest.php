@@ -55,7 +55,8 @@ test('user cannot add same watch twice to their collection', function () {
     ]);
 
     // Ajouter la montre à la collection
-    $user->collection()->attach($watch->id, [
+    $user->collection()->create([
+        'watch_id' => $watch->id,
         'purchase_date' => now(),
         'warranty_end_date' => now()->addYears(2)
     ]);
@@ -89,7 +90,8 @@ test('user can remove watch from their collection', function () {
     ]);
 
     // Ajouter la montre à la collection
-    $user->collection()->attach($watch->id, [
+    $user->collection()->create([
+        'watch_id' => $watch->id,
         'purchase_date' => now(),
         'warranty_end_date' => now()->addYears(2)
     ]);
@@ -120,7 +122,8 @@ test('user cannot remove watch from other users collection', function () {
     ]);
 
     // Ajouter la montre à la collection de user2
-    $user2->collection()->attach($watch->id, [
+    $user2->collection()->create([
+        'watch_id' => $watch->id,
         'purchase_date' => now(),
         'warranty_end_date' => now()->addYears(2)
     ]);
@@ -147,7 +150,8 @@ test('creator cannot remove watch from any collection', function () {
     ]);
 
     // Ajouter la montre à la collection de user
-    $user->collection()->attach($watch->id, [
+    $user->collection()->create([
+        'watch_id' => $watch->id,
         'purchase_date' => now(),
         'warranty_end_date' => now()->addYears(2)
     ]);
@@ -174,7 +178,8 @@ test('user can view their own collection', function () {
     ]);
 
     // Ajouter la montre à la collection de user
-    $user->collection()->attach($watch->id, [
+    $user->collection()->create([
+        'watch_id' => $watch->id,
         'purchase_date' => now(),
         'warranty_end_date' => now()->addYears(2)
     ]);
@@ -205,7 +210,8 @@ test('user cannot view another user\'s collection', function () {
     ]);
 
     // Ajouter la montre à la collection de user2
-    $user2->collection()->attach($watch->id, [
+    $user2->collection()->create([
+        'watch_id' => $watch->id,
         'purchase_date' => now(),
         'warranty_end_date' => now()->addYears(2)
     ]);
@@ -232,7 +238,8 @@ test('creator cannot view any collection', function () {
     ]);
 
     // Ajouter la montre à la collection de user
-    $user->collection()->attach($watch->id, [
+    $user->collection()->create([
+        'watch_id' => $watch->id,
         'purchase_date' => now(),
         'warranty_end_date' => now()->addYears(2)
     ]);
@@ -259,7 +266,8 @@ test('user can update their own collection', function () {
     ]);
 
     // Ajouter la montre à la collection de user
-    $user->collection()->attach($watch->id, [
+    $user->collection()->create([
+        'watch_id' => $watch->id,
         'purchase_date' => now(),
         'warranty_end_date' => now()->addYears(2)
     ]);
@@ -290,7 +298,8 @@ test('user cannot update another user\'s collection', function () {
     ]);
 
     // Ajouter la montre à la collection de user2
-    $user2->collection()->attach($watch->id, [
+    $user2->collection()->create([
+        'watch_id' => $watch->id,
         'purchase_date' => now(),
         'warranty_end_date' => now()->addYears(2)
     ]);
@@ -317,7 +326,8 @@ test('creator cannot update any collection', function () {
     ]);
 
     // Ajouter la montre à la collection de user
-    $user->collection()->attach($watch->id, [
+    $user->collection()->create([
+        'watch_id' => $watch->id,
         'purchase_date' => now(),
         'warranty_end_date' => now()->addYears(2)
     ]);
@@ -344,7 +354,8 @@ test('user can delete their own collection', function () {
     ]);
 
     // Ajouter la montre à la collection de user
-    $user->collection()->attach($watch->id, [
+    $user->collection()->create([
+        'watch_id' => $watch->id,
         'purchase_date' => now(),
         'warranty_end_date' => now()->addYears(2)
     ]);
@@ -375,7 +386,8 @@ test('user cannot delete another user\'s collection', function () {
     ]);
 
     // Ajouter la montre à la collection de user2
-    $user2->collection()->attach($watch->id, [
+    $user2->collection()->create([
+        'watch_id' => $watch->id,
         'purchase_date' => now(),
         'warranty_end_date' => now()->addYears(2)
     ]);
@@ -402,7 +414,8 @@ test('creator cannot delete any collection', function () {
     ]);
 
     // Ajouter la montre à la collection de user
-    $user->collection()->attach($watch->id, [
+    $user->collection()->create([
+        'watch_id' => $watch->id,
         'purchase_date' => now(),
         'warranty_end_date' => now()->addYears(2)
     ]);
