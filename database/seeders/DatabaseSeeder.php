@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Revisions;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -28,5 +29,34 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@colmacarthur.com',
             'role' => User::ROLE_CREATOR,
         ]);
+
+        Revisions::factory()->createMany([
+            [
+                'type' => 'bracelet',
+                'name' => 'Changement du bracelet',
+            ],
+            [
+                'type' => 'glass',
+                'name' => 'Remplacement de la vitre',
+            ],
+            [
+                'type' => 'redirection',
+                'name' => 'Réaiguillage complet',
+            ],
+            [
+                'type' => 'regular_maintenance',
+                'name' => 'Entretien régulier',
+            ],
+            [
+                'type' => 'battery',
+                'name' => 'Changement de la batterie',
+            ],
+            [
+                'type' => 'cleaning',
+                'name' => 'Nettoyage complet',
+            ],
+        ]);
+
+
     }
 }

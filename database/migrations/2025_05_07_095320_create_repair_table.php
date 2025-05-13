@@ -12,8 +12,10 @@ return new class extends Migration {
     {
         Schema::create('repairs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('watch_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('revision_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('collection_id')->constrained()->cascadeOnDelete();
+            $table->json('revisions')->nullable();
+            $table->date('date')->nullable();
+            $table->integer('price')->nullable();
             $table->timestamps();
         });
     }

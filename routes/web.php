@@ -27,4 +27,5 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/watch.php';
 require __DIR__ . '/collection.php';
+require __DIR__ . '/repair.php';
 require __DIR__ . '/auth.php';

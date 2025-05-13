@@ -1,0 +1,15 @@
+<?php
+
+use App\Http\Controllers\RepairController;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::get('/repair/create', [RepairController::class, 'create'])->name('repair.create');
+    Route::post('/repair/create', [RepairController::class, 'store'])->name('repair.store');
+    Route::get('/repair/{repair}/edit', [RepairController::class, 'edit'])->name('repair.edit');
+    Route::patch('/repair/{repair}/edit', [RepairController::class, 'update'])->name('repair.update');
+    Route::delete('/repair/{repair}/delete', [RepairController::class, 'destroy'])->name('repair.destroy');
+    Route::get('/repair', [RepairController::class, 'index'])->name('repair.index');
+    Route::get('/repair/{repair}', [RepairController::class, 'show'])->name('repair.show');
+});

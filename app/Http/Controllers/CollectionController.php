@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Collection;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Watch;
 use App\Http\Requests\CollectionStoreRequest;
 use App\Http\Requests\CollectionUpdateRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Models\Repair;
 
 class CollectionController extends Controller
 {
@@ -55,14 +55,14 @@ class CollectionController extends Controller
     public function store(CollectionStoreRequest $request)
     {
         $this->authorize('create', Collection::class);
-        
+
         Collection::create([
             'user_id' => auth()->id(),
             'watch_id' => $request->watch_id,
             'purchase_date' => $request->purchase_date,
             'warranty_end_date' => $request->warranty_end_date
         ]);
-        
+
         return redirect()->route('collection.index');
     }
 
@@ -72,9 +72,35 @@ class CollectionController extends Controller
     public function show(string $id)
     {
         $collection = Collection::with('watch.creator')->findOrFail($id);
+
+        $collectionIds = auth()->user()->collection->pluck('id');
+
+        // Réparations demandées (sans date)
+        $asked_repairs = Repair::whereIn('collection_id', $collectionIds)
+            ->whereNull('date')
+            ->with('collection.watch')
+            ->get();
+
+        // Réparations à venir
+        $upcoming_repairs = Repair::whereIn('collection_id', $collectionIds)
+            ->whereNotNull('date')
+            ->where('date', '>', now())
+            ->with('collection.watch')
+            ->get();
+
+        // Réparations passées
+        $past_repairs = Repair::whereIn('collection_id', $collectionIds)
+            ->whereNotNull('date')
+            ->where('date', '<', now())
+            ->with('collection.watch')
+            ->get();
+
         $this->authorize('view', $collection);
         return Inertia::render('Collection/Single', [
             'collection' => $collection,
+            'asked_repairs' => $asked_repairs,
+            'upcoming_repairs' => $upcoming_repairs,
+            'past_repairs' => $past_repairs,
         ]);
     }
 
@@ -97,12 +123,9 @@ class CollectionController extends Controller
     {
         $collection = Collection::findOrFail($id);
         $this->authorize('update', $collection);
-        
-        $collection->update([
-            'purchase_date' => $request->purchase_date,
-            'warranty_end_date' => $request->warranty_end_date
-        ]);
-        
+
+        $collection->update($request->validated());
+
         return redirect()->route('collection.show', $collection->id);
     }
 

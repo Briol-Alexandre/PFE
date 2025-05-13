@@ -3,8 +3,9 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { router } from "@inertiajs/react";
 import { useState } from 'react';
 import Modal from '@/Components/Modal';
+import RepairCard from '@/Components/Repairs/Card';
 
-export default function Single({ collection }) {
+export default function Single({ collection, asked_repairs, upcoming_repairs, past_repairs }) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const handleSubmit = (e) => {
@@ -20,7 +21,7 @@ export default function Single({ collection }) {
     return (
         <AuthenticatedLayout>
             <Head title={collection.watch.model} />
-            <div className="flex">
+            <section className="flex relative" aria-labelledby="collection-title">
                 <img
                     src={collection.watch.image}
                     alt={collection.watch.model}
@@ -28,7 +29,7 @@ export default function Single({ collection }) {
                 />
                 <div className="text-white ml-20 mt-20 font-just-sans">
                     <p className="text-4xl font-erstoria text-brand/70">{collection.watch.creator.name}</p>
-                    <h1 className="text-5xl mb-4 font-erstoria">{collection.watch.model}</h1>
+                    <h2 className="text-5xl mb-4 font-erstoria" id="collection-title">{collection.watch.model}</h2>
                     <div className="flex flex-col gap-4">
                         <p className="text-2xl">Informations</p>
                         <span>
@@ -61,8 +62,36 @@ export default function Single({ collection }) {
                         </form>
                     </div>
                 </div>
-                <img src={collection.watch.image} alt={collection.watch.model} className="absolute bottom-0 right-0 max-h-[600px] object-cover" />
-            </div>
+                <img src={collection.watch.image} alt={collection.watch.model} className="absolute -bottom-36 right-0 max-h-[600px] object-cover" />
+            </section>
+
+            <section aria-labelledby="repairs-title" className="mt-40">
+                <h2 className="text-2xl font-semibold text-brand" id="repairs-title">Réparations</h2>
+                <div className="space-y-8">
+                    {asked_repairs.length > 0 && (
+                        <div>
+                            <h3 className="text-xl text-brand mb-4">Réparations demandées</h3>
+                            <RepairCard repairs={asked_repairs} />
+                        </div>
+                    )}
+                    {upcoming_repairs.length > 0 && (
+                        <div>
+                            <h3 className="text-xl text-brand mb-4">Réparations à venir</h3>
+                            <RepairCard repairs={upcoming_repairs} />
+                        </div>
+                    )}
+                    {past_repairs.length > 0 && (
+                        <div>
+                            <h3 className="text-xl text-brand mb-4">Réparations passées</h3>
+                            <RepairCard repairs={past_repairs} />
+                        </div>
+                    )}
+                    {!asked_repairs.length && !upcoming_repairs.length && !past_repairs.length && (
+                        <p className="text-gray-400">Vous n'avez pas encore de réparations.</p>
+                    )}
+                </div>
+            </section>
+
             <Modal
                 show={isDeleteModalOpen}
                 onClose={() => setIsDeleteModalOpen(false)}

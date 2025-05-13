@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/react';
 import DashboardLayoutCollection from '@/Components/Collection/Dashboard-Layout';
 import DashboardLayoutRepairs from '@/Components/Repairs/Dasboard-Layout';
 
-export default function Dashboard({ auth }) {
+export default function Dashboard({ auth, repairs, asked_repairs, upcoming_repairs, past_repairs }) {
     const user = auth.user;
     return (
         <AuthenticatedLayout
@@ -18,7 +18,7 @@ export default function Dashboard({ auth }) {
             </div>
             <div className="pb-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <DashboardLayoutRepairs />
+                    <DashboardLayoutRepairs asked_repairs={asked_repairs} upcoming_repairs={upcoming_repairs} past_repairs={past_repairs} />
                 </div>
             </div>
         </AuthenticatedLayout>

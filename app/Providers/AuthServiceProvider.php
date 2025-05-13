@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Models\Collection;
 use App\Models\Watch;
+use App\Models\Repair;
 use App\Policies\CollectionPolicy;
 use App\Policies\WatchPolicy;
+use App\Policies\RepairPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -18,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Watch::class => WatchPolicy::class,
         Collection::class => CollectionPolicy::class,
+        Repair::class => RepairPolicy::class,
     ];
 
     /**

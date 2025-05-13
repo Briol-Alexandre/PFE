@@ -15,4 +15,9 @@
             @apply border-brand-red ;
         }
     }
+    input[type="checkbox"]{
+        &:checked{
+            background-color: brand-red;
+        }
+    }
 }
