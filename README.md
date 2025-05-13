@@ -1,10 +1,9 @@
-# Application de suivi de maintenance et d’entretien des montres
+# Watch Out : Interface de suivi, de maintenance et d’entretien des montres
 
 **Description générale :**
-
-L'application vise à aider les propriétaires de montres (de luxe ou standards) à mieux gérer l'entretien et la maintenance de leurs garde-temps. L'entretien régulier des montres est essentiel pour prolonger leur durée de vie et maintenir leur précision. Cette application permettra aux utilisateurs de suivre l'historique des entretiens et réparations, de recevoir des rappels pour les révisions et d'accéder à des services de réparation près de chez eux.
-
 Le site vise à aider les horloger à faciliter la gestion des réparations de leurs créations. En fournissant un accès au site à leurs clients, ils peuvent en un endroit voir quel client à besoin d’attention pour une de ses montres. 
+
+L'application vise aussi à aider les propriétaires de montres à mieux gérer l'entretien et la maintenance de leurs garde-temps. L'entretien régulier des montres est essentiel pour prolonger leur durée de vie et maintenir leur précision. Cette application permettra aux utilisateurs de suivre l'historique des entretiens et réparations, de recevoir des rappels pour les révisions.
 
 ### Fonctionnalités principales :
 
