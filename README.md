@@ -1,4 +1,4 @@
-### Application de suivi de maintenance et d’entretien des montres
+# Application de suivi de maintenance et d’entretien des montres
 
 **Description générale :**
 
