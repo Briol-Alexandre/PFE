@@ -34,7 +34,7 @@ export const getRepairStatusColor = (status) => {
 
 export const getRepairProgress = (status) => {
     if (status === 'rejected') {
-        return 0;
+        return 100;
     }
     const index = repairStatusOrder.indexOf(status);
     if (index === -1) { return 0; }

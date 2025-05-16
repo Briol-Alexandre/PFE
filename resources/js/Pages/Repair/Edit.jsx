@@ -8,6 +8,7 @@ export default function Edit({ repair, collections, revisions }) {
         collection_id: repair.collection_id,
         revisions: repair.revisions || [],
         description: repair.description,
+        refuse_reason: null,
         date: null,
         price: null,
     });

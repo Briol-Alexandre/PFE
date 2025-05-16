@@ -29,5 +29,7 @@ Route::middleware(['web', 'auth'])->group(function () {
 
     Route::get('/repair/{repair}/refuse', [RepairController::class, 'refuse_user'])->name('repair.refuse_user');
 
+    Route::patch('/repair/{repair}/refuse_creator', [RepairController::class, 'refuse_creator'])->name('repair.refuse_creator');
+
 });
 

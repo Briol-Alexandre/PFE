@@ -67,10 +67,10 @@ export default function Single({ repair }) {
                             </div>
                         </div>
 
-                        <div className="text-white font-just-sans">
+                        <div className="text-white font-just-sans border-b border-white/50 pb-8">
                             <p className="text-2xl">Informations sur la réparation</p>
-                            <div className="grid grid-cols-2 gap-4 mt-6">
-                                <div className='flex flex-col gap-4'>
+                            <div className="grid grid-cols-2 gap-4 mt-6 ">
+                                <div className='flex flex-col gap-4 '>
                                     <span>
                                         <p>Révision(s) demandée(s)</p>
                                         {repair.revisions ? (
@@ -106,7 +106,16 @@ export default function Single({ repair }) {
                                     </span>
                                 </div>
                             </div>
+
                         </div>
+                        {repair.status === 'rejected' && repair.refuse_reason && (
+                            <div className="mt-8">
+                                <span>
+                                    <p className='text-2xl text-brand'>Motif du refus</p>
+                                    <p className="text-brand">{repair.refuse_reason}</p>
+                                </span>
+                            </div>
+                        )}
                     </div>
                 </section>
             </div>

@@ -162,6 +162,14 @@ class RepairController extends Controller
         return redirect()->route('repair.show', $repair);
     }
 
+    public function refuse_creator(string $id, RepairUpdateEstimateRequest $request)
+    {
+        $repair = Repair::findOrFail($id);
+        $this->authorize('refuse_creator', $repair);
+        $repair->update($request->validated());
+        return redirect()->route('repair.show_creator', $repair);
+    }
+
     /**
      * Remove the specified resource from storage.
      */

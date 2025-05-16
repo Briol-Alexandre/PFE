@@ -80,6 +80,11 @@ class RepairPolicy
         return $repair->collection->user_id === $user->id;
     }
 
+    public function refuse_creator(User $user, Repair $repair): bool
+    {
+        return $repair->collection->watch->user_id === $user->id && $repair->status === 'asked';
+    }
+
     /**
      * Determine whether the user can restore the model.
      */

@@ -9,6 +9,7 @@ export default function Create({ collections, revisions }) {
         revision_ids: [],
         description: '',
         date: null,
+        refuse_reason: null,
         price: null,
         status: 'asked',
     });
@@ -22,7 +23,14 @@ export default function Create({ collections, revisions }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('repair.store'));
+        post(route('repair.store'), {
+            onError: (errors) => {
+                console.error('Erreur lors de la création:', errors);
+            },
+            onSuccess: () => {
+                console.log('Réparation créée avec succès');
+            },
+        });
     };
 
     return (

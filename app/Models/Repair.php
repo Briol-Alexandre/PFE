@@ -17,6 +17,7 @@ class Repair extends Model
         'date',
         'price',
         'revisions',
+        'refuse_reason',
         'description',
         'status'
     ];
@@ -25,6 +26,7 @@ class Repair extends Model
         'revisions' => 'array',
         'date' => 'datetime',
         'price' => 'integer',
+        'refuse_reason' => 'string',
         'status' => 'string'
     ];
 

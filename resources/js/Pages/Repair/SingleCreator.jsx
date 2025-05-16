@@ -3,16 +3,41 @@ import { Head, Link } from "@inertiajs/react";
 import { router } from "@inertiajs/react";
 import { useState } from 'react';
 import Modal from '@/Components/Modal';
-import { getRepairStatusInFrench, getRepairStatusColor } from "@/Utils/repairStatus";
 import { formatRepairDate } from "@/Utils/dateFormat";
 import ProgressBar from "@/Components/Repairs/ProgressBar";
+import InputLabel from '@/Components/InputLabel';
+import TextInput from '@/Components/TextInput';
+import InputError from '@/Components/InputError';
+
 
 export default function SingleCreator({ repair }) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-    const handleDelete = (e) => {
+    const [data, setData] = useState({
+        refuse_reason: '',
+        status: 'rejected',
+        price: repair.price,
+        date: repair.date,
+    });
+    const [errors, setErrors] = useState({});
+
+    const handleChange = (e) => {
+        setData({
+            ...data,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleRefuse = (e) => {
         e.preventDefault();
-        router.delete(route('repair.destroy', repair.id));
+        router.patch(route('repair.refuse_creator', repair.id), data, {
+            onError: (errors) => {
+                setErrors(errors);
+            },
+            onSuccess: () => {
+                setIsDeleteModalOpen(false);
+            },
+        });
     };
 
     return (
@@ -101,26 +126,41 @@ export default function SingleCreator({ repair }) {
             >
                 <div className="p-6">
                     <h2 className="text-lg font-medium text-brand">
-                        Êtes-vous sûr de vouloir supprimer cette réparation ?
+                        Êtes-vous sûr de vouloir refuser cette réparation ?
                     </h2>
+                    <form onSubmit={handleRefuse} className="mt-4 space-y-4">
+                        <div>
+                            <InputLabel htmlFor="refuse_reason" value="Motif de refus" className="text-white" />
+                            <TextInput
+                                id="refuse_reason"
+                                type="text"
+                                name="refuse_reason"
+                                value={data.refuse_reason}
+                                onChange={handleChange}
+                                className="w-full mt-1 bg-black/50 border-white/20 text-white"
+                                placeholder="Veuillez indiquer la raison du refus"
+                                required
+                            />
+                            {errors.refuse_reason && <InputError message={errors.refuse_reason} />}
+                        </div>
+                        <div className="flex justify-end gap-4 mt-6">
+                            <button
+                                type="button"
+                                className="px-4 py-2 bg-transparent border border-white/20 rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-white/10 transition-colors duration-200"
+                                onClick={() => setIsDeleteModalOpen(false)}
+                            >
+                                Annuler
+                            </button>
+                            <button
+                                type="submit"
+                                className="px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 transition-colors duration-200"
+                            >
+                                Confirmer le refus
+                            </button>
+                        </div>
+                    </form>
 
-                    <div className="mt-6 flex justify-end">
-                        <button
-                            type="button"
-                            className="mr-3 px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50"
-                            onClick={() => setIsDeleteModalOpen(false)}
-                        >
-                            Annuler
-                        </button>
 
-                        <button
-                            type="button"
-                            className="px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500"
-                            onClick={handleDelete}
-                        >
-                            Supprimer
-                        </button>
-                    </div>
                 </div>
             </Modal>
         </AuthenticatedLayout>
