@@ -17,8 +17,10 @@ class RepairStoreRequest extends FormRequest
             'collection_id' => 'required|exists:App\Models\Collection,id',
             'revision_ids' => 'required|array',
             'revision_ids.*' => 'exists:App\Models\Revisions,id',
-            'date' => 'nullable|date',
-            'price' => 'nullable|integer|min:0'
+            'description' => 'required|string',
+            'date' => 'nullable|date_format:Y-m-d\TH:i',
+            'price' => 'nullable|integer|min:0',
+            'status' => 'required|in:asked,pending,accepted,in_progress,completed,rejected'
         ];
     }
 }

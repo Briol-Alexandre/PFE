@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Modal from '@/Components/Modal';
 import RepairCard from '@/Components/Repairs/Card';
 
-export default function Single({ collection, asked_repairs, upcoming_repairs, past_repairs }) {
+export default function Single({ collection, upcoming_repairs, past_repairs }) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const handleSubmit = (e) => {
@@ -68,12 +68,6 @@ export default function Single({ collection, asked_repairs, upcoming_repairs, pa
             <section aria-labelledby="repairs-title" className="mt-40">
                 <h2 className="text-2xl font-semibold text-brand" id="repairs-title">Réparations</h2>
                 <div className="space-y-8">
-                    {asked_repairs.length > 0 && (
-                        <div>
-                            <h3 className="text-xl text-brand mb-4">Réparations demandées</h3>
-                            <RepairCard repairs={asked_repairs} />
-                        </div>
-                    )}
                     {upcoming_repairs.length > 0 && (
                         <div>
                             <h3 className="text-xl text-brand mb-4">Réparations à venir</h3>
@@ -86,7 +80,7 @@ export default function Single({ collection, asked_repairs, upcoming_repairs, pa
                             <RepairCard repairs={past_repairs} />
                         </div>
                     )}
-                    {!asked_repairs.length && !upcoming_repairs.length && !past_repairs.length && (
+                    {!upcoming_repairs.length && !past_repairs.length && (
                         <p className="text-gray-400">Vous n'avez pas encore de réparations.</p>
                     )}
                 </div>

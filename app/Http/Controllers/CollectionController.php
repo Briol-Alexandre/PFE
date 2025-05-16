@@ -73,23 +73,17 @@ class CollectionController extends Controller
     {
         $collection = Collection::with('watch.creator')->findOrFail($id);
 
-        $collectionIds = auth()->user()->collection->pluck('id');
-
-        // Réparations demandées (sans date)
-        $asked_repairs = Repair::whereIn('collection_id', $collectionIds)
-            ->whereNull('date')
-            ->with('collection.watch')
-            ->get();
-
         // Réparations à venir
-        $upcoming_repairs = Repair::whereIn('collection_id', $collectionIds)
-            ->whereNotNull('date')
-            ->where('date', '>', now())
+        $upcoming_repairs = Repair::where('collection_id', $id)
+            ->where(function ($query) {
+                $query->whereNull('date')
+                    ->orWhere('date', '>', now());
+            })
             ->with('collection.watch')
             ->get();
 
         // Réparations passées
-        $past_repairs = Repair::whereIn('collection_id', $collectionIds)
+        $past_repairs = Repair::where('collection_id', $id)
             ->whereNotNull('date')
             ->where('date', '<', now())
             ->with('collection.watch')
@@ -98,7 +92,6 @@ class CollectionController extends Controller
         $this->authorize('view', $collection);
         return Inertia::render('Collection/Single', [
             'collection' => $collection,
-            'asked_repairs' => $asked_repairs,
             'upcoming_repairs' => $upcoming_repairs,
             'past_repairs' => $past_repairs,
         ]);

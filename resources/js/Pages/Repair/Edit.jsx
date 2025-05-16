@@ -7,6 +7,7 @@ export default function Edit({ repair, collections, revisions }) {
     const { data, setData, patch, processing, errors } = useForm({
         collection_id: repair.collection_id,
         revisions: repair.revisions || [],
+        description: repair.description,
         date: null,
         price: null,
     });
@@ -54,6 +55,17 @@ export default function Edit({ repair, collections, revisions }) {
                                     ))}
                                 </select>
                                 {errors.collection_id && <InputError message={errors.collection_id} />}
+                            </div>
+                            <div>
+                                <InputLabel value="Description" />
+                                <textarea
+                                    id="description"
+                                    name="description"
+                                    value={data.description}
+                                    onChange={e => setData('description', e.target.value)}
+                                    className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                />
+                                {errors.description && <InputError message={errors.description} />}
                             </div>
 
                             <div>

@@ -1,32 +1,26 @@
 import { Link } from "@inertiajs/react";
-import RepairCard from "./Card";
+import RepairCard from "./CardImage";
 
-export default function DashboardLayoutRepairs({ repairs, asked_repairs, upcoming_repairs, past_repairs }) {
+export default function DashboardLayoutRepairs({ upcoming_repairs, past_repairs, userRole }) {
     return (
         <section aria-labelledby="collection-title" className="overflow-hidden shadow-sm sm:rounded-lg p-6">
             <div className="flex justify-between items-center mb-8">
                 <h3 className="text-2xl font-semibold text-brand" id="collection-title">Vos réparations</h3>
             </div>
             <div className="space-y-8">
-                {asked_repairs.length > 0 && (
-                    <div>
-                        <h3 className="text-xl text-brand mb-4">Réparations demandées</h3>
-                        <RepairCard repairs={asked_repairs} />
-                    </div>
-                )}
                 {upcoming_repairs.length > 0 && (
                     <div>
                         <h3 className="text-xl text-brand mb-4">Réparations à venir</h3>
-                        <RepairCard repairs={upcoming_repairs} />
+                        <RepairCard repairs={upcoming_repairs} userRole={userRole} />
                     </div>
                 )}
                 {past_repairs.length > 0 && (
                     <div>
                         <h3 className="text-xl text-brand mb-4">Réparations passées</h3>
-                        <RepairCard repairs={past_repairs} />
+                        <RepairCard repairs={past_repairs} userRole={userRole} />
                     </div>
                 )}
-                {!asked_repairs.length && !upcoming_repairs.length && !past_repairs.length && (
+                {!upcoming_repairs.length && !past_repairs.length && (
                     <p className="text-gray-400">Vous n'avez pas encore de réparations.</p>
                 )}
             </div>

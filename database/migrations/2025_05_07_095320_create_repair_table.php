@@ -14,8 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('collection_id')->constrained()->cascadeOnDelete();
             $table->json('revisions')->nullable();
-            $table->date('date')->nullable();
+            $table->longText('description');
+            $table->dateTime('date')->nullable();
             $table->integer('price')->nullable();
+            $table->enum('status', ['asked', 'pending', 'accepted', 'in_progress', 'completed', 'rejected'])->default('asked');
             $table->timestamps();
         });
     }

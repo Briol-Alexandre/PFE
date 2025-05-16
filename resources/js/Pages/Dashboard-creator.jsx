@@ -1,8 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import WatchCard from '@/Components/Watch/Card';
+import RepairCardImage from '@/Components/Repairs/CardImage';
 
-export default function Dashboard({ auth, watches }) {
+export default function Dashboard({ auth, watches, upcoming_repairs, past_repairs }) {
     const user = auth.user;
     return (
         <AuthenticatedLayout
@@ -36,6 +37,25 @@ export default function Dashboard({ auth, watches }) {
                                 Voir toutes vos montres
                             </Link>
                         </div>
+                    </section>
+                    <section aria-labelledby="repair-title" className="overflow-hidden shadow-sm sm:rounded-lg p-6">
+                        <h3 className="text-2xl font-semibold" id="repair-title">Vos entretiens</h3>
+                        <p>Entretiens demandés</p>
+                        {upcoming_repairs.length > 0 ? (
+                            <>
+                                <RepairCardImage repairs={upcoming_repairs} userRole={user.role} />
+                            </>
+                        ) : (
+                            <p className="text-gray-400">Vous n'avez pas encore de réparations.</p>
+                        )}
+                        <p>Entretiens passés</p>
+                        {past_repairs.length > 0 ? (
+                            <>
+                                <RepairCardImage repairs={past_repairs} userRole={user.role} />
+                            </>
+                        ) : (
+                            <p className="text-gray-400">Vous n'avez pas encore de réparations.</p>
+                        )}
                     </section>
                 </div>
             </div>

@@ -7,8 +7,10 @@ export default function Create({ collections, revisions }) {
     const { data, setData, post, processing, errors } = useForm({
         collection_id: '',
         revision_ids: [],
+        description: '',
         date: null,
         price: null,
+        status: 'asked',
     });
 
     const handleRevisionChange = (id) => {
@@ -48,6 +50,17 @@ export default function Create({ collections, revisions }) {
                                     ))}
                                 </select>
                                 {errors.collection_id && <InputError message={errors.collection_id} />}
+                            </div>
+                            <div>
+                                <InputLabel value="Description" />
+                                <textarea
+                                    id="description"
+                                    name="description"
+                                    value={data.description}
+                                    onChange={e => setData('description', e.target.value)}
+                                    className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                />
+                                {errors.description && <InputError message={errors.description} />}
                             </div>
 
                             <div>

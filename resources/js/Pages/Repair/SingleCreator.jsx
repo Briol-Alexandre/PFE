@@ -7,7 +7,7 @@ import { getRepairStatusInFrench, getRepairStatusColor } from "@/Utils/repairSta
 import { formatRepairDate } from "@/Utils/dateFormat";
 import ProgressBar from "@/Components/Repairs/ProgressBar";
 
-export default function Single({ repair }) {
+export default function SingleCreator({ repair }) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const handleDelete = (e) => {
@@ -27,43 +27,26 @@ export default function Single({ repair }) {
                                 <div>
                                     <p className="text-xl text-gray-400">{repair.collection.watch.creator.name}</p>
                                     <h2 className="text-4xl font-erstoria text-brand" id='repair-info'>{repair.collection.watch.model}</h2>
-
                                 </div>
                                 <div className="space-y-2">
                                     <ProgressBar status={repair.status} />
                                 </div>
                             </div>
                             <div className="flex gap-4">
-                                {repair.status === 'asked' && (<Link
-                                    href={route('repair.edit', repair.id)}
-                                    className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
-                                >
-                                    Modifier
-                                </Link>)}
-                                {repair.status === 'pending' && (<Link
-                                    href={route('repair.accept', repair.id)}
-                                    className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
-                                >
-                                    Accepter le devis
-                                </Link>)}
                                 {repair.status === 'asked' && (
-                                    <button
-                                        onClick={() => setIsDeleteModalOpen(true)}
-                                        className="px-4 py-2 bg-transparent border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200"
+                                    <Link
+                                        href={route('repair.edit_estimate', repair.id)}
+                                        className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
                                     >
-                                        Supprimer
-                                    </button>
-                                )}
-                                {repair.status === 'pending' && (
-                                    <Link href={route('repair.refuse_user', repair.id)} className='px-4 py-2 bg-transparent border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200'>
-                                        Refuser le devis
+                                        Accepter
                                     </Link>
                                 )}
-                                {repair.status === 'rejected' && (
-                                    <button onClick={() => setIsDeleteModalOpen(true)} className='px-4 py-2 bg-transparent border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200'>
-                                        Supprimer la demande
-                                    </button>
-                                )}
+                                <button
+                                    onClick={() => setIsDeleteModalOpen(true)}
+                                    className="px-4 py-2 bg-transparent border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200"
+                                >
+                                    Refuser
+                                </button>
                             </div>
                         </div>
 

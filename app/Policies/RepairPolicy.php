@@ -21,7 +21,23 @@ class RepairPolicy
      */
     public function view(User $user, Repair $repair): bool
     {
+        // Seul l'utilisateur normal peut voir la vue normale
+        if ($user->role === 'creator') {
+            return false;
+        }
         return $repair->collection->user_id === $user->id;
+    }
+
+    /**
+     * Determine whether the user can view the creator version of the model.
+     */
+    public function viewCreator(User $user, Repair $repair): bool
+    {
+        // Seul le créateur de la montre peut voir la vue créateur
+        if ($user->role !== 'creator') {
+            return false;
+        }
+        return $repair->collection->watch->user_id === $user->id;
     }
 
     /**
@@ -38,9 +54,24 @@ class RepairPolicy
      */
     public function update(User $user, Repair $repair): bool
     {
-        return $repair->collection->user_id === $user->id;
+        return $repair->collection->user_id === $user->id && $repair->status === 'asked';
     }
 
+    public function accept(User $user, Repair $repair): bool
+    {
+        return $repair->collection->user_id === $user->id && $repair->status === 'pending';
+    }
+
+    public function edit_estimate(User $user, Repair $repair): bool
+    {
+        return $repair->collection->watch->user_id === $user->id && $repair->status === 'asked';
+    }
+
+
+    public function refuse_user(User $user, Repair $repair): bool
+    {
+        return $repair->collection->user_id === $user->id && $repair->status === 'pending';
+    }
     /**
      * Determine whether the user can delete the model.
      */

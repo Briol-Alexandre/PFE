@@ -8,11 +8,11 @@ import { Head } from "@inertiajs/react";
 import { useState, useEffect } from 'react';
 
 export default function Edit({ watch }) {
-    const { data, setData, post, processing, errors, progress } = useForm({
+    const { data, setData, put, processing, errors, progress } = useForm({
         model: watch.model,
         movement: watch.movement,
         image: watch.image,
-        _method: 'POST',
+        _method: 'PUT',
         user_id: usePage().props.auth.user.id,
     });
 
@@ -20,7 +20,7 @@ export default function Edit({ watch }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('watch.update', { watch: watch.id }));
+        put(route('watch.update', { watch: watch.id }));
     };
 
     const handleChange = (e) => {

@@ -18,29 +18,51 @@ class DashboardController extends Controller
                 ->with('creator')
                 ->get();
 
+            // Récupérer les IDs des montres du créateur
+            $watchIds = $watches->pluck('id');
+
+            // Réparations à venir pour les montres du créateur
+            $upcoming_repairs = Repair::whereHas('collection.watch', function ($query) use ($watchIds) {
+                $query->whereIn('id', $watchIds);
+            })
+            ->where(function ($query) {
+                $query->whereNull('date')
+                    ->orWhere('date', '>', now());
+            })
+            ->with('collection.watch')
+            ->get();
+
+            // Réparations passées pour les montres du créateur
+            $past_repairs = Repair::whereHas('collection.watch', function ($query) use ($watchIds) {
+                $query->whereIn('id', $watchIds);
+            })
+            ->whereNotNull('date')
+            ->where('date', '<=', now())
+            ->with('collection.watch')
+            ->get();
+
             return Inertia::render('Dashboard-creator', [
                 'auth' => [
                     'user' => $user
                 ],
-                'watches' => $watches
+                'watches' => $watches,
+                'upcoming_repairs' => $upcoming_repairs,
+                'past_repairs' => $past_repairs
             ]);
         }
 
         // Obtenir les IDs des éléments de collection de l'utilisateur
         $collectionIds = $user->collection->pluck('id');
 
-        // Réparations demandées (sans date)
-        $asked_repairs = Repair::whereIn('collection_id', $collectionIds)
-            ->whereNull('date')
+        // Réparations à venir
+        $upcoming_repairs = Repair::whereIn('collection_id', $collectionIds)
+            ->where(function ($query) {
+                $query->whereNull('date')
+                    ->orWhere('date', '>', now());
+            })
             ->with('collection.watch')
             ->get();
 
-        // Réparations à venir
-        $upcoming_repairs = Repair::whereIn('collection_id', $collectionIds)
-            ->whereNotNull('date')
-            ->where('date', '>', now())
-            ->with('collection.watch')
-            ->get();
 
         // Réparations passées
         $past_repairs = Repair::whereIn('collection_id', $collectionIds)
@@ -62,7 +84,6 @@ class DashboardController extends Controller
                     'collection' => $user->collection()->with('watch.creator')->get(),
                 ]
             ],
-            'asked_repairs' => $asked_repairs,
             'upcoming_repairs' => $upcoming_repairs,
             'past_repairs' => $past_repairs,
         ]);

@@ -7,6 +7,7 @@ use App\Models\Collection;
 use App\Models\Revisions;
 use App\Http\Requests\RepairStoreRequest;
 use App\Http\Requests\RepairUpdateRequest;
+use App\Http\Requests\RepairUpdateEstimateRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
 
@@ -61,10 +62,11 @@ class RepairController extends Controller
                 ];
             })->toArray();
 
-        $repair = Repair::create([
-            'collection_id' => $validated['collection_id'],
-            'revisions' => $revisions
-        ]);
+        // Créer la réparation avec les données validées et les révisions
+        $repair = Repair::create(array_merge(
+            $validated,
+            ['revisions' => $revisions]
+        ));
 
         return redirect()->route('repair.show', $repair);
     }
@@ -78,6 +80,16 @@ class RepairController extends Controller
         $this->authorize('view', $repair);
 
         return Inertia::render('Repair/Single', [
+            'repair' => $repair
+        ]);
+    }
+
+    public function show_creator(string $id)
+    {
+        $repair = Repair::with('collection.watch.creator')->findOrFail($id);
+        $this->authorize('viewCreator', $repair);
+
+        return Inertia::render('Repair/SingleCreator', [
             'repair' => $repair
         ]);
     }
@@ -105,6 +117,16 @@ class RepairController extends Controller
         ]);
     }
 
+    public function edit_estimate(string $id)
+    {
+        $repair = Repair::with('collection.watch.creator')->findOrFail($id);
+        $this->authorize('edit_estimate', $repair);
+
+        return Inertia::render('Repair/SetEstimate', [
+            'repair' => $repair
+        ]);
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -113,6 +135,30 @@ class RepairController extends Controller
         $repair = Repair::findOrFail($id);
         $this->authorize('update', $repair);
         $repair->update($request->validated());
+        return redirect()->route('repair.show', $repair);
+    }
+
+    public function update_estimate(RepairUpdateEstimateRequest $request, string $id)
+    {
+        $repair = Repair::findOrFail($id);
+        $this->authorize('edit_estimate', $repair);
+        $repair->update($request->validated());
+        return redirect()->route('repair.show_creator', $repair);
+    }
+
+    public function accept(string $id)
+    {
+        $repair = Repair::findOrFail($id);
+        $this->authorize('accept', $repair);
+        $repair->update(['status' => 'accepted']);
+        return redirect()->route('repair.show', $repair);
+    }
+
+    public function refuse_user(string $id)
+    {
+        $repair = Repair::findOrFail($id);
+        $this->authorize('refuse_user', $repair);
+        $repair->update(['status' => 'rejected']);
         return redirect()->route('repair.show', $repair);
     }
 

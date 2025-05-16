@@ -11,17 +11,21 @@ use App\Models\Collection;
 class Repair extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'collection_id',
         'date',
         'price',
-        'revisions'
+        'revisions',
+        'description',
+        'status'
     ];
 
     protected $casts = [
         'revisions' => 'array',
-        'date' => 'datetime'
+        'date' => 'datetime',
+        'price' => 'integer',
+        'status' => 'string'
     ];
 
     public function collection(): BelongsTo
