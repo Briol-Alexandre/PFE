@@ -1,15 +1,16 @@
-import { Head, useForm } from "@inertiajs/react";
+import { Head, useForm, useState } from "@inertiajs/react";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 
-export default function Create({ collections, revisions }) {
+export default function Create({ collections, revisions, watch_id }) {
     const { data, setData, post, processing, errors } = useForm({
-        collection_id: '',
+        collection_id: watch_id || '',
         revision_ids: [],
         description: '',
         date: null,
         refuse_reason: null,
+        modify_reason: null,
         price: null,
         status: 'asked',
     });

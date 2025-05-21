@@ -13,7 +13,7 @@ class RepairPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -62,9 +62,24 @@ class RepairPolicy
         return $repair->collection->user_id === $user->id && $repair->status === 'pending';
     }
 
+    public function start(User $user, Repair $repair): bool
+    {
+        return $repair->collection->watch->user_id === $user->id && $repair->status === 'accepted' && now()->isSameDay($repair->date);
+    }
+
     public function edit_estimate(User $user, Repair $repair): bool
     {
         return $repair->collection->watch->user_id === $user->id && $repair->status === 'asked';
+    }
+
+    public function completed(User $user, Repair $repair): bool
+    {
+        return $repair->collection->watch->user_id === $user->id && $repair->status === 'in_progress';
+    }
+
+    public function modify_price_and_date(User $user, Repair $repair): bool
+    {
+        return $repair->collection->watch->user_id === $user->id && $repair->status === 'accepted';
     }
 
 

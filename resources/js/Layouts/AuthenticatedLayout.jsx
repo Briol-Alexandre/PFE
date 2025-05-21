@@ -54,6 +54,16 @@ export default function AuthenticatedLayout({ header, children }) {
                                         />
                                     </NavLink>
                                 )}
+                                <NavLink
+                                    href={route('repair.index')}
+                                    active={route().current('repair.index')}
+                                >
+                                    <img
+                                        src={`/img/svg/nav/repair/${route().current('repair.index') ? 'full' : 'empty'}.svg`}
+                                        alt="Vos réparations"
+                                        className="w-6 h-6"
+                                    />
+                                </NavLink>
 
 
                             </div>

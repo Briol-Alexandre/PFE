@@ -19,7 +19,62 @@ class RepairController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('viewAny', Repair::class);
+        $user = auth()->user();
+
+        // Charge les relations pour toutes les requêtes
+        $with = ['collection.watch.creator', 'collection.user'];
+
+        // Requête de base selon le rôle
+        $baseQuery = Repair::with($with);
+        if ($user->role === 'creator') {
+            $baseQuery->whereHas('collection.watch', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            });
+        } else {
+            $baseQuery->whereHas('collection', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            });
+        }
+
+        // Récupère toutes les réparations avec les relations
+        $repairs = (clone $baseQuery)->get();
+
+        // Réparations demandées
+        $asked_repairs = (clone $baseQuery)
+            ->where('status', 'asked')
+            ->get();
+
+        // Réparations à venir (acceptées et date future)
+        $upcomming_repairs = (clone $baseQuery)
+            ->where('status', 'accepted')
+            ->where('date', '>', now())
+            ->get();
+
+        // Réparations passées (complétées)
+        $past_repairs = (clone $baseQuery)
+            ->where('status', 'completed')
+            ->get();
+
+        // Réparations refusées
+        $rejected_repairs = (clone $baseQuery)
+            ->where('status', 'rejected')
+            ->get();
+
+        // Réparations en cours
+        $in_progress_repairs = (clone $baseQuery)
+            ->where('status', 'in_progress')
+            ->get();
+
+
+        return Inertia::render('Repair/Index', [
+            'repairs' => $repairs,
+            'asked_repairs' => $asked_repairs,
+            'upcomming_repairs' => $upcomming_repairs,
+            'past_repairs' => $past_repairs,
+            'rejected_repairs' => $rejected_repairs,
+            'in_progress_repairs' => $in_progress_repairs
+        ]);
     }
 
     /**
@@ -170,6 +225,14 @@ class RepairController extends Controller
         return redirect()->route('repair.show_creator', $repair);
     }
 
+    public function completed(string $id)
+    {
+        $repair = Repair::findOrFail($id);
+        $this->authorize('completed', $repair);
+        $repair->update(['status' => 'completed']);
+        return redirect()->route('repair.show_creator', $repair);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -181,5 +244,24 @@ class RepairController extends Controller
         $repair->delete();
 
         return redirect()->route('collection.show', $repair->collection_id);
+    }
+
+    public function modify_price_and_date(string $id)
+    {
+        $repair = Repair::findOrFail($id);
+        $this->authorize('modify_price_and_date', $repair);
+
+        return Inertia::render('Repair/ModifyPriceAndDate', [
+            'repair' => $repair
+        ]);
+    }
+
+    public function update_price_and_date(string $id, RepairUpdateEstimateRequest $request)
+    {
+        $repair = Repair::findOrFail($id);
+        $this->authorize('modify_price_and_date', $repair);
+        $repair->update($request->validated());
+        $repair->update(['status' => 'pending']);
+        return redirect()->route('repair.show_creator', $repair);
     }
 }

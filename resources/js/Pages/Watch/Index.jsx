@@ -1,24 +1,18 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from "@inertiajs/react";
-import WatchCard from '@/Components/Watch/Card';
+import { Head, Link, usePage } from "@inertiajs/react";
+import DashboardLayoutWatch from "@/Components/Watch/Dashboard-Layout";
 
 export default function Index({ watches }) {
+    const userRole = usePage().props.auth.user.role;
+
     return (
         <AuthenticatedLayout>
-            <Head title="Vos montres" />
-            <div className='text-white'>
-                <h2 className="font-semibold font-erstoria text-3xl text-brand leading-tight">Vos montres</h2>
-                <WatchCard watches={watches} />
-            </div>
-            <div className="flex justify-center mt-8">
-                <Link href={route('watch.create')}>
-                    <button
-                        type="button"
-                        className="hover-underline"
-                    >
-                        Créer une montre
-                    </button>
-                </Link>
+            <Head title="Montres" />
+
+            <div className="py-12">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <DashboardLayoutWatch watches={watches} userRole={userRole} />
+                </div>
             </div>
         </AuthenticatedLayout>
     );

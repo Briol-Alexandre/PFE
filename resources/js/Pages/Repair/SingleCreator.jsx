@@ -4,6 +4,7 @@ import { router } from "@inertiajs/react";
 import { useState } from 'react';
 import Modal from '@/Components/Modal';
 import { formatRepairDate } from "@/Utils/dateFormat";
+import { isSameDay } from 'date-fns';
 import ProgressBar from "@/Components/Repairs/ProgressBar";
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
@@ -30,7 +31,11 @@ export default function SingleCreator({ repair }) {
 
     const handleRefuse = (e) => {
         e.preventDefault();
-        router.patch(route('repair.refuse_creator', repair.id), data, {
+        const submitData = {
+            ...data,
+            status: 'rejected'
+        };
+        router.patch(route('repair.refuse_creator', repair.id), submitData, {
             onError: (errors) => {
                 setErrors(errors);
             },
@@ -59,19 +64,45 @@ export default function SingleCreator({ repair }) {
                             </div>
                             <div className="flex gap-4">
                                 {repair.status === 'asked' && (
+                                    <>
+                                        <Link
+                                            href={route('repair.edit_estimate', repair.id)}
+                                            className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
+                                        >
+                                            Accepter
+                                        </Link>
+                                        <button
+                                            onClick={() => setIsDeleteModalOpen(true)}
+                                            className="px-4 py-2 bg-transparent border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200"
+                                        >
+                                            Refuser
+                                        </button>
+                                    </>
+                                )}
+                                {repair.status === 'in_progress' && (
                                     <Link
-                                        href={route('repair.edit_estimate', repair.id)}
+                                        href={route('repair.completed', repair.id)}
                                         className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
                                     >
-                                        Accepter
+                                        Indiquer comme terminée
                                     </Link>
                                 )}
-                                <button
-                                    onClick={() => setIsDeleteModalOpen(true)}
-                                    className="px-4 py-2 bg-transparent border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200"
-                                >
-                                    Refuser
-                                </button>
+                                {repair.status === 'accepted' && (
+                                    <Link
+                                        href={route('repair.modify_price_and_date', repair.id)}
+                                        className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
+                                    >
+                                        Modifier le prix et/ou la date
+                                    </Link>
+                                )}
+                                {repair.status === 'accepted' && isSameDay(new Date(repair.date), new Date()) && (
+                                    <Link
+                                        href={route('repair.start', repair.id)}
+                                        className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
+                                    >
+                                        Démarrer la réparation
+                                    </Link>
+                                )}
                             </div>
                         </div>
 

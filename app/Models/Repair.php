@@ -18,6 +18,7 @@ class Repair extends Model
         'price',
         'revisions',
         'refuse_reason',
+        'modify_reason',
         'description',
         'status'
     ];
@@ -27,8 +28,17 @@ class Repair extends Model
         'date' => 'datetime',
         'price' => 'integer',
         'refuse_reason' => 'string',
+        'modify_reason' => 'string',
         'status' => 'string'
     ];
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     */
+    protected function serializeDate($date)
+    {
+        return $date->setTimezone(new \DateTimeZone('Europe/Paris'));
+    }
 
     public function collection(): BelongsTo
     {

@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->dateTime('date')->nullable();
             $table->integer('price')->nullable();
             $table->string('refuse_reason')->nullable();
+            $table->string('modify_reason')->nullable();
             $table->enum('status', ['asked', 'pending', 'accepted', 'in_progress', 'completed', 'rejected'])->default('asked');
             $table->timestamps();
         });

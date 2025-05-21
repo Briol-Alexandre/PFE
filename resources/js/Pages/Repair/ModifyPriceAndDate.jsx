@@ -3,24 +3,30 @@ import { Head, useForm } from '@inertiajs/react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
+import TextArea from '@/Components/TextArea';
 
-export default function SetEstimate({ repair }) {
+const formatDateForInput = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toISOString().slice(0, 16);
+};
+
+export default function ModifyPriceAndDate({ repair }) {
     const { data, setData, patch, processing, errors } = useForm({
-        date: repair.date || '',
+        date: formatDateForInput(repair.date),
         price: repair.price || '',
         status: 'pending',
-        refuse_reason: '',
         modify_reason: '',
     });
 
     const submit = (e) => {
         e.preventDefault();
-        patch(route('repair.update_estimate', repair.id));
+        patch(route('repair.update_price_and_date', repair.id));
     };
 
     return (
         <AuthenticatedLayout>
-            <Head title="Accepter la réparation" />
+            <Head title="Modifier le prix et la date" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -35,38 +41,51 @@ export default function SetEstimate({ repair }) {
 
                             <form onSubmit={submit} className="mt-6 space-y-6">
                                 <div>
-                                    <InputLabel htmlFor="date" value="Date et heure de la réparation" />
+                                    <InputLabel htmlFor="date" value="Date de réparation" />
                                     <TextInput
                                         id="date"
                                         type="datetime-local"
                                         name="date"
                                         value={data.date}
                                         className="mt-1 block w-full bg-transparent"
-                                        onChange={e => setData('date', e.target.value)}
+                                        onChange={(e) => setData('date', e.target.value)}
                                     />
-                                    {errors.date && <InputError message={errors.date} />}
+                                    <InputError message={errors.date} className="mt-2" />
                                 </div>
 
                                 <div>
-                                    <InputLabel htmlFor="price" value="Prix estimé" />
+                                    <InputLabel htmlFor="price" value="Prix" />
                                     <TextInput
                                         id="price"
                                         type="number"
                                         name="price"
                                         value={data.price}
                                         className="mt-1 block w-full bg-transparent"
-                                        onChange={e => setData('price', e.target.value)}
+                                        onChange={(e) => setData('price', e.target.value)}
                                     />
-                                    {errors.price && <InputError message={errors.price} />}
+                                    <InputError message={errors.price} className="mt-2" />
+                                </div>
+
+                                <div>
+                                    <InputLabel htmlFor="modify_reason" value="Raison de la modification" />
+                                    <TextArea
+                                        id="modify_reason"
+                                        name="modify_reason"
+                                        value={data.modify_reason}
+                                        className="mt-1 block w-full bg-transparent"
+                                        onChange={(e) => setData('modify_reason', e.target.value)}
+                                        required
+                                    />
+                                    <InputError message={errors.modify_reason} className="mt-2" />
                                 </div>
 
                                 <div className="flex items-center gap-4">
                                     <button
                                         type="submit"
-                                        className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
+                                        className="px-4 py-2 bg-brand text-black rounded-md hover:bg-brand/80 transition-colors duration-200"
                                         disabled={processing}
                                     >
-                                        Valider l'estimation
+                                        Modifier
                                     </button>
                                 </div>
                             </form>

@@ -6,7 +6,7 @@ export default function RepairCard({ repairs, userRole }) {
     return (
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-10">
             {repairs.map((repair) => (
-                <li key={repair.id} className="bg-black/20 backdrop-blur-3xl lg:max-w-[400px] aspect-square p-10 rounded-3xl hover:bg-white/20 transition-colors duration-300 relative">
+                <li key={repair.id} className="bg-black/20 backdrop-blur-3xl lg:max-w-[400px] p-10 rounded-3xl hover:bg-white/20 transition-colors duration-300 relative">
                     <Link href={route(repairRoute, { repair: repair.id })} className="flex flex-col gap-4">
                         <div className='flex flex-col'>
                             <p className="text-sm text-brand rounded-full w-fit px-2 py-1 absolute top-6 right-6" style={{ background: getRepairStatusColor(repair.status) }}>{getRepairStatusInFrench(repair.status)}</p>

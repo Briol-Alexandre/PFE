@@ -25,7 +25,8 @@ class RepairUpdateEstimateRequest extends FormRequest
             'date' => 'nullable|date_format:Y-m-d\TH:i',
             'price' => 'nullable|integer|min:0',
             'status' => 'required|string|in:pending,accepted,in_progress,completed,rejected',
-            'refuse_reason' => 'required|string'
+            'refuse_reason' => 'nullable|string',
+            'modify_reason' => 'nullable|string',
         ];
     }
 }

@@ -10,9 +10,9 @@ export const repairStatusTranslations = {
 export const repairStatusColors = {
     asked: '#3498db',       // bleu clair
     pending: '#f1c40f',     // jaune
-    accepted: '#2ecc71',    // vert
+    accepted: '#0080ff',    // bleu
     in_progress: '#e67e22', // orange
-    completed: '#2c3e50',   // gris foncé
+    completed: '#27ae60',   // vert
     rejected: '#e74c3c'     // rouge
 };
 

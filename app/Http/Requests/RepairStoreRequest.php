@@ -21,6 +21,7 @@ class RepairStoreRequest extends FormRequest
             'date' => 'nullable|date_format:Y-m-d\TH:i',
             'price' => 'nullable|integer|min:0',
             'refuse_reason' => 'nullable|string',
+            'modify_reason' => 'nullable|string',
             'status' => 'required|in:asked,pending,accepted,in_progress,completed,rejected'
         ];
     }

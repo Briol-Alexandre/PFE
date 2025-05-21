@@ -1,16 +1,18 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, usePage } from '@inertiajs/react';
-import CollectionCard from '@/Components/Collection/Card';
+import { Head, Link, usePage } from "@inertiajs/react";
+import DashboardLayoutCollection from "@/Components/Collection/Dashboard-Layout";
 
-export default function Index() {
-    const collections = usePage().props.collections;
+export default function Index({ collections }) {
+    const userRole = usePage().props.auth.user.role;
+
     return (
         <AuthenticatedLayout>
-            <Head title="Votre collection" />
-            <div className='text-white'>
-                <h1 className="font-semibold font-erstoria text-3xl text-brand leading-tight">Votre collection</h1>
-                <CollectionCard collections={collections} />
-                <Link href={route('collection.create')} className="hover-underline mx-auto mt-10">Ajouter une montre</Link>
+            <Head title="Collections" />
+
+            <div className="py-12">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <DashboardLayoutCollection collections={collections} userRole={userRole} />
+                </div>
             </div>
         </AuthenticatedLayout>
     );

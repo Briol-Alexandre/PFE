@@ -84,6 +84,9 @@ export default function Single({ collection, upcoming_repairs, past_repairs }) {
                         <p className="text-gray-400">Vous n'avez pas encore de réparations.</p>
                     )}
                 </div>
+                <Link href={route('repair.create', { watch_id: collection.watch.id })} className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200 mx-auto mt-8">
+                    Ajouter une réparation
+                </Link>
             </section>
 
             <Modal

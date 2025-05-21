@@ -59,6 +59,11 @@ export default function Single({ repair }) {
                                         Refuser le devis
                                     </Link>
                                 )}
+                                {repair.status === 'accepted' && (
+                                    <button onClick={() => setIsDeleteModalOpen(true)} className='px-4 py-2 bg-transparent border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200'>
+                                        Annuler la réparation
+                                    </button>
+                                )}
                                 {repair.status === 'rejected' && (
                                     <button onClick={() => setIsDeleteModalOpen(true)} className='px-4 py-2 bg-transparent border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200'>
                                         Supprimer la demande
@@ -113,6 +118,14 @@ export default function Single({ repair }) {
                                 <span>
                                     <p className='text-2xl text-brand'>Motif du refus</p>
                                     <p className="text-brand">{repair.refuse_reason}</p>
+                                </span>
+                            </div>
+                        )}
+                        {repair.status === 'pending' && repair.modify_reason && (
+                            <div className="mt-8">
+                                <span>
+                                    <p className='text-2xl text-brand'>Motif de la modification</p>
+                                    <p className="text-brand">{repair.modify_reason}</p>
                                 </span>
                             </div>
                         )}

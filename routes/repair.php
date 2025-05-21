@@ -31,5 +31,13 @@ Route::middleware(['web', 'auth'])->group(function () {
 
     Route::patch('/repair/{repair}/refuse_creator', [RepairController::class, 'refuse_creator'])->name('repair.refuse_creator');
 
+    Route::get('/repair/{repair}/completed', [RepairController::class, 'completed'])->name('repair.completed');
+
+    Route::get('/repair/{repair}/modify_price_and_date', [RepairController::class, 'modify_price_and_date'])->name('repair.modify_price_and_date');
+
+    Route::patch('/repair/{repair}/update_price_and_date', [RepairController::class, 'update_price_and_date'])->name('repair.update_price_and_date');
+
+    Route::get('/repair/{repair}/start', [RepairController::class, 'start'])->name('repair.start');
+
 });
 
