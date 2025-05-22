@@ -59,7 +59,7 @@ class RepairPolicy
 
     public function accept(User $user, Repair $repair): bool
     {
-        return $repair->collection->user_id === $user->id && $repair->status === 'pending';
+        return $repair->collection->user_id === $user->id && ($repair->status === 'pending' || $repair->status === 'modified');
     }
 
     public function start(User $user, Repair $repair): bool

@@ -2,6 +2,7 @@ export const repairStatusTranslations = {
     asked: 'Demandée',
     pending: 'En attente de la validation du devis',
     accepted: 'Acceptée et planifiée',
+    modified: 'Devis modifié',
     in_progress: 'En cours de réparation',
     completed: 'Réparation terminée',
     rejected: 'Rejetée'
@@ -11,6 +12,7 @@ export const repairStatusColors = {
     asked: '#3498db',       // bleu clair
     pending: '#f1c40f',     // jaune
     accepted: '#0080ff',    // bleu
+    modified: '#9b59b6',    // violet
     in_progress: '#e67e22', // orange
     completed: '#27ae60',   // vert
     rejected: '#e74c3c'     // rouge
@@ -20,6 +22,7 @@ export const repairStatusOrder = [
     'asked',
     'pending',
     'accepted',
+    'modified',
     'in_progress',
     'completed'
 ];

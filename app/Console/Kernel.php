@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // Le scheduling a été désactivé
+        $schedule->command('repairs:notify-upcoming')->dailyAt('09:00');
     }
 
 

@@ -233,6 +233,14 @@ class RepairController extends Controller
         return redirect()->route('repair.show_creator', $repair);
     }
 
+    public function start(string $id)
+    {
+        $repair = Repair::findOrFail($id);
+        $this->authorize('start', $repair);
+        $repair->update(['status' => 'in_progress']);
+        return redirect()->route('repair.show_creator', $repair);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -261,7 +269,7 @@ class RepairController extends Controller
         $repair = Repair::findOrFail($id);
         $this->authorize('modify_price_and_date', $repair);
         $repair->update($request->validated());
-        $repair->update(['status' => 'pending']);
+        $repair->update(['status' => 'modified']);
         return redirect()->route('repair.show_creator', $repair);
     }
 }

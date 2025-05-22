@@ -7,6 +7,7 @@ use App\Models\Revisions;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Collection;
+use App\Notifications\RepairStatusUpdated;
 
 class Repair extends Model
 {
@@ -43,5 +44,44 @@ class Repair extends Model
     public function collection(): BelongsTo
     {
         return $this->belongsTo(Collection::class);
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($repair) {
+            if ($repair->status === 'asked') {
+                $creator = $repair->collection->watch->creator;
+                $creator->notify(new RepairStatusUpdated($repair));
+            }
+        });
+
+        static::updating(function ($repair) {
+            if ($repair->isDirty('status')) {
+                $user = $repair->collection->user;
+                $creator = $repair->collection->watch->creator;
+
+                switch ($repair->status) {
+                    case 'asked':
+                        $creator->notify(new RepairStatusUpdated($repair));
+                        break;
+                    case 'pending':
+                        $user->notify(new RepairStatusUpdated($repair));
+                        break;
+                    case 'accepted':
+                        $creator->notify(new RepairStatusUpdated($repair));
+                        break;
+                    case 'completed':
+                        $user->notify(new RepairStatusUpdated($repair));
+                        break;
+                    case 'refused':
+                    case 'modified':
+                        $user->notify(new RepairStatusUpdated($repair));
+                        break;
+                    case 'canceled':
+                        $creator->notify(new RepairStatusUpdated($repair));
+                        break;
+                }
+            }
+        });
     }
 }

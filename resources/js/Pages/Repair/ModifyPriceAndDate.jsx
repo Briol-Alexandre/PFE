@@ -15,7 +15,7 @@ export default function ModifyPriceAndDate({ repair }) {
     const { data, setData, patch, processing, errors } = useForm({
         date: formatDateForInput(repair.date),
         price: repair.price || '',
-        status: 'pending',
+        status: 'modified',
         modify_reason: '',
     });
 

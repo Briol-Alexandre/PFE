@@ -40,7 +40,7 @@ export default function Single({ repair }) {
                                 >
                                     Modifier
                                 </Link>)}
-                                {repair.status === 'pending' && (<Link
+                                {(repair.status === 'pending' || repair.status === 'modified') && (<Link
                                     href={route('repair.accept', repair.id)}
                                     className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
                                 >
@@ -54,7 +54,7 @@ export default function Single({ repair }) {
                                         Supprimer
                                     </button>
                                 )}
-                                {repair.status === 'pending' && (
+                                {(repair.status === 'pending' || repair.status === 'modified') && (
                                     <Link href={route('repair.refuse_user', repair.id)} className='px-4 py-2 bg-transparent border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200'>
                                         Refuser le devis
                                     </Link>
