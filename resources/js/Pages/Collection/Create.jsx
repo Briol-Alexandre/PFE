@@ -8,6 +8,7 @@ export default function Create({ watches }) {
         watch_id: '',
         purchase_date: '',
         warranty_end_date: '',
+        warranty_image: null,
         user_id: usePage().props.auth.user.id,
     });
 
@@ -17,8 +18,8 @@ export default function Create({ watches }) {
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setData(name, value);
+        const { name, value, type, files } = e.target;
+        setData(name, type === 'file' ? files[0] : value);
     };
 
     return (
@@ -72,6 +73,19 @@ export default function Create({ watches }) {
                                     className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 />
                                 {errors.warranty_end_date && <InputError message={errors.warranty_end_date} />}
+                            </div>
+
+                            <div>
+                                <InputLabel htmlFor="warranty_image" value="Image de la garantie" />
+                                <input
+                                    type="file"
+                                    name="warranty_image"
+                                    id="warranty_image"
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    accept="image/*"
+                                />
+                                {errors.warranty_image && <InputError message={errors.warranty_image} />}
                             </div>
 
                             <div className="flex items-center justify-end mt-6">

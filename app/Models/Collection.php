@@ -14,6 +14,7 @@ class Collection extends Model
         'watch_id',
         'purchase_date',
         'warranty_end_date',
+        'warranty_image',
     ];
 
     public function user(): BelongsTo

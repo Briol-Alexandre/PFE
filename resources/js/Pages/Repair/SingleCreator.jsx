@@ -44,6 +44,8 @@ export default function SingleCreator({ repair }) {
             },
         });
     };
+    const [showWarrantyImage, setShowWarrantyImage] = useState(false);
+
 
     return (
         <AuthenticatedLayout>
@@ -126,6 +128,26 @@ export default function SingleCreator({ repair }) {
                                         <p>Description</p>
                                         <p className="text-brand/80">{repair.description}</p>
                                     </span>
+                                    <span>
+                                        <p>Date de fin de garantie de la montre</p>
+                                        <div className='flex items-center gap-2'>
+                                            <p className="text-brand/80">
+                                                {repair.collection.warranty_end_date
+                                                    ? new Date(repair.collection.warranty_end_date).toLocaleDateString()
+                                                    : 'Non renseigné'
+                                                }
+                                            </p>
+                                            {repair.collection.warranty_image && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setShowWarrantyImage(true)}
+                                                    className="w-4 h-4 rounded-full border border-brand flex items-center justify-center hover:bg-brand hover:text-black transition-colors duration-300 text-xs"
+                                                >
+                                                    ?
+                                                </button>
+                                            )}
+                                        </div>
+                                    </span>
                                 </div>
                                 <div className='flex flex-col gap-4'>
                                     <span>
@@ -193,6 +215,17 @@ export default function SingleCreator({ repair }) {
 
 
                 </div>
+            </Modal>
+            <Modal
+                show={showWarrantyImage}
+                onClose={() => setShowWarrantyImage(false)}
+                className='bg-black/75 h-[300px] border border-white/10 flex flex-col justify-around text-white px-10'
+            >
+                <img
+                    src={`/storage/${repair.collection.warranty_image}`}
+                    alt="Image de garantie"
+                    className="w-full h-full object-contain"
+                />
             </Modal>
         </AuthenticatedLayout>
     );

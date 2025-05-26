@@ -56,12 +56,19 @@ class CollectionController extends Controller
     {
         $this->authorize('create', Collection::class);
 
-        Collection::create([
+        $data = [
             'user_id' => auth()->id(),
             'watch_id' => $request->watch_id,
             'purchase_date' => $request->purchase_date,
             'warranty_end_date' => $request->warranty_end_date
-        ]);
+        ];
+
+        if ($request->hasFile('warranty_image')) {
+            $path = $request->file('warranty_image')->store('warranty_images', 'public');
+            $data['warranty_image'] = $path;
+        }
+
+        Collection::create($data);
 
         return redirect()->route('collection.index');
     }

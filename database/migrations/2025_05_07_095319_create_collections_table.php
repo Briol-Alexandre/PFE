@@ -14,6 +14,7 @@ class CreateCollectionsTable extends Migration
             $table->foreignId('watch_id')->constrained('watches')->onDelete('cascade');
             $table->date('purchase_date');
             $table->date('warranty_end_date');
+            $table->string('warranty_image');
             $table->timestamps();
             $table->unique(['user_id', 'watch_id']);
         });

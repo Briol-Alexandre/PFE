@@ -7,6 +7,7 @@ import RepairCard from '@/Components/Repairs/Card';
 
 export default function Single({ collection, upcoming_repairs, past_repairs }) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [showWarrantyImage, setShowWarrantyImage] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -42,7 +43,18 @@ export default function Single({ collection, upcoming_repairs, past_repairs }) {
                         </span>
                         <span>
                             <p>Fin de garantie</p>
-                            <p className="text-brand/80">{!collection.warranty_end_date ? 'Non renseigné' : new Date(collection.warranty_end_date).toLocaleDateString()}</p>
+                            <div className="flex items-center gap-2">
+                                <p className="text-brand/80">{!collection.warranty_end_date ? 'Non renseigné' : new Date(collection.warranty_end_date).toLocaleDateString()}</p>
+                                {collection.warranty_image && (
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowWarrantyImage(true)}
+                                        className="w-4 h-4 rounded-full border border-brand flex items-center justify-center hover:bg-brand hover:text-black transition-colors duration-300 text-xs"
+                                    >
+                                        ?
+                                    </button>
+                                )}
+                            </div>
                         </span>
                         <Link href={route('collection.edit', { collection: collection.id })} className="">
                             <button
@@ -114,6 +126,30 @@ export default function Single({ collection, upcoming_repairs, past_repairs }) {
                     >
                         Supprimer
                     </button>
+                </div>
+            </Modal>
+
+            <Modal
+                show={showWarrantyImage}
+                onClose={() => setShowWarrantyImage(false)}
+                className="bg-black/75 max-w-2xl mx-auto border border-white/10 flex flex-col justify-around text-white p-6"
+            >
+                <div className="flex flex-col gap-4">
+                    <div className="flex justify-between items-center">
+                        <p className="text-2xl">Image de la garantie</p>
+                        <button
+                            type="button"
+                            onClick={() => setShowWarrantyImage(false)}
+                            className="text-white/50 hover:text-white transition-colors duration-300"
+                        >
+                            ✕
+                        </button>
+                    </div>
+                    <img
+                        src={`/storage/${collection.warranty_image}`}
+                        alt="Image de la garantie"
+                        className="max-w-full h-auto rounded-lg"
+                    />
                 </div>
             </Modal>
         </AuthenticatedLayout>
