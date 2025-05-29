@@ -2,6 +2,7 @@
 @import url("./style.css");
 @import url("./form/form.css");
 @import url("./welcome/welcome.css");
+@import url("./calendar.css");
 
 @tailwind base;
 @tailwind components;

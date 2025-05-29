@@ -66,6 +66,10 @@ class RepairController extends Controller
             ->where('status', 'in_progress')
             ->get();
 
+        // Réparations en attente
+        $pending_repairs = (clone $baseQuery)
+            ->where('status', 'pending')
+            ->get();
 
         return Inertia::render('Repair/Index', [
             'repairs' => $repairs,
@@ -73,7 +77,8 @@ class RepairController extends Controller
             'upcomming_repairs' => $upcomming_repairs,
             'past_repairs' => $past_repairs,
             'rejected_repairs' => $rejected_repairs,
-            'in_progress_repairs' => $in_progress_repairs
+            'in_progress_repairs' => $in_progress_repairs,
+            'pending_repairs' => $pending_repairs
         ]);
     }
 
@@ -141,7 +146,7 @@ class RepairController extends Controller
 
     public function show_creator(string $id)
     {
-        $repair = Repair::with('collection.watch.creator')->findOrFail($id);
+        $repair = Repair::with(['collection.user', 'collection.watch.creator'])->findOrFail($id);
         $this->authorize('viewCreator', $repair);
 
         return Inertia::render('Repair/SingleCreator', [

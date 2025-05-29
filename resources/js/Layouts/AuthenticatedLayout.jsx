@@ -64,6 +64,16 @@ export default function AuthenticatedLayout({ header, children }) {
                                         className="w-6 h-6"
                                     />
                                 </NavLink>
+                                <NavLink
+                                    href={route('calendar.index')}
+                                    active={route().current('calendar.index')}
+                                >
+                                    <img
+                                        src={`/img/svg/nav/calendar/${route().current('calendar.index') ? 'full' : 'empty'}.svg`}
+                                        alt="Calendrier"
+                                        className="w-6 h-6"
+                                    />
+                                </NavLink>
 
 
                             </div>

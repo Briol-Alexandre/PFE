@@ -113,7 +113,11 @@ export default function SingleCreator({ repair }) {
                             <div className="grid grid-cols-2 gap-4 mt-6">
                                 <div className='flex flex-col gap-4'>
                                     <span>
-                                        <p>Révision(s) demandée(s)</p>
+                                        <p className="font-semibold">Client</p>
+                                        <p className="text-brand/80">{repair.collection.user.first_name} {repair.collection.user.name} ({repair.collection.user.email})</p>
+                                    </span>
+                                    <span>
+                                        <p className="font-semibold">Révision(s) demandée(s)</p>
                                         {repair.revisions ? (
                                             <div className="text-brand/80">
                                                 {repair.revisions.map(revision => (
@@ -125,11 +129,11 @@ export default function SingleCreator({ repair }) {
                                         )}
                                     </span>
                                     <span>
-                                        <p>Description</p>
+                                        <p className="font-semibold">Description</p>
                                         <p className="text-brand/80">{repair.description}</p>
                                     </span>
                                     <span>
-                                        <p>Date de fin de garantie de la montre</p>
+                                        <p className="font-semibold">Date de fin de garantie de la montre</p>
                                         <div className='flex items-center gap-2'>
                                             <p className="text-brand/80">
                                                 {repair.collection.warranty_end_date
@@ -151,13 +155,13 @@ export default function SingleCreator({ repair }) {
                                 </div>
                                 <div className='flex flex-col gap-4'>
                                     <span>
-                                        <p>Date de la réparation</p>
+                                        <p className="font-semibold">Date de la réparation</p>
                                         <p className="text-brand/80">
                                             {formatRepairDate(repair.date)}
                                         </p>
                                     </span>
                                     <span>
-                                        <p>Prix total</p>
+                                        <p className="font-semibold">Prix total</p>
                                         <p className="text-brand/80">
                                             {repair.price
                                                 ? `${repair.price}€`
@@ -199,14 +203,14 @@ export default function SingleCreator({ repair }) {
                         <div className="flex justify-end gap-4 mt-6">
                             <button
                                 type="button"
-                                className="px-4 py-2 bg-transparent border border-white/20 rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-white/10 transition-colors duration-200"
+                                className="px-4 py-2 bg-transparent border border-white/20 rounded-md font-semisemibold text-xs text-white uppercase tracking-widest hover:bg-white/10 transition-colors duration-200"
                                 onClick={() => setIsDeleteModalOpen(false)}
                             >
                                 Annuler
                             </button>
                             <button
                                 type="submit"
-                                className="px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 transition-colors duration-200"
+                                className="px-4 py-2 bg-red-600 border border-transparent rounded-md font-semisemibold text-xs text-white uppercase tracking-widest hover:bg-red-500 transition-colors duration-200"
                             >
                                 Confirmer le refus
                             </button>
