@@ -61,6 +61,14 @@ export default function Index({ repairs, asked_repairs, upcomming_repairs, past_
                     Créer une réparation
                 </Link>
             )}
+            {usePage().props.auth.user.role === 'creator' && (
+                <Link
+                    href={route('revision.index')}
+                    className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
+                >
+                    Gérer les révisions
+                </Link>
+            )}
         </AuthenticatedLayout>
     );
 }

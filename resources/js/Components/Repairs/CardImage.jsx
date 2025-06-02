@@ -6,7 +6,7 @@ export default function RepairCardImage({ repairs, userRole }) {
     return (
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-10">
             {repairs.map((repair) => (
-                <li key={repair.id} className="bg-black/20 backdrop-blur-3xl lg:max-w-[400px] aspect-square p-10 rounded-3xl hover:bg-white/20 transition-colors duration-300">
+                <li key={repair.id} className="bg-black/20 backdrop-blur-3xl max-w-[400px] aspect-square p-10 rounded-3xl hover:bg-white/20 transition-colors duration-300">
                     <Link href={route(repairRoute, { repair: repair.id })} className="flex flex-col gap-4">
                         <p className="text-sm text-brand rounded-full w-fit px-2 py-1 absolute top-4 right-4" style={{ background: getRepairStatusColor(repair.status) }}>{getRepairStatusInFrench(repair.status)}</p>
                         <img src={repair.collection.watch.image} alt={repair.collection.watch.model} className="w-full aspect-square" />

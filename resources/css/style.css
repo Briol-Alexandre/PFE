@@ -50,7 +50,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #000000, #3e0000);
+    background: linear-gradient(135deg, #000000, #330000);
     background-size: 400% 400%;
     animation: backgroundShift 15s ease infinite;
     z-index: -20;
@@ -82,7 +82,7 @@ object {
 }
 
 .hover-underline {
-    @apply w-fit xl:text-2xl md:text-xl sm:text-lg text-base font-light border-brand bg-transparent transition-all ease-in-out duration-300 relative flex items-center justify-center px-4 py-2 overflow-hidden text-brand border-2 rounded-md z-10;
+    @apply w-fit xl:text-2xl md:text-xl text-sm font-light border-brand bg-transparent transition-all ease-in-out duration-300 relative flex items-center justify-center px-4 py-2 overflow-hidden text-brand border-2 rounded-md z-10;
 
     &::after {
         @apply content-[''] bg-brand absolute inset-0 scale-x-100 w-[102%] h-full transition-all ease-in-out duration-300 -translate-x-full -z-1;
@@ -99,4 +99,12 @@ object {
 
 .animate-fade-in {
     opacity: 1 !important;
+}
+
+.sub-title {
+    @apply rl:text-2xl text-xl font-semibold text-brand;
+}
+
+.title {
+    @apply lg:text-5xl rl:text-4xl text-3xl text-center rl:my-10  font-semibold font-erstoria;
 }

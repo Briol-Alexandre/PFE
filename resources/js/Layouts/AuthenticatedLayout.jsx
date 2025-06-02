@@ -14,72 +14,99 @@ export default function AuthenticatedLayout({ header, children }) {
     return (
         <div className="min-h-screen text-white font-just-sans">
             <nav className="py-10">
-                <div className="mx-20 max-w-7xl">
-                    <div className="flex h-16 justify-between">
-                        <div className="flex w-full">
+                <div className="rl:mx-20 mx-5 max-w-7xl">
+                    <div className="flex h-16 items-center justify-between">
+                        <div className="flex w-full items-center">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
                                     <ApplicationLogo className="min-w-[200px] block h-9 w-auto fill-current text-gray-800" />
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex justify-end items-center w-full">
-                                <NavLink
-                                    href={route('dashboard')}
-                                    active={route().current('dashboard')}
-                                >
+                            <div className="hidden space-x-8 md:-my-px md:ms-10 md:flex justify-end items-center w-full">
+                                <div className="group relative">
+                                    <NavLink
+                                        href={route('dashboard')}
+                                        active={route().current('dashboard')}
+                                    >
+                                        <img src={`/img/svg/nav/dashboard/${route().current('dashboard') ? 'full' : 'empty'}.svg`} alt="Dashboard" className='w-6 h-6' />
+                                    </NavLink>
+                                    <div className="absolute left-1/2 -translate-x-1/2 -bottom-8 hidden group-hover:block bg-black/80 backdrop-blur-lg text-white text-sm py-1 px-2 rounded whitespace-nowrap">
+                                        Tableau de bord
+                                    </div>
+                                </div>
 
-                                    <img src={`/img/svg/nav/dashboard/${route().current('dashboard') ? 'full' : 'empty'}.svg`} alt="Dashboard" className='w-6 h-6' />
-                                </NavLink>
                                 {user.role === 'creator' ? (
-                                    <NavLink
-                                        href={route('watch.index')}
-                                        active={route().current('watch.index')}
-                                    >
-                                        <img
-                                            src={`/img/svg/nav/watch/${route().current('watch.index') ? 'full' : 'empty'}.svg`}
-                                            alt="Vos montres"
-                                            className="w-6 h-6"
-                                        />
-                                    </NavLink>
+                                    <div className="group relative">
+                                        <NavLink
+                                            href={route('watch.index')}
+                                            active={route().current('watch.index')}
+                                        >
+                                            <img
+                                                src={`/img/svg/nav/watch/${route().current('watch.index') ? 'full' : 'empty'}.svg`}
+                                                alt="Vos montres"
+                                                className="w-6 h-6"
+                                            />
+                                        </NavLink>
+                                        <div className="absolute left-1/2 -translate-x-1/2 -bottom-8 hidden group-hover:block bg-black/80 backdrop-blur-lg text-white text-sm py-1 px-2 rounded whitespace-nowrap">
+                                            Vos montres
+                                        </div>
+                                    </div>
                                 ) : (
+                                    <div className="group relative">
+                                        <NavLink
+                                            href={route('collection.index')}
+                                            active={route().current('collection.index')}
+                                        >
+                                            <img
+                                                src={`/img/svg/nav/watch/${route().current('collection.index') ? 'full' : 'empty'}.svg`}
+                                                alt="Votre collection"
+                                                className="w-6 h-6"
+                                            />
+                                        </NavLink>
+                                        <div className="absolute left-1/2 -translate-x-1/2 -bottom-8 hidden group-hover:block bg-black/80 backdrop-blur-lg text-white text-sm py-1 px-2 rounded whitespace-nowrap">
+                                            Votre collection
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div className="group relative">
                                     <NavLink
-                                        href={route('collection.index')}
-                                        active={route().current('collection.index')}
+                                        href={route('repair.index')}
+                                        active={route().current('repair.index')}
                                     >
                                         <img
-                                            src={`/img/svg/nav/watch/${route().current('collection.index') ? 'full' : 'empty'}.svg`}
-                                            alt="Votre collection"
+                                            src={`/img/svg/nav/repair/${route().current('repair.index') ? 'full' : 'empty'}.svg`}
+                                            alt="Vos réparations"
                                             className="w-6 h-6"
                                         />
                                     </NavLink>
-                                )}
-                                <NavLink
-                                    href={route('repair.index')}
-                                    active={route().current('repair.index')}
-                                >
-                                    <img
-                                        src={`/img/svg/nav/repair/${route().current('repair.index') ? 'full' : 'empty'}.svg`}
-                                        alt="Vos réparations"
-                                        className="w-6 h-6"
-                                    />
-                                </NavLink>
-                                <NavLink
-                                    href={route('calendar.index')}
-                                    active={route().current('calendar.index')}
-                                >
-                                    <img
-                                        src={`/img/svg/nav/calendar/${route().current('calendar.index') ? 'full' : 'empty'}.svg`}
-                                        alt="Calendrier"
-                                        className="w-6 h-6"
-                                    />
-                                </NavLink>
+                                    <div className="absolute left-1/2 -translate-x-1/2 -bottom-8 hidden group-hover:block bg-black/80 backdrop-blur-lg text-white text-sm py-1 px-2 rounded whitespace-nowrap">
+                                        Vos réparations
+                                    </div>
+                                </div>
+
+                                <div className="group relative">
+                                    <NavLink
+                                        href={route('calendar.index')}
+                                        active={route().current('calendar.index')}
+                                    >
+                                        <img
+                                            src={`/img/svg/nav/calendar/${route().current('calendar.index') ? 'full' : 'empty'}.svg`}
+                                            alt="Calendrier"
+                                            className="w-6 h-6"
+                                        />
+                                    </NavLink>
+                                    <div className="absolute left-1/2 -translate-x-1/2 -bottom-8 hidden group-hover:block bg-black/80 backdrop-blur-lg text-white text-sm py-1 px-2 rounded whitespace-nowrap">
+                                        Calendrier
+                                    </div>
+                                </div>
 
 
                             </div>
                         </div>
 
-                        <div className="hidden sm:ms-6 sm:flex sm:items-center mt-3">
+                        <div className="hidden md:ms-6 md:flex md:items-center mt-1">
                             <div className="relative ms-3">
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -93,24 +120,33 @@ export default function AuthenticatedLayout({ header, children }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link
-                                            href={route('profile.edit')}
-                                        >
-                                            Profile
-                                        </Dropdown.Link>
+                                        {user.role === 'creator' && (
+                                            <Dropdown.Link
+                                                href={route('profile.creator')}
+                                            >
+                                                Profil
+                                            </Dropdown.Link>
+                                        )}
+                                        {user.role === 'user' && (
+                                            <Dropdown.Link
+                                                href={route('profile.edit')}
+                                            >
+                                                Profil
+                                            </Dropdown.Link>
+                                        )}
                                         <Dropdown.Link
                                             href={route('logout')}
                                             method="post"
                                             as="button"
                                         >
-                                            Log Out
+                                            Se deconnecter
                                         </Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>
                         </div>
 
-                        <div className="-me-2 flex items-center sm:hidden">
+                        <div className="-me-2 flex items-center md:hidden">
                             <button
                                 onClick={() =>
                                     setShowingNavigationDropdown(
@@ -156,7 +192,7 @@ export default function AuthenticatedLayout({ header, children }) {
                 <div
                     className={
                         (showingNavigationDropdown ? 'block' : 'hidden') +
-                        ' sm:hidden'
+                        ' md:hidden'
                     }
                 >
                     <div className="space-y-1 pb-3 pt-2">
@@ -166,43 +202,59 @@ export default function AuthenticatedLayout({ header, children }) {
                         >
                             Dashboard
                         </ResponsiveNavLink>
-                    </div>
-
-                    <div className="border-t border-gray-200 pb-1 pt-4">
-                        <div className="px-4">
-                            <div className="text-base font-medium text-gray-800">
-                                {user.name}
-                            </div>
-                            <div className="text-sm font-medium text-gray-500">
-                                {user.email}
-                            </div>
-                        </div>
-
+                        {user.role === 'creator' ? (
+                            <ResponsiveNavLink
+                                href={route('watch.index')}
+                                active={route().current('watch.index')}
+                            >
+                                Vos montres
+                            </ResponsiveNavLink>
+                        ) : (
+                            <ResponsiveNavLink
+                                href={route('collection.index')}
+                                active={route().current('collection.index')}
+                            >
+                                Votre collection
+                            </ResponsiveNavLink>
+                        )}
+                        <ResponsiveNavLink
+                            href={route('repair.index')}
+                            active={route().current('repair.index')}
+                        >
+                            Vos réparations
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('calendar.index')}
+                            active={route().current('calendar.index')}
+                        >
+                            Calendrier
+                        </ResponsiveNavLink>
                         <div className="mt-3 space-y-1">
                             <ResponsiveNavLink href={route('profile.edit')}>
-                                Profile
+                                Profil
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 method="post"
                                 href={route('logout')}
                                 as="button"
                             >
-                                Log Out
+                                Se deconnecter
                             </ResponsiveNavLink>
                         </div>
                     </div>
                 </div>
-            </nav>
+            </nav >
 
             {header && (
                 <header className="">
-                    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                    <div className="mx-auto max-w-7xl px-4 py-6 md:px-6 lg:px-8">
                         {header}
                     </div>
                 </header>
-            )}
+            )
+            }
 
             <main>{children}</main>
-        </div>
+        </div >
     );
 }

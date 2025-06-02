@@ -5,10 +5,10 @@ export default function DashboardLayoutCollection({ collections }) {
     return (
         <section aria-labelledby="collection-title" className="overflow-hidden shadow-sm sm:rounded-lg p-6">
             <div className="flex justify-between items-center mb-8">
-                <h3 className="text-2xl font-semibold text-brand" id="collection-title">Votre collection</h3>
+                <h3 className="sub-title" id="collection-title">Votre collection</h3>
                 <Link
                     href={route('collection.create')}
-                    className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
+                    className="hover-underline"
                 >
                     Ajouter une montre
                 </Link>

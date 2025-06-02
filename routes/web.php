@@ -21,6 +21,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/creator', [ProfileController::class, 'editCreator'])->name('profile.creator');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
@@ -28,5 +29,6 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/watch.php';
 require __DIR__ . '/collection.php';
 require __DIR__ . '/repair.php';
+require __DIR__ . '/revision.php';
 require __DIR__ . '/calendar.php';
 require __DIR__ . '/auth.php';

@@ -18,9 +18,7 @@ class RepairUpdateRequest extends FormRequest
             'revisions' => 'required|array',
             'revisions.*.id' => 'required|exists:App\Models\Revisions,id',
             'revisions.*.name' => 'required|string',
-            'date' => 'nullable',
-            'price' => 'nullable',
-            'refuse_reason' => 'required|string'
+            'description' => 'required|string'
         ];
     }
 }

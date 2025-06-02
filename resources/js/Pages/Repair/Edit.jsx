@@ -4,14 +4,10 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 
 export default function Edit({ repair, collections, revisions }) {
-    const { data, setData, patch, processing, errors } = useForm({
+    const { data, setData, patch, processing, errors, reset } = useForm({
         collection_id: repair.collection_id,
         revisions: repair.revisions || [],
         description: repair.description,
-        refuse_reason: null,
-        modify_reason: null,
-        date: null,
-        price: null,
     });
 
     const handleRevisionChange = (id) => {
@@ -24,11 +20,14 @@ export default function Edit({ repair, collections, revisions }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Soumission du formulaire...');
-        console.log('Data:', data);
         patch(route('repair.update', repair.id), data, {
-            onSuccess: () => console.log('Succès !'),
-            onError: (errors) => console.log('Erreurs:', errors)
+            preserveScroll: true,
+            onSuccess: () => {
+                // Le contrôleur redirige déjà vers la page de détails
+            },
+            onError: () => {
+                // Les erreurs sont automatiquement affichées par InputError
+            }
         });
     };
 

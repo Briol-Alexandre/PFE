@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('revisions', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['bracelet', 'glass', 'redirection', 'regular_maintenance', 'battery', 'cleaning']);
+            $table->string('type');
             $table->string('name');
             $table->timestamps();
         });

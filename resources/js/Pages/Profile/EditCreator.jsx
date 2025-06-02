@@ -4,7 +4,7 @@ import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 
-export default function Edit({ auth, mustVerifyEmail, status }) {
+export default function EditCreator({ auth, mustVerifyEmail, status }) {
     const user = auth.user;
 
     return (
@@ -12,11 +12,11 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
             user={user}
             header={
                 <h2 className="font-semibold font-erstoria text-3xl text-brand leading-tight">
-                    Mon profil
+                    Mon profil créateur
                 </h2>
             }
         >
-            <Head title="Mon profil" />
+            <Head title="Mon profil créateur" />
 
             <div className="pb-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">

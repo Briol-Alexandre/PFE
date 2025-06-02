@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         Revisions::factory()->createMany([
             [
                 'type' => 'bracelet',
-                'name' => 'Changement du bracelet',
+                'name' => 'Changement du bracelet (spécifier la couleur)',
             ],
             [
                 'type' => 'glass',
@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'type' => 'battery',
-                'name' => 'Changement de la batterie',
+                'name' => 'Changement de la batterie (uniquement pour les montres à mouvement quartz)',
             ],
             [
                 'type' => 'cleaning',

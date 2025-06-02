@@ -33,9 +33,9 @@ class CalendarController extends Controller
                 $client = $repair->collection->user;
 
                 $name = $repair->revisions[0]['name'] ?? 'Sans nom';
-                $description = "Réparation : {$name}\n";
+                $description = "Client : {$client->name} {$client->first_name}\n";
                 $description .= "Montre : {$watch->brand} {$watch->model}\n";
-                $description .= "Client : {$client->name}\n";
+                $description .= "Réparation(s) : {$name}\n";
                 $description .= "État : {$this->translateStatus($repair->status)}";
 
                 // Utiliser la date et l'heure exactes de la réparation
@@ -53,7 +53,7 @@ class CalendarController extends Controller
 
                 return [
                     'id' => $repair->id,
-                    'title' => $watch->creator->name . ' - ' . $name,
+                    'title' => $watch->model . ' - ' . $client->first_name . ' ' . $client->name,
                     'start' => $startDate,
                     'end' => $endDate,
                     'status' => $repair->status,

@@ -60,4 +60,21 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    /**
+     * Display the creator's profile form.
+     */
+    public function editCreator(Request $request): Response|RedirectResponse
+    {
+        $user = $request->user();
+        
+        if ($user->role !== 'creator') {
+            return Redirect::route('profile.edit');
+        }
+
+        return Inertia::render('Profile/EditCreator', [
+            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'status' => session('status'),
+        ]);
+    }
 }

@@ -10,7 +10,7 @@ export default function Dashboard({ auth, upcoming_repairs, past_repairs }) {
     return (
         <AuthenticatedLayout
             user={user}
-            header={<h2 className="font-semibold font-erstoria text-3xl text-brand leading-tight">Bienvenue {user.first_name} {user.name}</h2>}
+            header={<h2 className="title text-left">Bienvenue {user.first_name} {user.name}</h2>}
         >
             <Head title="Dashboard" />
             <div className="pb-12">

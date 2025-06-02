@@ -28,61 +28,53 @@ export default function UpdateProfileInformation({
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">
-                    Profile Information
+                <h2 className="text-2xl font-semibold mb-4 font-erstoria text-brand">
+                    Informations du profil
                 </h2>
 
-                <p className="mt-1 text-sm text-gray-600">
-                    Update your account's profile information and email address.
+                <p className="text-sm text-brand mb-6">
+                    Mettez à jour les informations de votre profil et votre adresse email.
                 </p>
             </header>
 
-            <form onSubmit={submit} className="mt-6 space-y-6">
+            <form onSubmit={submit} className="space-y-6">
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        className="mt-1 block w-full"
+                    <label className="block text-sm font-medium text-brand">Nom</label>
+                    <input
+                        type="text"
+                        name="name"
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
+                        className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                         required
-                        isFocused
-                        autoComplete="name"
                     />
-
-                    <InputError className="mt-2" message={errors.name} />
+                    {errors.name && <div className="text-red-500 text-sm mt-1">{errors.name}</div>}
                 </div>
-                <div>
-                    <InputLabel htmlFor="first_name" value="First Name" />
 
-                    <TextInput
-                        id="first_name"
-                        className="mt-1 block w-full"
+                <div>
+                    <label className="block text-sm font-medium text-brand">Prénom</label>
+                    <input
+                        type="text"
+                        name="first_name"
                         value={data.first_name}
                         onChange={(e) => setData('first_name', e.target.value)}
+                        className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                         required
-                        isFocused
-                        autoComplete="first_name"
                     />
-
-                    <InputError className="mt-2" message={errors.first_name} />
+                    {errors.first_name && <div className="text-red-500 text-sm mt-1">{errors.first_name}</div>}
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
+                    <label className="block text-sm font-medium text-brand">Email</label>
+                    <input
                         type="email"
-                        className="mt-1 block w-full"
+                        name="email"
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
+                        className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                         required
-                        autoComplete="username"
                     />
-
-                    <InputError className="mt-2" message={errors.email} />
+                    {errors.email && <div className="text-red-500 text-sm mt-1">{errors.email}</div>}
                 </div>
 
                 {mustVerifyEmail && user.email_verified_at === null && (
@@ -93,7 +85,7 @@ export default function UpdateProfileInformation({
                                 href={route('verification.send')}
                                 method="post"
                                 as="button"
-                                className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                className="rounded-md text-sm text-brand underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             >
                                 Click here to re-send the verification email.
                             </Link>
@@ -108,8 +100,14 @@ export default function UpdateProfileInformation({
                     </div>
                 )}
 
-                <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                <div className="flex items-center justify-end mt-6">
+                    <button
+                        type="submit"
+                        disabled={processing}
+                        className="hover-underline ml-auto"
+                    >
+                        {processing ? 'Enregistrement...' : 'Enregistrer'}
+                    </button>
 
                     <Transition
                         show={recentlySuccessful}
@@ -118,8 +116,8 @@ export default function UpdateProfileInformation({
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600">
-                            Saved.
+                        <p className="text-sm text-gray-600 ml-3">
+                            Enregistré
                         </p>
                     </Transition>
                 </div>

@@ -47,82 +47,63 @@ export default function UpdatePasswordForm({ className = '' }) {
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">
-                    Update Password
+                <h2 className="text-2xl font-semibold mb-4 font-erstoria text-brand">
+                    Modifier le mot de passe
                 </h2>
 
-                <p className="mt-1 text-sm text-gray-600">
-                    Ensure your account is using a long, random password to stay
-                    secure.
+                <p className="text-sm text-gray-600 mb-6">
+                    Assurez-vous d'utiliser un mot de passe long et aléatoire pour plus de sécurité.
                 </p>
             </header>
 
-            <form onSubmit={updatePassword} className="mt-6 space-y-6">
+            <form onSubmit={updatePassword} className="space-y-6">
                 <div>
-                    <InputLabel
-                        htmlFor="current_password"
-                        value="Current Password"
-                    />
-
-                    <TextInput
-                        id="current_password"
-                        ref={currentPasswordInput}
-                        value={data.current_password}
-                        onChange={(e) =>
-                            setData('current_password', e.target.value)
-                        }
+                    <label className="block text-sm font-medium text-gray-700">Mot de passe actuel</label>
+                    <input
                         type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
+                        name="current_password"
+                        value={data.current_password}
+                        onChange={(e) => setData('current_password', e.target.value)}
+                        className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        required
                     />
-
-                    <InputError
-                        message={errors.current_password}
-                        className="mt-2"
-                    />
+                    {errors.current_password && <div className="text-red-500 text-sm mt-1">{errors.current_password}</div>}
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="password" value="New Password" />
-
-                    <TextInput
-                        id="password"
-                        ref={passwordInput}
+                    <label className="block text-sm font-medium text-gray-700">Nouveau mot de passe</label>
+                    <input
+                        type="password"
+                        name="password"
                         value={data.password}
                         onChange={(e) => setData('password', e.target.value)}
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
+                        className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        required
                     />
-
-                    <InputError message={errors.password} className="mt-2" />
+                    {errors.password && <div className="text-red-500 text-sm mt-1">{errors.password}</div>}
                 </div>
 
                 <div>
-                    <InputLabel
-                        htmlFor="password_confirmation"
-                        value="Confirm Password"
-                    />
-
-                    <TextInput
-                        id="password_confirmation"
-                        value={data.password_confirmation}
-                        onChange={(e) =>
-                            setData('password_confirmation', e.target.value)
-                        }
+                    <label className="block text-sm font-medium text-gray-700">Confirmer le mot de passe</label>
+                    <input
                         type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
+                        name="password_confirmation"
+                        value={data.password_confirmation}
+                        onChange={(e) => setData('password_confirmation', e.target.value)}
+                        className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        required
                     />
-
-                    <InputError
-                        message={errors.password_confirmation}
-                        className="mt-2"
-                    />
+                    {errors.password_confirmation && <div className="text-red-500 text-sm mt-1">{errors.password_confirmation}</div>}
                 </div>
 
-                <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                <div className="flex items-center justify-end mt-6">
+                    <button
+                        type="submit"
+                        disabled={processing}
+                        className="hover-underline ml-auto"
+                    >
+                        {processing ? 'Enregistrement...' : 'Enregistrer'}
+                    </button>
 
                     <Transition
                         show={recentlySuccessful}
@@ -131,9 +112,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600">
-                            Saved.
-                        </p>
+                        <p className="text-sm text-gray-600 ml-3">Enregistré</p>
                     </Transition>
                 </div>
             </form>

@@ -26,10 +26,10 @@ export default function Create({ watches }) {
         <AuthenticatedLayout>
             <Head title="Ajouter une montre" />
             <div>
-                <h1 className="text-5xl text-center my-10 font-semibold mb-4 font-erstoria">Ajouter une montre à ma collection</h1>
+                <h1 className="lg:text-5xl rl:text-4xl text-3xl text-center rl:my-10  font-semibold font-erstoria">Ajouter une montre à ma collection</h1>
                 <div className="max-w-2xl mx-auto px-6">
                     <div className="space-y-6">
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-6 py-10">
                             <div>
                                 <InputLabel htmlFor="watch_id" value="Sélectionner une montre" />
                                 <select
@@ -82,7 +82,7 @@ export default function Create({ watches }) {
                                     name="warranty_image"
                                     id="warranty_image"
                                     onChange={handleChange}
-                                    className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
                                     accept="image/*"
                                 />
                                 {errors.warranty_image && <InputError message={errors.warranty_image} />}
