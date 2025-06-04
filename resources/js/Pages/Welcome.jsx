@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import ULTextSection from '../Components/welcome-page/ul-text-section';
 import ScrollbarCustom from '../Components/tools/ScrollBar';
 import ScrollImage from '../Components/welcome-page/Scroll-image';
-import ApplicationLogo from '../Components/ApplicationLogo';
 import Breakpoints from '../Components/tools/Breakpoints';
 
 export default function Welcome({ auth }) {
@@ -19,12 +18,12 @@ export default function Welcome({ auth }) {
 
     return (
         <>
-            <Head title="WatchOut - Ne laissez pas le temps abîmer vos montres" />
+            <Head title="Col&MacArthur-Maintenance - Ne laissez pas le temps abîmer vos montres" />
             <Breakpoints />
             <ScrollbarCustom />
             <div className="min-h-screen flex flex-col items-center justify-center max-md:px-4">
                 <header className="flex flex-col items-center justify-center w-full">
-                    <ApplicationLogo className="xl:max-w-[900px] md:max-w-[600px] max-w-[400px] z-10" />
+                    <img src="/img/logo.svg" alt="Col&MacArthur-Maintenance" className="xl:max-w-[900px] md:max-w-[600px] max-w-[400px] z-10" />
                     <p className="text-center xl:text-6xl rl:text-5xl md:text-4.5xl text-2xl max-rl:leading-tight font-erstoria text-brand pt-16 md:w-1/2">
                         Ne laissez pas le temps abîmer vos montres
                     </p>

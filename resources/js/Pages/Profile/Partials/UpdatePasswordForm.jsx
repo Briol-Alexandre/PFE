@@ -51,14 +51,14 @@ export default function UpdatePasswordForm({ className = '' }) {
                     Modifier le mot de passe
                 </h2>
 
-                <p className="text-sm text-gray-600 mb-6">
+                <p className="text-sm text-brand mb-6">
                     Assurez-vous d'utiliser un mot de passe long et aléatoire pour plus de sécurité.
                 </p>
             </header>
 
             <form onSubmit={updatePassword} className="space-y-6">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Mot de passe actuel</label>
+                    <label className="block text-sm font-medium text-brand">Mot de passe actuel</label>
                     <input
                         type="password"
                         name="current_password"
@@ -71,7 +71,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Nouveau mot de passe</label>
+                    <label className="block text-sm font-medium text-brand">Nouveau mot de passe</label>
                     <input
                         type="password"
                         name="password"
@@ -84,7 +84,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Confirmer le mot de passe</label>
+                    <label className="block text-sm font-medium text-brand">Confirmer le mot de passe</label>
                     <input
                         type="password"
                         name="password_confirmation"
@@ -112,7 +112,7 @@ export default function UpdatePasswordForm({ className = '' }) {
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600 ml-3">Enregistré</p>
+                        <p className="text-sm text-brand ml-3">Enregistré</p>
                     </Transition>
                 </div>
             </form>

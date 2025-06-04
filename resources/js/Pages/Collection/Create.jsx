@@ -2,6 +2,7 @@ import { Head, useForm, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import InputLabel from '@/Components/InputLabel';
 import InputError from '@/Components/InputError';
+import Select from 'react-select';
 
 export default function Create({ watches }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -22,6 +23,10 @@ export default function Create({ watches }) {
         setData(name, type === 'file' ? files[0] : value);
     };
 
+    const handleWatchSelect = (selectedOption) => {
+        setData('watch_id', selectedOption ? selectedOption.value : '');
+    };
+
     return (
         <AuthenticatedLayout>
             <Head title="Ajouter une montre" />
@@ -32,20 +37,54 @@ export default function Create({ watches }) {
                         <form onSubmit={handleSubmit} className="space-y-6 py-10">
                             <div>
                                 <InputLabel htmlFor="watch_id" value="Sélectionner une montre" />
-                                <select
-                                    name="watch_id"
+                                <Select
                                     id="watch_id"
-                                    value={data.watch_id}
-                                    onChange={handleChange}
-                                    className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                >
-                                    <option value="">Choisir une montre...</option>
-                                    {watches.map((watch) => (
-                                        <option key={watch.id} value={watch.id}>
-                                            {watch.creator.name} - {watch.model}
-                                        </option>
-                                    ))}
-                                </select>
+                                    name="watch_id"
+                                    value={watches.find(watch => watch.id === data.watch_id) ? {
+                                        value: data.watch_id,
+                                        label: `${watches.find(watch => watch.id === data.watch_id).creator.name} - ${watches.find(watch => watch.id === data.watch_id).model}`
+                                    } : null}
+                                    onChange={handleWatchSelect}
+                                    options={watches.map(watch => ({
+                                        value: watch.id,
+                                        label: `${watch.creator.name} - ${watch.model}`
+                                    }))}
+                                    placeholder="Rechercher une montre..."
+                                    isClearable
+                                    className="mt-1"
+                                    noOptionsMessage={() => "Aucune montre trouvée"}
+                                    styles={{
+                                        control: (base) => ({
+                                            ...base,
+                                            backgroundColor: '#374151',
+                                            borderColor: '#4B5563',
+                                            '&:hover': {
+                                                borderColor: '#6366F1'
+                                            }
+                                        }),
+                                        menu: (base) => ({
+                                            ...base,
+                                            backgroundColor: '#374151'
+                                        }),
+                                        option: (base, state) => ({
+                                            ...base,
+                                            backgroundColor: state.isFocused ? '#4B5563' : '#374151',
+                                            color: 'white',
+                                            '&:hover': {
+                                                backgroundColor: '#4B5563'
+                                            }
+                                        }),
+                                        singleValue: (base) => ({
+                                            ...base,
+                                            color: 'white'
+                                        }),
+                                        input: (base) => ({
+                                            ...base,
+                                            color: 'white'
+                                        }),
+
+                                    }}
+                                />
                                 {errors.watch_id && <InputError message={errors.watch_id} />}
                             </div>
 

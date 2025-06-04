@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Link } from "@inertiajs/react";
 
 export default function Index({ repairs, asked_repairs, upcomming_repairs, past_repairs, rejected_repairs, in_progress_repairs, pending_repairs }) {
+    const [searchTerm, setSearchTerm] = useState('');
     const [categories] = useState([
         { name: 'Toutes', repairs: repairs },
         { name: 'Demandées', repairs: asked_repairs },
@@ -21,7 +22,7 @@ export default function Index({ repairs, asked_repairs, upcomming_repairs, past_
         <AuthenticatedLayout>
             <Head title="Réparations" />
             <div>
-                <h1 className="text-5xl text-center my-10 font-semibold mb-4 font-erstoria">Réparations</h1>
+                <h1 className="title">Réparations</h1>
 
                 <Tab.Group>
                     <div className="w-full max-w-4xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -47,7 +48,13 @@ export default function Index({ repairs, asked_repairs, upcomming_repairs, past_
                             <Tab.Panel
                                 key={idx}
                             >
-                                <RepairCard repairs={category.repairs} userRole={usePage().props.auth.user.role} />
+                                <RepairCard
+                                    repairs={category.repairs}
+                                    userRole={usePage().props.auth.user.role}
+                                    searchTerm={searchTerm}
+                                    setSearchTerm={setSearchTerm}
+                                    showSearch={true}
+                                />
                             </Tab.Panel>
                         ))}
                     </Tab.Panels>
@@ -56,18 +63,20 @@ export default function Index({ repairs, asked_repairs, upcomming_repairs, past_
             {usePage().props.auth.user.role !== 'creator' && (
                 <Link
                     href={route('repair.create')}
-                    className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
+                    className="hover-underline"
                 >
                     Créer une réparation
                 </Link>
             )}
             {usePage().props.auth.user.role === 'creator' && (
-                <Link
-                    href={route('revision.index')}
-                    className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
-                >
-                    Gérer les révisions
-                </Link>
+                <div className="flex justify-center my-10">
+                    <Link
+                        href={route('revision.index')}
+                        className="hover-underline"
+                    >
+                        Gérer les révisions
+                    </Link>
+                </div>
             )}
         </AuthenticatedLayout>
     );

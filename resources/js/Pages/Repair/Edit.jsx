@@ -58,18 +58,6 @@ export default function Edit({ repair, collections, revisions }) {
                                 {errors.collection_id && <InputError message={errors.collection_id} />}
                             </div>
                             <div>
-                                <InputLabel value="Description" />
-                                <textarea
-                                    id="description"
-                                    name="description"
-                                    value={data.description}
-                                    onChange={e => setData('description', e.target.value)}
-                                    className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                />
-                                {errors.description && <InputError message={errors.description} />}
-                            </div>
-
-                            <div>
                                 <InputLabel value="Types de réparation" />
                                 <div className="mt-4 space-y-4">
                                     {revisions.map(revision => (
@@ -82,7 +70,7 @@ export default function Edit({ repair, collections, revisions }) {
                                                 checked={data.revisions.some(r => r.id === revision.id)}
 
                                                 onChange={() => handleRevisionChange(revision.id)}
-                                                className="h-4 w-4 rounded border-gray-300 text-brand focus:ring-brand"
+                                                className="h-4 w-4 rounded border-gray-500 text-gray-500 focus:ring-brand-red focus:ring-2"
                                             />
                                             <label htmlFor={`revision-${revision.id}`} className="ml-3 block text-sm text-white">
                                                 {revision.name}
@@ -91,6 +79,17 @@ export default function Edit({ repair, collections, revisions }) {
                                     ))}
                                 </div>
                                 {errors.revisions && <InputError message={errors.revisions} />}
+                            </div>
+                            <div>
+                                <InputLabel value="Description" />
+                                <textarea
+                                    id="description"
+                                    name="description"
+                                    value={data.description}
+                                    onChange={e => setData('description', e.target.value)}
+                                    className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                />
+                                {errors.description && <InputError message={errors.description} />}
                             </div>
 
                             <div className="flex items-center justify-end mt-4">

@@ -1,4 +1,4 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
+
 import { Link } from '@inertiajs/react';
 
 export default function GuestLayout({ children }) {
@@ -6,7 +6,7 @@ export default function GuestLayout({ children }) {
         <div className="flex flex-col gap-10 min-h-screen items-center bg-[url('/img/background.jpg')] bg-cover pt-6 justify-center sm:pt-0">
             <div>
                 <Link href="/" className="flex items-center justify-center">
-                    <ApplicationLogo className="xl:max-w-[900px] md:max-w-[600px] max-w-[300px] h-24 fill-current text-gray-500" />
+                    <img src="/img/logo.svg" alt="Logo" className="xl:max-w-[900px] md:max-w-[600px] max-w-[300px] h-24" />
                 </Link>
             </div>
 

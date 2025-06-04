@@ -21,33 +21,24 @@ class DashboardController extends Controller
             // Récupérer les IDs des montres du créateur
             $watchIds = $watches->pluck('id');
 
-            // Réparations à venir pour les montres du créateur
-            $upcoming_repairs = Repair::whereHas('collection.watch', function ($query) use ($watchIds) {
+            $asked_repairs = Repair::whereHas('collection.watch', function ($query) use ($watchIds) {
                 $query->whereIn('id', $watchIds);
             })
-            ->where(function ($query) {
-                $query->whereNull('date')
-                    ->orWhere('date', '>', now());
-            })
-            ->with('collection.watch')
-            ->get();
-
-            // Réparations passées pour les montres du créateur
-            $past_repairs = Repair::whereHas('collection.watch', function ($query) use ($watchIds) {
-                $query->whereIn('id', $watchIds);
-            })
-            ->whereNotNull('date')
-            ->where('date', '<=', now())
-            ->with('collection.watch')
-            ->get();
+                ->where('status', 'asked')
+                ->with([
+                    'collection.user',
+                    'collection.watch'
+                ])
+                ->orderBy('created_at', 'desc')
+                ->take(3)
+                ->get();
 
             return Inertia::render('Dashboard-creator', [
                 'auth' => [
                     'user' => $user
                 ],
                 'watches' => $watches,
-                'upcoming_repairs' => $upcoming_repairs,
-                'past_repairs' => $past_repairs
+                'asked_repairs' => $asked_repairs
             ]);
         }
 

@@ -1,4 +1,3 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
@@ -14,12 +13,12 @@ export default function AuthenticatedLayout({ header, children }) {
     return (
         <div className="min-h-screen text-white font-just-sans">
             <nav className="py-10">
-                <div className="rl:mx-20 mx-5 max-w-7xl">
+                <div className="rl:mx-20 mx-5">
                     <div className="flex h-16 items-center justify-between">
                         <div className="flex w-full items-center">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="min-w-[200px] block h-9 w-auto fill-current text-gray-800" />
+                                    <img src="/img/logo.svg" alt="Logo" className="min-w-[200px] block h-12 w-auto" />
                                 </Link>
                             </div>
 
@@ -195,12 +194,12 @@ export default function AuthenticatedLayout({ header, children }) {
                         ' md:hidden'
                     }
                 >
-                    <div className="space-y-1 pb-3 pt-2">
+                    <div className="space-y-1 pb-3 pt-2 border-t border-brand-green">
                         <ResponsiveNavLink
                             href={route('dashboard')}
                             active={route().current('dashboard')}
                         >
-                            Dashboard
+                            Tableau de bord
                         </ResponsiveNavLink>
                         {user.role === 'creator' ? (
                             <ResponsiveNavLink

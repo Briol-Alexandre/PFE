@@ -22,7 +22,7 @@ export default function Single({ repair }) {
             <div className="py-12">
                 <section className="max-w-7xl mx-auto sm:px-6 lg:px-8" aria-labelledby='repair-info'>
                     <div className="bg-black/20 backdrop-blur-3xl overflow-hidden shadow-sm sm:rounded-lg p-6">
-                        <div className="flex justify-between items-start mb-8 border-b border-white/50 pb-4">
+                        <div className="flex justify-between items-start mb-8 border-b border-brand-green pb-4">
                             <div className="flex gap-4 items-center">
                                 <div>
                                     <p className="text-xl text-gray-400">{repair.collection.watch.creator.name}</p>
@@ -72,7 +72,7 @@ export default function Single({ repair }) {
                             </div>
                         </div>
 
-                        <div className="text-white font-just-sans border-b border-white/50 pb-8">
+                        <div className="text-white font-just-sans border-b border-brand-green pb-8">
                             <p className="text-2xl">Informations sur la réparation</p>
                             <div className="grid grid-cols-2 gap-4 mt-6 ">
                                 <div className='flex flex-col gap-4 '>
@@ -111,6 +111,9 @@ export default function Single({ repair }) {
                                     </span>
                                 </div>
                             </div>
+                            {repair.status === 'accepted' && (
+                                <p className='mt-6 font-bold text-brand text-lg'>Vous devez ammener votre montre à la réparation {formatRepairDate(repair.date)}.</p>
+                            )}
 
                         </div>
                         {repair.status === 'rejected' && repair.refuse_reason && (

@@ -12,7 +12,7 @@ export default function Index({ revisions }) {
         <AuthenticatedLayout>
             <Head title="Gérer les révisions" />
             <div>
-                <div className="flex justify-between items-center mb-8">
+                <div className="flex justify-between items-center mb-8 lg:px-20 px-10">
                     <h1 className="lg:text-5xl rl:text-4xl text-3xl text-center rl:my-10 font-semibold font-erstoria">Gérer les révisions</h1>
                     <Link
                         href={route('revision.create')}
@@ -22,8 +22,8 @@ export default function Index({ revisions }) {
                     </Link>
                 </div>
 
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 px-10">
+                    <div className="overflow-hidden shadow-sm lg:rounded-lg p-6">
                         {revisions.length === 0 ? (
                             <p className="text-gray-400">Aucune révision n'a été créée.</p>
                         ) : (
@@ -34,7 +34,7 @@ export default function Index({ revisions }) {
                                         className="flex items-center justify-between p-4 bg-gray-800 rounded-lg"
                                     >
                                         <div>
-                                            <h3 className="text-lg font-semibold text-white">{revision.name}</h3>
+                                            <h3 className="rl:text-lg text-base font-semibold text-white">{revision.name}</h3>
                                         </div>
                                         <div className="flex items-center space-x-4">
                                             <Link

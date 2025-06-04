@@ -1,9 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
-import WatchCard from '@/Components/Watch/Card';
+import DashboardLayoutWatch from '@/Components/Watch/Dashboard-Layout';
 import RepairCardImage from '@/Components/Repairs/CardImage';
 
-export default function Dashboard({ auth, watches, upcoming_repairs, past_repairs }) {
+export default function Dashboard({ auth, watches, asked_repairs }) {
     const user = auth.user;
     return (
         <AuthenticatedLayout
@@ -14,56 +14,34 @@ export default function Dashboard({ auth, watches, upcoming_repairs, past_repair
 
             <div className="pb-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <section aria-labelledby="watch-title" className="overflow-hidden shadow-sm sm:rounded-lg p-6">
-                        <div className="flex justify-between items-center mb-8">
-                            <h3 className="sub-title" id="watch-title">Vos montres</h3>
-                            <Link
-                                href={route('watch.create')}
-                                className="hover-underline"
-                            >
-                                Créer une montre
-                            </Link>
-                        </div>
-
-                        {watches.length === 0 ? (
-                            <p className="text-gray-400">Vous n'avez pas encore créé de montres.</p>
-                        ) : (
-                            <div className="">
-                                <WatchCard watches={watches} />
-                            </div>
-                        )}
-                        <div className="mt-8 flex justify-center">
-                            <Link href={route('watch.index')} className="hover-underline">
-                                Voir toutes vos montres
-                            </Link>
-                        </div>
-                    </section>
-                    <section aria-labelledby="repair-title" className="overflow-hidden shadow-sm sm:rounded-lg p-6">
-                        <div className="flex justify-between items-center mb-8">
-                            <h3 className="sub-title" id="repair-title">Vos révisions</h3>
+                    <DashboardLayoutWatch watches={watches} userRole={user.role} isDashboard={true} />
+                    <section aria-labelledby="repair-title" className="overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="p-6 pb-4 flex justify-between items-center">
+                            <h3 className="sub-title" id="repair-title">Dernières demandes</h3>
                             <Link href={route('revision.create')} className="hover-underline">
                                 Nouvelle révision
                             </Link>
                         </div>
-                        <p>Entretiens demandés</p>
-                        {upcoming_repairs.length > 0 ? (
-                            <>
-                                <RepairCardImage repairs={upcoming_repairs} userRole={user.role} />
-                            </>
-                        ) : (
-                            <p className="text-gray-400">Vous n'avez pas encore de réparations.</p>
-                        )}
-                        <p>Entretiens passés</p>
-                        {past_repairs.length > 0 ? (
-                            <>
-                                <RepairCardImage repairs={past_repairs} userRole={user.role} />
-                            </>
-                        ) : (
-                            <p className="text-gray-400">Vous n'avez pas encore de réparations.</p>
-                        )}
-                        <Link href={route('repair.index')} className="hover-underline">
-                            Voir toutes vos réparations
-                        </Link>
+                        {(() => {
+                            const latestRepairs = asked_repairs
+                                .filter(repair => repair.status === 'asked')
+                                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                                .slice(0, 3);
+
+                            return latestRepairs.length > 0 ? (
+                                <RepairCardImage
+                                    repairs={latestRepairs}
+                                    userRole={user.role}
+                                />
+                            ) : (
+                                <p className="text-gray-400">Aucune nouvelle demande</p>
+                            );
+                        })()}
+                        <div className="p-6 pt-4 flex justify-center">
+                            <Link href={route('repair.index')} className="hover-underline">
+                                Voir toutes vos réparations
+                            </Link>
+                        </div>
                     </section>
                 </div>
             </div>

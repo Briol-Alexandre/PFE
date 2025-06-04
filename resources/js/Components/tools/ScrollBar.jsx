@@ -40,7 +40,7 @@ const ScrollbarCustom = () => {
                 return (
                     <div
                         key={index}
-                        className="bg-brand-red transition-all duration-300 origin-right rounded-full"
+                        className="bg-brand-green transition-all duration-300 origin-right rounded-full"
                         style={{
                             transform: `scaleX(${0.2 + scale})`,
                             height: "2px",
