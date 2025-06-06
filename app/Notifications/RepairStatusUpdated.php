@@ -29,9 +29,28 @@ class RepairStatusUpdated extends Notification
         $message = (new MailMessage)
             ->from(config('mail.from.address'), config('mail.from.name'))
             ->replyTo(config('mail.from.address'), config('mail.from.name'))
-            ->subject('Mise à jour de votre réparation - WatchOut')
             ->greeting('Bonjour')
-            ->salutation('Cordialement, L\'équipe WatchOut');
+            ->salutation('Cordialement, L\'équipe Col&MacArthur');
+
+        switch ($this->repair->status) {
+            case 'asked':
+                $message->subject('Nouvelle demande de réparation - Col&MacArthur-Maintenance');
+                break;
+            case 'accepted':
+                $message->subject('Le devis de réparation a été acceptée - Col&MacArthur-Maintenance');
+                break;
+            case 'refused':
+                $message->subject('Votre demande de réparation a été refusée - Col&MacArthur-Maintenance');
+                break;
+            case 'in_progress':
+                $message->subject('Votre réparation est en cours - Col&MacArthur-Maintenance');
+                break;
+            case 'completed':
+                $message->subject('Votre réparation est terminée - Col&MacArthur-Maintenance');
+                break;
+            default:
+                $message->subject('Mise à jour de votre réparation - Col&MacArthur-Maintenance');
+        }
 
         switch ($this->repair->status) {
             case 'asked':

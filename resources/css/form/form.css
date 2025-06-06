@@ -6,18 +6,18 @@
     input{
         @apply bg-transparent border-brand border-2 rounded-md text-brand;
         &:focus{
-            @apply border-brand-red ;
+            @apply border-brand-green ;
         }
     }
     select{
         @apply bg-transparent border-brand border-2 rounded-md text-brand;
         &:focus{
-            @apply border-brand-red ;
+            @apply border-brand-green ;
         }
     }
     input[type="checkbox"]{
         &:checked{
-            background-color: brand-red;
+            background-color: brand-green;
         }
     }
 }

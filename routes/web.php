@@ -30,5 +30,6 @@ require __DIR__ . '/watch.php';
 require __DIR__ . '/collection.php';
 require __DIR__ . '/repair.php';
 require __DIR__ . '/revision.php';
+require __DIR__ . '/users.php';
 require __DIR__ . '/calendar.php';
 require __DIR__ . '/auth.php';

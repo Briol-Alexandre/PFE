@@ -1,8 +1,9 @@
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import ScrollBar from '@/Components/tools/ScrollBar';
 import { Link, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
@@ -17,7 +18,7 @@ export default function AuthenticatedLayout({ header, children }) {
                     <div className="flex h-16 items-center justify-between">
                         <div className="flex w-full items-center">
                             <div className="flex shrink-0 items-center">
-                                <Link href="/">
+                                <Link href={route('dashboard')}>
                                     <img src="/img/logo.svg" alt="Logo" className="min-w-[200px] block h-12 w-auto" />
                                 </Link>
                             </div>
@@ -100,7 +101,23 @@ export default function AuthenticatedLayout({ header, children }) {
                                         Calendrier
                                     </div>
                                 </div>
-
+                                {user.role === 'creator' && (
+                                    <div className="group relative">
+                                        <NavLink
+                                            href={route('users.index')}
+                                            active={route().current('users.index')}
+                                        >
+                                            <img
+                                                src={`/img/svg/nav/users/${route().current('users.index') ? 'full' : 'empty'}.svg`}
+                                                alt="Utilisateurs"
+                                                className="w-6 h-6"
+                                            />
+                                        </NavLink>
+                                        <div className="absolute left-1/2 -translate-x-1/2 -bottom-8 hidden group-hover:block bg-black/80 backdrop-blur-lg text-white text-sm py-1 px-2 rounded whitespace-nowrap">
+                                            Utilisateurs
+                                        </div>
+                                    </div>
+                                )}
 
                             </div>
                         </div>
@@ -113,7 +130,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                             <button
                                                 type="button"
                                             >
-                                                <img src={`/img/svg/nav/profile/${route().current('profile.edit') ? 'full' : 'empty'}.svg`} alt="Profile" className='w-6 h-6' />
+                                                <img src={`/img/svg/nav/settings/${route().current('profile.edit') ? 'full' : 'empty'}.svg`} alt="Paramètres" className='w-6 h-6' />
                                             </button>
                                         </span>
                                     </Dropdown.Trigger>
@@ -254,6 +271,7 @@ export default function AuthenticatedLayout({ header, children }) {
             }
 
             <main>{children}</main>
+            <ScrollBar />
         </div >
     );
 }

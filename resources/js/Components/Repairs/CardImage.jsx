@@ -2,11 +2,12 @@ import { Link } from "@inertiajs/react";
 import { getRepairStatusInFrench, getRepairStatusColor } from "@/Utils/repairStatus";
 import { useState } from 'react';
 
-export default function RepairCardImage({ repairs, userRole, searchTerm = '', showSearch = false, setSearchTerm = () => { } }) {
+export default function RepairCardImage({ repairs, userRole, searchTerm = '', showSearch = false, setSearchTerm = () => { }, checkUser = true }) {
     const repairRoute = userRole === 'creator' ? 'repair.show_creator' : 'repair.show';
 
     const filteredRepairs = repairs.filter(repair => {
-        if (!repair?.collection?.user || !repair?.collection?.watch) return false;
+        if (checkUser && !repair?.collection?.user) return false;
+        if (!repair?.collection?.watch) return false;
 
         if (!showSearch || !searchTerm) return true;
 
@@ -29,16 +30,28 @@ export default function RepairCardImage({ repairs, userRole, searchTerm = '', sh
                 <Link href={route(repairRoute, { repair: repair.id })} className="block p-4">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div className="flex-1 min-w-0 space-y-2 md:space-y-0">
-                            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+                            <div className="flex flex-col md:flex-row md:items-center md:gap-4">
                                 <p className="text-lg font-medium truncate">
                                     {repair.collection.user.name} {repair.collection.user.first_name || ''}
                                 </p>
                                 <p className="text-sm text-gray-400 truncate">{repair.collection.user.email || 'Email non renseigné'}</p>
                             </div>
-                            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+                            <div className="flex flex-col md:flex-row md:items-center md:gap-4">
                                 <p className="text-lg font-medium truncate">{repair.collection.watch.model || 'Modèle non renseigné'}</p>
                                 <p className="text-sm text-gray-400 truncate">
                                     {repair.revisions?.length ? repair.revisions.map(revision => revision.name).join(', ') : 'Aucune révision'}
+                                </p>
+                            </div>
+                            <div className="flex flex-col md:flex-row md:items-center md:gap-4">
+                                <p className="text-lg font-medium truncate">{repair.date ? 'Date' : ''}</p>
+                                <p className="text-sm text-gray-400 truncate">
+                                    {repair.date ? new Date(repair.date).toLocaleDateString() : ''}
+                                </p>
+                            </div>
+                            <div className="flex flex-col md:flex-row md:items-center md:gap-4">
+                                <p className="text-lg font-medium truncate">{repair.price ? 'Prix' : ''}</p>
+                                <p className="text-sm text-gray-400 truncate">
+                                    {repair.price ? repair.price + '€' : ''}
                                 </p>
                             </div>
                         </div>
