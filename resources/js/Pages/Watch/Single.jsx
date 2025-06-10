@@ -7,11 +7,6 @@ import Modal from '@/Components/Modal';
 export default function Single({ watch }) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setIsDeleteModalOpen(true);
-    };
-
     const handleDelete = (e) => {
         e.preventDefault();
         router.delete(route('watch.destroy', { watch: watch.id }));
@@ -30,6 +25,14 @@ export default function Single({ watch }) {
                             <p>Type de mouvement</p>
                             <p className="capitalize text-brand">{watch.movement}</p>
                         </span>
+                        <span>
+                            <p>Bracelet</p>
+                            <p className="capitalize text-brand">Cuir, Acier</p>
+                        </span>
+                        <span>
+                            <p>Taille du cadran</p>
+                            <p className="capitalize text-brand">40mm, 42mm</p>
+                        </span>
                         <Link href={route('watch.edit', { watch: watch.id })} className="">
                             <button
                                 type="button"
@@ -38,45 +41,11 @@ export default function Single({ watch }) {
                                 Modifier les informations
                             </button>
                         </Link>
-                        <form onSubmit={handleSubmit}>
-                            <button
-                                type="submit"
-                                className="px-4 py-2 rounded-md text-white transition-colors duration-300 hover:bg-brand-red border border-brand-red"
-                            >
-                                Supprimer la montre
-                            </button>
-                        </form>
                     </div>
                 </div>
                 <img src={watch.image} alt={watch.model} className="absolute bottom-0 right-0 max-h-[600px] object-cover" />
             </div>
-            <Modal
-                show={isDeleteModalOpen}
-                onClose={() => setIsDeleteModalOpen(false)}
-                className="bg-black/75 h-[300px] border border-white/10 flex flex-col justify-around text-white px-10"
-            >
-                <div>
-                    <p className="text-2xl">Supprimer la montre</p>
-                    <p>Êtes-vous sûr de vouloir supprimer cette montre ?</p>
-                    <small>Cette action est irréversible.</small>
-                </div>
-                <div className="flex justify-end gap-4">
-                    <button
-                        type="button"
-                        className="px-4 py-2 rounded-md text-white transition-colors duration-300 hover:bg-brand-red border border-brand-red"
-                        onClick={() => setIsDeleteModalOpen(false)}
-                    >
-                        Annuler
-                    </button>
-                    <button
-                        type="submit"
-                        className="px-4 py-2 rounded-md text-white transition-colors duration-300 bg-brand-red border hover:bg-transparent  border-brand-red"
-                        onClick={handleDelete}
-                    >
-                        Supprimer
-                    </button>
-                </div>
-            </Modal>
+
         </AuthenticatedLayout>
     );
 }

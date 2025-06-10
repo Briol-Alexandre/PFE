@@ -15,6 +15,7 @@ export default function Dashboard({ auth, watches, asked_repairs }) {
             <div className="pb-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <DashboardLayoutWatch watches={watches} userRole={user.role} isDashboard={true} />
+
                     <section aria-labelledby="repair-title" className="overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 pb-4 flex justify-between items-center">
                             <h3 className="sub-title" id="repair-title">Dernières demandes</h3>

@@ -32,7 +32,7 @@ export default function Create() {
                     <div className="space-y-6">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Modèle</label>
+                                <InputLabel htmlFor="model" value="Modèle" />
                                 <input
                                     type="text"
                                     name="model"

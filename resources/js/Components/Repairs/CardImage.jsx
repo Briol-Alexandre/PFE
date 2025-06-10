@@ -111,7 +111,7 @@ export default function RepairCardImage({ repairs, userRole, searchTerm = '', sh
     }
 
     return (
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-10">
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:px-10">
             {repairs.map((repair) => (
                 <ClientCard repair={repair} key={repair.id} />
             ))}
