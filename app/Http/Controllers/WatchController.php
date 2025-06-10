@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WatchStoreRequest;
+use App\Http\Requests\WatchUpdateRequest;
 use App\Models\Watch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -42,6 +43,10 @@ class WatchController extends Controller
             $validated['image'] = Storage::url($path);
         }
 
+        // Conversion des champs string en array
+        $validated['available_straps'] = array_map('trim', explode(',', $validated['available_straps']));
+        $validated['available_sizes'] = array_map('trim', explode(',', $validated['available_sizes']));
+
         $watch = Watch::create($validated);
         return Inertia::location(route('watch.show', $watch->id));
     }
@@ -71,11 +76,13 @@ class WatchController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(WatchUpdateRequest $request, string $id)
     {
         $watch = Watch::with('creator')->findOrFail($id);
 
-        $data = $request->all();
+        \Log::info('Données reçues:', $request->all());
+        $data = $request->validated();
+        \Log::info('Données validées:', $data);
 
         // Gestion de l'image
         if ($request->hasFile('image')) {
@@ -90,7 +97,21 @@ class WatchController extends Controller
             $data['image'] = '/storage/' . $path;
         }
 
+        // Conversion des champs string en array
+        if ($request->has('available_straps')) {
+            $data['available_straps'] = $request->input('available_straps') ? 
+                array_values(array_filter(array_map('trim', explode(',', $request->input('available_straps'))))) : 
+                [];
+        }
+
+        if ($request->has('available_sizes')) {
+            $data['available_sizes'] = $request->input('available_sizes') ? 
+                array_values(array_filter(array_map('trim', explode(',', $request->input('available_sizes'))))) : 
+                [];
+        }
+
         $watch->update($data);
+        \Log::info('Données après mise à jour:', $watch->toArray());
 
         return Inertia::location(route('watch.show', $watch->id));
     }

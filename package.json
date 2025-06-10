@@ -18,7 +18,9 @@
         "vite": "^6.2.4"
     },
     "dependencies": {
+        "@headlessui/react": "^2.2.4",
         "date-fns": "^4.1.0",
+        "headlessui": "^0.0.0",
         "react-big-calendar": "^1.18.0",
         "react-select": "^5.10.1"
     }

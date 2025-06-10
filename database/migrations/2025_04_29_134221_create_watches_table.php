@@ -16,6 +16,10 @@ return new class extends Migration {
             $table->string('model');
             $table->enum('movement', ['quartz', 'automatique']);
             $table->string('image')->nullable();
+            $table->json('available_straps')->nullable(); // Bracelets disponibles
+            $table->json('available_sizes')->nullable(); // Tailles de cadran disponibles
+            $table->string('selected_strap')->nullable(); // Bracelet sélectionné par l'utilisateur
+            $table->string('selected_size')->nullable(); // Taille sélectionnée par l'utilisateur
             $table->timestamps();
         });
     }

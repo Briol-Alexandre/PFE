@@ -1,13 +1,23 @@
 import { Head, Link } from "@inertiajs/react";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { router } from "@inertiajs/react";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from '@/Components/Modal';
 import RepairCard from '@/Components/Repairs/Card';
 
 export default function Single({ collection, upcoming_repairs, past_repairs }) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [showWarrantyImage, setShowWarrantyImage] = useState(false);
+    const [scrollOffset, setScrollOffset] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrollOffset(window.scrollY);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -31,11 +41,19 @@ export default function Single({ collection, upcoming_repairs, past_repairs }) {
                 <div className="text-white ml-20 mt-20 font-just-sans">
                     <p className="text-4xl font-erstoria text-brand/70">{collection.watch.creator.name}</p>
                     <h2 className="text-5xl mb-4 font-erstoria" id="collection-title">{collection.watch.model}</h2>
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
                         <p className="text-2xl">Informations</p>
                         <span>
                             <p>Type de mouvement</p>
                             <p className="capitalize text-brand/80">{collection.watch.movement}</p>
+                        </span>
+                        <span>
+                            <p>Bracelet</p>
+                            <p className="capitalize text-brand/80">{collection.selected_strap}</p>
+                        </span>
+                        <span>
+                            <p>Taille du cadran</p>
+                            <p className="capitalize text-brand/80">{collection.selected_size}</p>
                         </span>
                         <span>
                             <p>Date d'achat</p>
@@ -74,7 +92,18 @@ export default function Single({ collection, upcoming_repairs, past_repairs }) {
                         </form>
                     </div>
                 </div>
-                <img src={collection.watch.image} alt={collection.watch.model} className="absolute -bottom-36 right-0 max-h-[600px] object-cover" />
+                <div
+                    className="fixed bottom-0 right-0 w-[600px] h-[600px] overflow-hidden transition-transform duration-300"
+                    style={{
+                        transform: `translateX(${Math.min(scrollOffset * 5, 1000)}px)`
+                    }}
+                >
+                    <img
+                        src={collection.watch.image}
+                        alt={collection.watch.model}
+                        className="w-full h-full object-contain select-none"
+                    />
+                </div>
             </section>
 
             <section aria-labelledby="repairs-title" className="mt-40">

@@ -16,9 +16,18 @@ class Watch extends Model
         'movement',
         'image',
         'user_id',
+        'available_straps',
+        'available_sizes',
+        'selected_strap',
+        'selected_size',
     ];
 
     protected $with = ['creator'];
+
+    protected $casts = [
+        'available_straps' => 'array',
+        'available_sizes' => 'array',
+    ];
 
 
 

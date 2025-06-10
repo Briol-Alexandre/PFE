@@ -10,6 +10,8 @@ export default function Create() {
         movement: '',
         image: null,
         user_id: usePage().props.auth.user.id,
+        available_straps: '',
+        available_sizes: '',
     });
 
     const handleSubmit = (e) => {
@@ -66,6 +68,32 @@ export default function Create() {
                                     className="mt-1 block w-full"
                                 />
                                 {errors.image && <InputError message={errors.image} />}
+                            </div>
+
+                            <div>
+                                <InputLabel htmlFor="available_straps" value="Bracelets disponibles" />
+                                <TextInput
+                                    type="text"
+                                    name="available_straps"
+                                    value={data.available_straps}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    placeholder="Entrez les bracelets disponibles séparés par des virgules (ex: Cuir noir, Acier, Caoutchouc)"
+                                />
+                                {errors.available_straps && <InputError message={errors.available_straps} />}
+                            </div>
+
+                            <div>
+                                <InputLabel htmlFor="available_sizes" value="Tailles de cadran disponibles" />
+                                <TextInput
+                                    type="text"
+                                    name="available_sizes"
+                                    value={data.available_sizes}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    placeholder="Entrez les tailles disponibles séparées par des virgules (ex: 36mm, 39mm, 41mm)"
+                                />
+                                {errors.available_sizes && <InputError message={errors.available_sizes} />}
                             </div>
 
                             <div className="flex items-center justify-end mt-6">

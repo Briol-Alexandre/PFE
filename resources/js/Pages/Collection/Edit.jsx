@@ -10,6 +10,8 @@ export default function Edit({ collection }) {
         warranty_end_date: collection.warranty_end_date,
         watch_id: collection.watch.id,
         user_id: collection.user_id,
+        selected_strap: collection.selected_strap,
+        selected_size: collection.selected_size,
     });
 
     const handleSubmit = (e) => {
@@ -68,6 +70,38 @@ export default function Edit({ collection }) {
                                 className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             />
                             {errors.warranty_end_date && <InputError message={errors.warranty_end_date} />}
+                        </div>
+
+                        <div>
+                            <InputLabel htmlFor="selected_strap" value="Bracelet choisi" />
+                            <select
+                                name="selected_strap"
+                                value={data.selected_strap}
+                                onChange={handleChange}
+                                className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            >
+                                <option value="">Sélectionnez un bracelet</option>
+                                {collection.watch.available_straps.map((strap) => (
+                                    <option key={strap} value={strap}>{strap}</option>
+                                ))}
+                            </select>
+                            {errors.selected_strap && <InputError message={errors.selected_strap} />}
+                        </div>
+
+                        <div>
+                            <InputLabel htmlFor="selected_size" value="Taille du cadran" />
+                            <select
+                                name="selected_size"
+                                value={data.selected_size}
+                                onChange={handleChange}
+                                className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            >
+                                <option value="">Sélectionnez une taille</option>
+                                {collection.watch.available_sizes.map((size) => (
+                                    <option key={size} value={size}>{size}</option>
+                                ))}
+                            </select>
+                            {errors.selected_size && <InputError message={errors.selected_size} />}
                         </div>
 
                         <div className="pt-4 flex justify-between w-full items-center">

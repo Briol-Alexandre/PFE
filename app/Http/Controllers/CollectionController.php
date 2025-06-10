@@ -60,7 +60,9 @@ class CollectionController extends Controller
             'user_id' => auth()->id(),
             'watch_id' => $request->watch_id,
             'purchase_date' => $request->purchase_date,
-            'warranty_end_date' => $request->warranty_end_date
+            'warranty_end_date' => $request->warranty_end_date,
+            'selected_strap' => $request->selected_strap,
+            'selected_size' => $request->selected_size
         ];
 
         if ($request->hasFile('warranty_image')) {

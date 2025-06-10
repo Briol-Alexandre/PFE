@@ -27,11 +27,11 @@ export default function Single({ watch }) {
                         </span>
                         <span>
                             <p>Bracelet</p>
-                            <p className="capitalize text-brand">Cuir, Acier</p>
+                            <p className="capitalize text-brand">{watch.available_straps.join(', ')}</p>
                         </span>
                         <span>
                             <p>Taille du cadran</p>
-                            <p className="capitalize text-brand">40mm, 42mm</p>
+                            <p className="capitalize text-brand">{watch.available_sizes.join(', ')}</p>
                         </span>
                         <Link href={route('watch.edit', { watch: watch.id })} className="">
                             <button

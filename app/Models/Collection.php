@@ -16,6 +16,8 @@ class Collection extends Model
         'purchase_date',
         'warranty_end_date',
         'warranty_image',
+        'selected_strap',
+        'selected_size',
     ];
 
     public function user(): BelongsTo

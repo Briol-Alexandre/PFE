@@ -19,6 +19,8 @@ class WatchStoreRequest extends FormRequest
             'movement' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'user_id' => 'required|exists:users,id',
+            'available_straps' => 'required|string',
+            'available_sizes' => 'required|string',
         ];
     }
 }

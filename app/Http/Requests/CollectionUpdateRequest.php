@@ -16,6 +16,8 @@ class CollectionUpdateRequest extends FormRequest
         return [
             'purchase_date' => 'required|date',
             'warranty_end_date' => 'required|date',
+            'selected_strap' => 'required|string',
+            'selected_size' => 'required|string',
         ];
     }
 }
