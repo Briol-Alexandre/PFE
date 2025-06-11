@@ -82,12 +82,6 @@ export default function Login({ status, canResetPassword }) {
                 </div>
                 <div className='flex gap-4 items-center max-md:flex-wrap mt-10'>
                     <div className='flex gap-2 items-center justify-between w-full'>
-                        <Link
-                            href={route('register')}
-                            className="rounded-md text-sm text-brand underline hover:text-brand-red focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2 transition-all ease-in-out duration-300"
-                        >
-                            Pas encore de compte ?
-                        </Link>
                         {canResetPassword && (
                             <Link
                                 href={route('password.request')}
