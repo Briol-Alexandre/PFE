@@ -68,10 +68,11 @@ export default function Create({ watches }) {
                                         control: (base) => ({
                                             ...base,
                                             backgroundColor: 'transparent',
-                                            borderColor: '#FFFFFF',
+                                            borderColor: '#EAEAE5',
                                             borderRadius: '0.375rem',
+                                            color: '#EAEAE5',
                                             '&:hover': {
-                                                borderColor: '#00FF00'
+                                                borderColor: '#EAEAE5'
                                             }
                                         }),
                                         menu: (base) => ({
@@ -81,19 +82,23 @@ export default function Create({ watches }) {
                                         }),
                                         option: (base, state) => ({
                                             ...base,
-                                            backgroundColor: state.isFocused ? 'rgba(212, 175, 55, 0.1)' : 'transparent',
-                                            color: '#D4AF37',
+                                            backgroundColor: state.isFocused ? 'rgba(234, 234, 229, 0.1)' : 'transparent',
+                                            color: '#EAEAE5',
                                             '&:hover': {
-                                                backgroundColor: 'rgba(212, 175, 55, 0.1)'
+                                                backgroundColor: 'rgba(234, 234, 229, 0.1)'
                                             }
                                         }),
                                         singleValue: (base) => ({
                                             ...base,
-                                            color: '#D4AF37'
+                                            color: '#EAEAE5'
                                         }),
                                         input: (base) => ({
                                             ...base,
-                                            color: '#D4AF37'
+                                            color: '#EAEAE5'
+                                        }),
+                                        placeholder: (base) => ({
+                                            ...base,
+                                            color: '#EAEAE5'
                                         })
                                     }}
                                 />
