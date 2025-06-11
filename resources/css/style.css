@@ -108,3 +108,7 @@ object {
 .title {
     @apply lg:text-5xl rl:text-4xl text-3xl text-center rl:my-10  font-semibold font-erstoria;
 }
+
+.filter-brand {
+    filter: invert(93%) sepia(8%) saturate(101%) hue-rotate(18deg) brightness(103%) contrast(92%);
+}

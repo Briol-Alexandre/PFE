@@ -113,7 +113,7 @@ export default function Create({ watches }) {
                                     id="purchase_date"
                                     value={data.purchase_date}
                                     onChange={handleChange}
-                                    className="mt-1 block w-full rounded-md bg-transparent border-brand text-brand shadow-sm focus:border-brand-green focus:ring-brand-green"
+                                    className="mt-1 block w-full rounded-md bg-transparent border-brand text-brand shadow-sm focus:border-brand-green focus:ring-brand-green [&::-webkit-calendar-picker-indicator]:text-brand [&::-webkit-calendar-picker-indicator]:filter-brand"
                                 />
                                 {errors.purchase_date && <InputError message={errors.purchase_date} />}
                             </div>
@@ -126,7 +126,7 @@ export default function Create({ watches }) {
                                     id="warranty_end_date"
                                     value={data.warranty_end_date}
                                     onChange={handleChange}
-                                    className="mt-1 block w-full rounded-md bg-transparent border-brand text-brand shadow-sm focus:border-brand-green focus:ring-brand-green"
+                                    className="mt-1 block w-full rounded-md bg-transparent border-brand text-brand shadow-sm focus:border-brand-green focus:ring-brand-green [&::-webkit-calendar-picker-indicator]:text-brand [&::-webkit-calendar-picker-indicator]:filter-brand"
                                 />
                                 {errors.warranty_end_date && <InputError message={errors.warranty_end_date} />}
                             </div>
@@ -164,7 +164,7 @@ export default function Create({ watches }) {
                                             id="selected_strap"
                                             value={data.selected_strap}
                                             onChange={handleChange}
-                                            className="mt-1 block w-full rounded-md bg-transparent border-brand text-brand shadow-sm focus:border-brand-green focus:ring-brand-green"
+                                            className="mt-1 block w-full rounded-md bg-transparent border-brand text-brand shadow-sm focus:border-brand-green focus:ring-brand-green [&::-webkit-calendar-picker-indicator]:text-brand [&::-webkit-calendar-picker-indicator]:filter-brand"
                                         >
                                             <option value="">Sélectionnez un bracelet</option>
                                             {watches.find(watch => watch.id === data.watch_id).available_straps.map((strap, index) => (
@@ -181,7 +181,7 @@ export default function Create({ watches }) {
                                             id="selected_size"
                                             value={data.selected_size}
                                             onChange={handleChange}
-                                            className="mt-1 block w-full rounded-md bg-transparent border-brand text-brand shadow-sm focus:border-brand-green focus:ring-brand-green"
+                                            className="mt-1 block w-full rounded-md bg-transparent border-brand text-brand shadow-sm focus:border-brand-green focus:ring-brand-green [&::-webkit-calendar-picker-indicator]:text-brand [&::-webkit-calendar-picker-indicator]:filter-brand"
                                         >
                                             <option value="">Sélectionnez une taille</option>
                                             {watches.find(watch => watch.id === data.watch_id).available_sizes.map((size, index) => (
@@ -198,7 +198,7 @@ export default function Create({ watches }) {
                                             id="selected_movement"
                                             value={data.selected_movement}
                                             onChange={handleChange}
-                                            className="mt-1 block w-full rounded-md bg-transparent border-brand text-brand shadow-sm focus:border-brand-green focus:ring-brand-green"
+                                            className="mt-1 block w-full rounded-md bg-transparent border-brand text-brand shadow-sm focus:border-brand-green focus:ring-brand-green [&::-webkit-calendar-picker-indicator]:text-brand [&::-webkit-calendar-picker-indicator]:filter-brand"
                                         >
                                             <option value="">Sélectionnez un mouvement</option>
                                             {watches.find(watch => watch.id === data.watch_id).available_movements.map((movement, index) => (
