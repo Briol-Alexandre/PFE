@@ -19,7 +19,6 @@ export default function Welcome({ auth }) {
     return (
         <>
             <Head title="Col&MacArthur-Maintenance - Ne laissez pas le temps abîmer vos montres" />
-            <Breakpoints />
             <ScrollbarCustom />
             <div className="min-h-screen flex flex-col items-center justify-center max-md:px-4">
                 <header className="flex flex-col items-center justify-center w-full">
