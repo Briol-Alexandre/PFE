@@ -39,11 +39,13 @@ export default function Create({ watches }) {
     return (
         <AuthenticatedLayout>
             <Head title="Ajouter une montre" />
-            <div>
-                <h1 className="lg:text-5xl rl:text-4xl text-3xl text-center rl:my-10  font-semibold font-erstoria">Ajouter une montre à ma collection</h1>
-                <div className="max-w-2xl mx-auto px-6">
-                    <div className="space-y-6">
-                        <form onSubmit={handleSubmit} className="space-y-6 py-10">
+            <div className="py-12">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div className="bg-black/20 backdrop-blur-3xl overflow-hidden shadow-sm sm:rounded-lg p-6">
+                        <div className="flex justify-between items-start mb-8 border-b border-brand-green pb-4">
+                            <h1 className="text-4xl font-erstoria text-brand">Ajouter une montre à ma collection</h1>
+                        </div>
+                        <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                                 <InputLabel htmlFor="watch_id" value="Sélectionner une montre" />
                                 <Select
@@ -65,33 +67,34 @@ export default function Create({ watches }) {
                                     styles={{
                                         control: (base) => ({
                                             ...base,
-                                            backgroundColor: '#374151',
-                                            borderColor: '#4B5563',
+                                            backgroundColor: 'transparent',
+                                            borderColor: '#FFFFFF',
+                                            borderRadius: '0.375rem',
                                             '&:hover': {
-                                                borderColor: '#6366F1'
+                                                borderColor: '#00FF00'
                                             }
                                         }),
                                         menu: (base) => ({
                                             ...base,
-                                            backgroundColor: '#374151'
+                                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                            backdropFilter: 'blur(12px)'
                                         }),
                                         option: (base, state) => ({
                                             ...base,
-                                            backgroundColor: state.isFocused ? '#4B5563' : '#374151',
-                                            color: 'white',
+                                            backgroundColor: state.isFocused ? 'rgba(212, 175, 55, 0.1)' : 'transparent',
+                                            color: '#D4AF37',
                                             '&:hover': {
-                                                backgroundColor: '#4B5563'
+                                                backgroundColor: 'rgba(212, 175, 55, 0.1)'
                                             }
                                         }),
                                         singleValue: (base) => ({
                                             ...base,
-                                            color: 'white'
+                                            color: '#D4AF37'
                                         }),
                                         input: (base) => ({
                                             ...base,
-                                            color: 'white'
-                                        }),
-
+                                            color: '#D4AF37'
+                                        })
                                     }}
                                 />
                                 {errors.watch_id && <InputError message={errors.watch_id} />}
@@ -105,7 +108,7 @@ export default function Create({ watches }) {
                                     id="purchase_date"
                                     value={data.purchase_date}
                                     onChange={handleChange}
-                                    className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    className="mt-1 block w-full rounded-md bg-transparent border-brand text-brand shadow-sm focus:border-brand-green focus:ring-brand-green"
                                 />
                                 {errors.purchase_date && <InputError message={errors.purchase_date} />}
                             </div>
@@ -118,21 +121,32 @@ export default function Create({ watches }) {
                                     id="warranty_end_date"
                                     value={data.warranty_end_date}
                                     onChange={handleChange}
-                                    className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    className="mt-1 block w-full rounded-md bg-transparent border-brand text-brand shadow-sm focus:border-brand-green focus:ring-brand-green"
                                 />
                                 {errors.warranty_end_date && <InputError message={errors.warranty_end_date} />}
                             </div>
 
                             <div>
-                                <InputLabel htmlFor="warranty_image" value="Image de la garantie" />
-                                <input
-                                    type="file"
-                                    name="warranty_image"
-                                    id="warranty_image"
-                                    onChange={handleChange}
-                                    className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
-                                    accept="image/*"
-                                />
+                                <InputLabel htmlFor="warranty_image" value="Photo de la garantie" />
+                                <div className="mt-1 flex items-center justify-center w-full">
+                                    <label htmlFor="warranty_image" className="flex flex-col items-center justify-center w-full h-32 border-2 border-brand border-dashed rounded-lg cursor-pointer bg-transparent hover:bg-brand/5 transition-all duration-200">
+                                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                            <svg className="w-8 h-8 mb-4 text-brand" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                            </svg>
+                                            <p className="mb-2 text-sm text-brand"><span className="font-semibold">Cliquez pour uploader</span></p>
+                                            <p className="text-xs text-brand/70">PNG, JPG (MAX. 800x400px)</p>
+                                        </div>
+                                        <input
+                                            type="file"
+                                            name="warranty_image"
+                                            id="warranty_image"
+                                            onChange={handleChange}
+                                            className="hidden"
+                                            accept="image/*"
+                                        />
+                                    </label>
+                                </div>
                                 {errors.warranty_image && <InputError message={errors.warranty_image} />}
                             </div>
 
@@ -145,7 +159,7 @@ export default function Create({ watches }) {
                                             id="selected_strap"
                                             value={data.selected_strap}
                                             onChange={handleChange}
-                                            className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                            className="mt-1 block w-full rounded-md bg-transparent border-brand text-brand shadow-sm focus:border-brand-green focus:ring-brand-green"
                                         >
                                             <option value="">Sélectionnez un bracelet</option>
                                             {watches.find(watch => watch.id === data.watch_id).available_straps.map((strap, index) => (
@@ -162,7 +176,7 @@ export default function Create({ watches }) {
                                             id="selected_size"
                                             value={data.selected_size}
                                             onChange={handleChange}
-                                            className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                            className="mt-1 block w-full rounded-md bg-transparent border-brand text-brand shadow-sm focus:border-brand-green focus:ring-brand-green"
                                         >
                                             <option value="">Sélectionnez une taille</option>
                                             {watches.find(watch => watch.id === data.watch_id).available_sizes.map((size, index) => (
@@ -179,7 +193,7 @@ export default function Create({ watches }) {
                                             id="selected_movement"
                                             value={data.selected_movement}
                                             onChange={handleChange}
-                                            className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                            className="mt-1 block w-full rounded-md bg-transparent border-brand text-brand shadow-sm focus:border-brand-green focus:ring-brand-green"
                                         >
                                             <option value="">Sélectionnez un mouvement</option>
                                             {watches.find(watch => watch.id === data.watch_id).available_movements.map((movement, index) => (
@@ -195,7 +209,7 @@ export default function Create({ watches }) {
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="hover-underline ml-auto"
+                                    className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200 ml-auto"
                                 >
                                     {processing ? 'Ajout en cours...' : 'Ajouter à ma collection'}
                                 </button>

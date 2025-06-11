@@ -17,7 +17,7 @@ export default function Single({ watch }) {
             <div className="flex ">
                 <img src={watch.image} alt={watch.model} className="fixed -z-10 -top-40 left-1/2 -translate-x-1/2 blur-2xl opacity-50 scale-125 max-w-[500px]" />
                 <div className="text-white ml-20 mt-20 font-just-sans">
-                    <p className="text-4xl font-erstoria text-brand">{watch.creator.name}</p>
+                    <p className="text-4xl font-erstoria text-brand">Col&MacArthur</p>
                     <h1 className="text-5xl mb-4 font-erstoria">{watch.model}</h1>
                     <div className="flex flex-col gap-4">
                         <p className="text-2xl">Informations</p>
