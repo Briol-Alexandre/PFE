@@ -33,14 +33,9 @@ export default function Welcome({ auth }) {
                                 <span>Accèdez à votre espace</span>
                             </Link>
                         ) : (
-                            <>
-                                <Link href="/login" className="hover-underline rl:text-2xl md:text-xl sm:text-lg text-base font-light">
-                                    <span>Se connecter</span>
-                                </Link>
-                                <Link href="/register" className="hover-underline rl:text-2xl md:text-xl sm:text-lg text-base font-light">
-                                    <span>Créer un compte</span>
-                                </Link>
-                            </>
+                            <Link href="/login" className="hover-underline rl:text-2xl md:text-xl sm:text-lg text-base font-light">
+                                <span>Se connecter</span>
+                            </Link>
                         )}
                     </div>
                 </header>
