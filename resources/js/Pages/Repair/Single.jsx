@@ -9,10 +9,60 @@ import ProgressBar from "@/Components/Repairs/ProgressBar";
 
 export default function Single({ repair }) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isAcceptModalOpen, setIsAcceptModalOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [acceptError, setAcceptError] = useState('');
 
     const handleDelete = (e) => {
         e.preventDefault();
         router.delete(route('repair.destroy', repair.id));
+    };
+
+    const handleAccept = (e) => {
+        e.preventDefault();
+
+        // Si le statut est 'modified', on accepte directement sans choisir de date
+        if (repair.status === 'modified') {
+            router.post(route('repair.accept', repair.id), {
+                _method: 'POST',
+                date: repair.date // On garde la date existante
+            }, {
+                onSuccess: () => {
+                    console.log('Succès!');
+                    window.location.reload();
+                },
+                onError: (errors) => {
+                    console.error('Erreur:', errors);
+                    alert('Une erreur est survenue');
+                }
+            });
+            return;
+        }
+
+        // Pour les autres statuts, on vérifie la sélection d'une date
+        if (!selectedDate) {
+            setAcceptError('Veuillez sélectionner une date');
+            return;
+        }
+
+        const formData = {
+            date: selectedDate,
+            _method: 'POST'
+        };
+
+        console.log('Envoi de la date:', formData);
+
+        router.post(route('repair.accept', repair.id), formData, {
+            onSuccess: () => {
+                console.log('Succès!');
+                setIsAcceptModalOpen(false);
+                window.location.reload();
+            },
+            onError: (errors) => {
+                console.error('Erreur:', errors);
+                setAcceptError(errors.date || 'Une erreur est survenue');
+            }
+        });
     };
 
     return (
@@ -25,7 +75,7 @@ export default function Single({ repair }) {
                         <div className="flex justify-between items-start mb-8 border-b border-brand-green pb-4">
                             <div className="flex gap-4 items-center">
                                 <div>
-                                    <p className="text-xl text-gray-400">{repair.collection.watch.creator.name}</p>
+                                    <p className="text-xl text-gray-400">Col&MacArthur</p>
                                     <h2 className="text-4xl font-erstoria text-brand" id='repair-info'>{repair.collection.watch.model}</h2>
 
                                 </div>
@@ -40,24 +90,23 @@ export default function Single({ repair }) {
                                 >
                                     Modifier
                                 </Link>)}
-                                {(repair.status === 'pending' || repair.status === 'modified') && (<Link
-                                    href={route('repair.accept', repair.id)}
-                                    className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
-                                >
-                                    Accepter le devis
-                                </Link>)}
-                                {repair.status === 'asked' && (
-                                    <button
-                                        onClick={() => setIsDeleteModalOpen(true)}
-                                        className="px-4 py-2 bg-transparent border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200"
-                                    >
-                                        Supprimer
-                                    </button>
-                                )}
                                 {(repair.status === 'pending' || repair.status === 'modified') && (
-                                    <Link href={route('repair.refuse_user', repair.id)} className='px-4 py-2 bg-transparent border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200'>
-                                        Refuser le devis
-                                    </Link>
+                                    <>
+                                        <button
+                                            onClick={(e) => repair.status === 'modified' ? handleAccept(e) : setIsAcceptModalOpen(true)}
+                                            className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
+                                        >
+                                            Accepter {repair.status === 'modified' ? 'la modification' : 'le devis'}
+                                        </button>
+                                        {repair.status === 'pending' && (
+                                            <Link
+                                                href={route('repair.refuse_user', repair.id)}
+                                                className="px-4 py-2 bg-transparent border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-black transition-colors duration-200"
+                                            >
+                                                Refuser le devis
+                                            </Link>
+                                        )}
+                                    </>
                                 )}
                                 {repair.status === 'accepted' && (
                                     <button onClick={() => setIsDeleteModalOpen(true)} className='px-4 py-2 bg-transparent border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition-colors duration-200'>
@@ -73,11 +122,11 @@ export default function Single({ repair }) {
                         </div>
 
                         <div className="text-white font-just-sans border-b border-brand-green pb-8">
-                            <p className="text-2xl">Informations sur la réparation</p>
+                            <p className="text-2xl font-bold">Informations sur la réparation</p>
                             <div className="grid grid-cols-2 gap-4 mt-6 ">
                                 <div className='flex flex-col gap-4 '>
                                     <span>
-                                        <p>Révision(s) demandée(s)</p>
+                                        <p className="font-semibold">Révision(s) demandée(s)</p>
                                         {repair.revisions ? (
                                             <div className="text-brand/80">
                                                 {repair.revisions.map(revision => (
@@ -89,19 +138,29 @@ export default function Single({ repair }) {
                                         )}
                                     </span>
                                     <span>
-                                        <p>Description</p>
+                                        <p className="font-semibold">Description</p>
                                         <p className="text-brand/80">{repair.description}</p>
                                     </span>
                                 </div>
                                 <div className='flex flex-col gap-4'>
                                     <span>
-                                        <p>Date de la réparation</p>
-                                        <p className="text-brand/80">
-                                            {formatRepairDate(repair.date)}
-                                        </p>
+                                        <p className="font-semibold">{repair.status === 'pending' ? 'Dates proposées' : 'Date de la réparation'}</p>
+                                        {repair.status === 'pending' ? (
+                                            <div className="space-y-1">
+                                                {repair.proposed_dates?.map((date, index) => (
+                                                    <p key={index} className="text-brand/80">
+                                                        {formatRepairDate(date)}
+                                                    </p>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <p className="text-brand/80">
+                                                {formatRepairDate(repair.date)}
+                                            </p>
+                                        )}
                                     </span>
                                     <span>
-                                        <p>Prix total</p>
+                                        <p className="font-semibold">Prix total</p>
                                         <p className="text-brand/80">
                                             {repair.price
                                                 ? `${repair.price}€`
@@ -119,12 +178,12 @@ export default function Single({ repair }) {
                         {repair.status === 'rejected' && repair.refuse_reason && (
                             <div className="mt-8">
                                 <span>
-                                    <p className='text-2xl text-brand'>Motif du refus</p>
+                                    <p className='text-2xl font-bold text-brand'>Motif du refus</p>
                                     <p className="text-brand">{repair.refuse_reason}</p>
                                 </span>
                             </div>
                         )}
-                        {repair.status === 'pending' && repair.modify_reason && (
+                        {repair.status === 'modified' && repair.modify_reason && (
                             <div className="mt-8">
                                 <span>
                                     <p className='text-2xl text-brand'>Motif de la modification</p>
@@ -161,6 +220,58 @@ export default function Single({ repair }) {
                             onClick={handleDelete}
                         >
                             Supprimer
+                        </button>
+                    </div>
+                </div>
+            </Modal>
+
+            <Modal
+                show={isAcceptModalOpen}
+                onClose={() => setIsAcceptModalOpen(false)}
+                className='bg-black/75 border border-white/10 flex flex-col justify-around text-white px-10 py-6'
+            >
+                <div className="p-6">
+                    <h2 className="text-lg font-medium text-brand mb-4">
+                        Choisissez une date pour la réparation
+                    </h2>
+                    <div className="space-y-4">
+                        {repair.proposed_dates?.map((date, index) => (
+                            <div key={index} className="flex items-center space-x-3">
+                                <input
+                                    type="radio"
+                                    id={`date-${index}`}
+                                    name="repair-date"
+                                    value={date}
+                                    checked={selectedDate === date}
+                                    onChange={(e) => {
+                                        setSelectedDate(e.target.value);
+                                        setAcceptError('');
+                                    }}
+                                    className="text-brand focus:ring-brand"
+                                />
+                                <label htmlFor={`date-${index}`} className="text-white">
+                                    {formatRepairDate(date)}
+                                </label>
+                            </div>
+                        ))}
+                        {acceptError && (
+                            <p className="text-red-500 text-sm mt-2">{acceptError}</p>
+                        )}
+                    </div>
+                    <div className="flex justify-end gap-4 mt-6">
+                        <button
+                            type="button"
+                            className="px-4 py-2 bg-transparent border border-white/20 rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-white/10 transition-colors duration-200"
+                            onClick={() => setIsAcceptModalOpen(false)}
+                        >
+                            Annuler
+                        </button>
+                        <button
+                            type="button"
+                            className="px-4 py-2 bg-brand border border-transparent rounded-md font-semibold text-xs text-black uppercase tracking-widest hover:bg-brand/80 transition-colors duration-200"
+                            onClick={handleAccept}
+                        >
+                            Confirmer
                         </button>
                     </div>
                 </div>

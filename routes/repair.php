@@ -25,7 +25,7 @@ Route::middleware(['web', 'auth'])->group(function () {
 
     Route::patch('/repair/{repair}/edit_estimate', [RepairController::class, 'update_estimate'])->name('repair.update_estimate');
 
-    Route::get('/repair/{repair}/accept', [RepairController::class, 'accept'])->name('repair.accept');
+    Route::post('/repair/{repair}/accept', [RepairController::class, 'accept'])->name('repair.accept');
 
     Route::get('/repair/{repair}/refuse', [RepairController::class, 'refuse_user'])->name('repair.refuse_user');
 

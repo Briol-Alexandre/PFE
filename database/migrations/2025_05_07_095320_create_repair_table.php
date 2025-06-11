@@ -15,7 +15,8 @@ return new class extends Migration {
             $table->foreignId('collection_id')->constrained()->cascadeOnDelete();
             $table->json('revisions')->nullable();
             $table->longText('description');
-            $table->dateTime('date')->nullable();
+            $table->json('proposed_dates')->nullable(); // Les dates proposées par l'horloger
+            $table->dateTime('date')->nullable(); // La date choisie par l'utilisateur
             $table->integer('price')->nullable();
             $table->string('refuse_reason')->nullable();
             $table->string('modify_reason')->nullable();

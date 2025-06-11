@@ -8,6 +8,7 @@ use App\Models\Revisions;
 use App\Http\Requests\RepairStoreRequest;
 use App\Http\Requests\RepairUpdateRequest;
 use App\Http\Requests\RepairUpdateEstimateRequest;
+use App\Http\Requests\RepairAcceptRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
 
@@ -202,15 +203,87 @@ class RepairController extends Controller
     {
         $repair = Repair::findOrFail($id);
         $this->authorize('edit_estimate', $repair);
-        $repair->update($request->validated());
-        return redirect()->route('repair.show_creator', $repair);
+        
+        $validated = $request->validated();
+        
+        \Log::info('Données reçues dans update_estimate:', [
+            'validated' => $validated,
+            'repair_id' => $id
+        ]);
+        
+        // Si le statut est 'pending', on s'assure que les dates proposées sont présentes
+        if ($validated['status'] === 'pending' && empty($validated['proposed_dates'])) {
+            \Log::error('Dates proposées manquantes');
+            return back()->withErrors(['proposed_dates' => 'Vous devez proposer au moins une date']);
+        }
+        
+        // Si le statut est 'modified', on ne modifie que le prix
+        if ($validated['status'] === 'modified') {
+            unset($validated['date']);
+            unset($validated['proposed_dates']);
+        }
+        
+        try {
+            $repair->update($validated);
+            \Log::info('Réparation mise à jour avec succès', ['repair_id' => $repair->id]);
+            return redirect()->route('repair.show_creator', $repair);
+        } catch (\Exception $e) {
+            \Log::error('Erreur lors de la mise à jour de la réparation', [
+                'repair_id' => $repair->id,
+                'error' => $e->getMessage()
+            ]);
+            return back()->withErrors(['general' => 'Une erreur est survenue lors de la mise à jour']);
+        }
     }
 
-    public function accept(string $id)
+    public function accept(RepairAcceptRequest $request, string $id)
     {
         $repair = Repair::findOrFail($id);
         $this->authorize('accept', $repair);
-        $repair->update(['status' => 'accepted']);
+        
+        $validated = $request->validated();
+        
+        \Log::info('Accept repair - Données reçues:', [
+            'status' => $repair->status,
+            'date_choisie' => $validated['date'],
+            'dates_proposées' => $repair->proposed_dates
+        ]);
+        
+        // Si le statut est 'modified', on accepte directement avec la date existante
+        if ($repair->status === 'modified') {
+            $repair->update([
+                'status' => 'accepted'
+            ]);
+            
+            \Log::info('Réparation modifiée acceptée avec succès', ['repair_id' => $repair->id]);
+            return redirect()->route('repair.show', $repair);
+        }
+        
+        // Pour les autres statuts, on vérifie la date choisie
+        // Normaliser les dates pour la comparaison
+        $chosenDate = new \DateTime($validated['date']);
+        $proposedDates = array_map(function($date) {
+            return (new \DateTime($date))->format('Y-m-d\TH:i:s.u\Z');
+        }, $repair->proposed_dates);
+        
+        $normalizedChosenDate = $chosenDate->format('Y-m-d\TH:i:s.u\Z');
+        
+        \Log::info('Dates normalisées:', [
+            'date_choisie' => $normalizedChosenDate,
+            'dates_proposées' => $proposedDates
+        ]);
+        
+        if (!in_array($normalizedChosenDate, $proposedDates)) {
+            \Log::error('Date non trouvée dans les dates proposées');
+            return back()->withErrors(['date' => 'La date choisie doit faire partie des dates proposées']);
+        }
+        
+        $repair->update([
+            'status' => 'accepted',
+            'date' => $normalizedChosenDate
+        ]);
+        
+        \Log::info('Réparation acceptée avec succès', ['repair_id' => $repair->id]);
         return redirect()->route('repair.show', $repair);
     }
 
@@ -273,8 +346,16 @@ class RepairController extends Controller
     {
         $repair = Repair::findOrFail($id);
         $this->authorize('modify_price_and_date', $repair);
-        $repair->update($request->validated());
-        $repair->update(['status' => 'modified']);
+        
+        $validated = $request->validated();
+        
+        // Ne permettre que la modification du prix
+        $repair->update([
+            'price' => $validated['price'],
+            'status' => 'modified',
+            'modify_reason' => $validated['modify_reason'] ?? null
+        ]);
+        
         return redirect()->route('repair.show_creator', $repair);
     }
 }

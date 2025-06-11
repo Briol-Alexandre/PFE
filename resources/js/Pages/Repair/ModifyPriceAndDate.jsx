@@ -13,7 +13,6 @@ const formatDateForInput = (dateString) => {
 
 export default function ModifyPriceAndDate({ repair }) {
     const { data, setData, patch, processing, errors } = useForm({
-        date: formatDateForInput(repair.date),
         price: repair.price || '',
         status: 'modified',
         modify_reason: '',
@@ -34,25 +33,12 @@ export default function ModifyPriceAndDate({ repair }) {
                         <div className="flex flex-col gap-4">
                             <div className="flex gap-4 items-center">
                                 <div>
-                                    <p className="text-xl text-gray-400">{repair.collection.watch.creator.name}</p>
+                                    <p className="text-xl text-gray-400">Col&MacArthur</p>
                                     <h2 className="text-4xl font-erstoria text-brand">{repair.collection.watch.model}</h2>
                                 </div>
                             </div>
 
                             <form onSubmit={submit} className="mt-6 space-y-6">
-                                <div>
-                                    <InputLabel htmlFor="date" value="Date de réparation" />
-                                    <TextInput
-                                        id="date"
-                                        type="datetime-local"
-                                        name="date"
-                                        value={data.date}
-                                        className="mt-1 block w-full bg-transparent"
-                                        onChange={(e) => setData('date', e.target.value)}
-                                    />
-                                    <InputError message={errors.date} className="mt-2" />
-                                </div>
-
                                 <div>
                                     <InputLabel htmlFor="price" value="Prix" />
                                     <TextInput

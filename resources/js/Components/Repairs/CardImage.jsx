@@ -72,7 +72,7 @@ export default function RepairCardImage({ repairs, userRole, searchTerm = '', sh
                 </p>
                 <img src={repair.collection.watch.image} alt={repair.collection.watch.model} className="w-full aspect-square" />
                 <div className='flex flex-col'>
-                    <p className="text-lg text-gray-400 leading-5">{repair.collection.watch.creator.name}</p>
+                    <p className="text-lg text-gray-400 leading-5">Col&MacArthur</p>
                     <p className="text-lg leading-5">{repair.collection.watch.model}</p>
                     <div className="mt-4 space-y-1">
                         <p className="text-sm text-gray-400">Révision : {repair.revisions ? repair.revisions.map(revision => revision.name).join(', ') : 'Aucune révision'}</p>

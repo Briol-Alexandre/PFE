@@ -57,7 +57,7 @@ export default function SingleCreator({ repair }) {
                         <div className="flex justify-between items-start mb-8 border-b border-white/50 pb-4">
                             <div className="flex gap-4 items-center">
                                 <div>
-                                    <p className="text-xl text-gray-400">{repair.collection.watch.creator.name}</p>
+                                    <p className="text-xl text-gray-400">Col&MacArthur</p>
                                     <h2 className="text-4xl font-erstoria text-brand" id='repair-info'>{repair.collection.watch.model}</h2>
                                 </div>
                                 <div className="space-y-2">
@@ -109,7 +109,7 @@ export default function SingleCreator({ repair }) {
                         </div>
 
                         <div className="text-white font-just-sans">
-                            <p className="text-2xl">Informations sur la réparation</p>
+                            <p className="text-2xl font-bold">Informations sur la réparation</p>
                             <div className="grid grid-cols-2 gap-4 mt-6">
                                 <div className='flex flex-col gap-4'>
                                     <span>
@@ -155,10 +155,22 @@ export default function SingleCreator({ repair }) {
                                 </div>
                                 <div className='flex flex-col gap-4'>
                                     <span>
-                                        <p className="font-semibold">Date de la réparation</p>
-                                        <p className="text-brand/80">
-                                            {formatRepairDate(repair.date)}
+                                        <p className="font-semibold">
+                                            {repair.status === 'pending' ? 'Dates proposées' : 'Date de la réparation'}
                                         </p>
+                                        {repair.status === 'pending' ? (
+                                            <div className="space-y-1">
+                                                {repair.proposed_dates?.map((date, index) => (
+                                                    <p key={index} className="text-brand/80">
+                                                        {formatRepairDate(date)}
+                                                    </p>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <p className="text-brand/80">
+                                                {formatRepairDate(repair.date)}
+                                            </p>
+                                        )}
                                     </span>
                                     <span>
                                         <p className="font-semibold">Prix total</p>

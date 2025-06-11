@@ -69,7 +69,11 @@ class RepairStatusUpdated extends Notification
             case 'pending':
                 $message->line('La réparation de votre ' . $this->repair->collection->watch->model . ' a été évaluée.')
                     ->line('Prix estimé: ' . $this->repair->price . '€')
-                    ->line('Date prévue: ' . $this->repair->date->format('d/m/Y H:i'));
+                    ->line('Dates proposées :');
+                
+                foreach ($this->repair->proposed_dates as $date) {
+                    $message->line('- ' . (new \DateTime($date))->format('d/m/Y H:i'));
+                }
                 $message->action('Voir la réparation', route($repairRoute, $this->repair->id));
                 break;
 
@@ -95,7 +99,6 @@ class RepairStatusUpdated extends Notification
             case 'modified':
                 $message->line('La réparation de votre ' . $this->repair->collection->watch->model . ' a été modifiée.')
                     ->line('Modification: ' . $this->repair->modify_reason)
-                    ->line('Nouvelle date: ' . $this->repair->date->format('d/m/Y H:i'))
                     ->line('Nouveau prix: ' . $this->repair->price . '€');
 
                 $message->action('Voir la réparation', route($repairRoute, $this->repair->id));

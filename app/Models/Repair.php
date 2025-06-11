@@ -21,7 +21,8 @@ class Repair extends Model
         'refuse_reason',
         'modify_reason',
         'description',
-        'status'
+        'status',
+        'proposed_dates'
     ];
 
     protected $casts = [
@@ -30,7 +31,8 @@ class Repair extends Model
         'price' => 'integer',
         'refuse_reason' => 'string',
         'modify_reason' => 'string',
-        'status' => 'string'
+        'status' => 'string',
+        'proposed_dates' => 'array'
     ];
 
     /**
@@ -38,7 +40,7 @@ class Repair extends Model
      */
     protected function serializeDate($date)
     {
-        return $date->setTimezone(new \DateTimeZone('Europe/Paris'));
+        return $date ? $date->setTimezone(new \DateTimeZone('Europe/Paris')) : null;
     }
 
     public function collection(): BelongsTo
