@@ -23,7 +23,7 @@ export default function Single({ watch }) {
                         <p className="text-2xl">Informations</p>
                         <span>
                             <p>Type de mouvement</p>
-                            <p className="capitalize text-brand">{watch.movement}</p>
+                            <p className="capitalize text-brand">{watch.available_movements.join(', ')}</p>
                         </span>
                         <span>
                             <p>Bracelet</p>

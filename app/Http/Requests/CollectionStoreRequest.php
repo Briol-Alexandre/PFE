@@ -22,6 +22,7 @@ class CollectionStoreRequest extends FormRequest
             'warranty_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'selected_strap' => 'required|string',
             'selected_size' => 'required|string',
+            'selected_movement' => 'required|string',
         ];
     }
 }

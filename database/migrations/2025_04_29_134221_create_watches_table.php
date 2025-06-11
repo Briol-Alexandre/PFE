@@ -14,7 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('model');
-            $table->enum('movement', ['quartz', 'automatique']);
+            $table->json('available_movements')->nullable(); // Mouvements disponibles
+            $table->string('selected_movement')->nullable(); // Mouvement sélectionné par l'utilisateur
             $table->string('image')->nullable();
             $table->json('available_straps')->nullable(); // Bracelets disponibles
             $table->json('available_sizes')->nullable(); // Tailles de cadran disponibles

@@ -46,6 +46,7 @@ class WatchController extends Controller
         // Conversion des champs string en array
         $validated['available_straps'] = array_map('trim', explode(',', $validated['available_straps']));
         $validated['available_sizes'] = array_map('trim', explode(',', $validated['available_sizes']));
+        $validated['available_movements'] = array_map('trim', explode(',', $validated['available_movements']));
 
         $watch = Watch::create($validated);
         return Inertia::location(route('watch.show', $watch->id));
@@ -107,6 +108,12 @@ class WatchController extends Controller
         if ($request->has('available_sizes')) {
             $data['available_sizes'] = $request->input('available_sizes') ? 
                 array_values(array_filter(array_map('trim', explode(',', $request->input('available_sizes'))))) : 
+                [];
+        }
+
+        if ($request->has('available_movements')) {
+            $data['available_movements'] = $request->input('available_movements') ? 
+                array_values(array_filter(array_map('trim', explode(',', $request->input('available_movements'))))) : 
                 [];
         }
 

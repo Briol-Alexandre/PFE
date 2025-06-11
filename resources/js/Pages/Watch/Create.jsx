@@ -7,7 +7,8 @@ import InputError from '@/Components/InputError';
 export default function Create() {
     const { data, setData, post, processing, errors } = useForm({
         model: '',
-        movement: '',
+        available_movements: '',
+        selected_movement: '',
         image: null,
         user_id: usePage().props.auth.user.id,
         available_straps: '',
@@ -45,18 +46,16 @@ export default function Create() {
                                 {errors.model && <div className="text-red-500 text-sm mt-1">{errors.model}</div>}
                             </div>
                             <div>
-                                <InputLabel htmlFor="movement" value="Mouvement" />
-                                <select
-                                    name="movement"
-                                    value={data.movement}
+                                <InputLabel htmlFor="available_movements" value="Mouvements disponibles" />
+                                <TextInput
+                                    type="text"
+                                    name="available_movements"
+                                    value={data.available_movements}
                                     onChange={handleChange}
                                     className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                >
-                                    <option value="">Sélectionnez un mouvement</option>
-                                    <option value="quartz">Quartz</option>
-                                    <option value="automatique">Automatique</option>
-                                </select>
-                                {errors.movement && <InputError message={errors.movement} />}
+                                    placeholder="Entrez les mouvements disponibles séparés par des virgules (ex: Quartz, Automatique, Manuel)"
+                                />
+                                {errors.available_movements && <InputError message={errors.available_movements} />}
                             </div>
 
                             <div>

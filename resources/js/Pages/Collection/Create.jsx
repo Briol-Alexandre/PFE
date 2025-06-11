@@ -13,6 +13,7 @@ export default function Create({ watches }) {
         user_id: usePage().props.auth.user.id,
         selected_strap: '',
         selected_size: '',
+        selected_movement: '',
     });
 
     const handleSubmit = (e) => {
@@ -21,8 +22,14 @@ export default function Create({ watches }) {
     };
 
     const handleChange = (e) => {
-        const { name, value, type, files } = e.target;
-        setData(name, type === 'file' ? files[0] : value);
+        if (e.target) {
+            const { name, value, type, files } = e.target;
+            setData(name, type === 'file' ? files[0] : value);
+        } else {
+            // Gestion des changements de Select
+            const { name, value } = e;
+            setData(name, value);
+        }
     };
 
     const handleWatchSelect = (selectedOption) => {
@@ -163,6 +170,23 @@ export default function Create({ watches }) {
                                             ))}
                                         </select>
                                         {errors.selected_size && <InputError message={errors.selected_size} />}
+                                    </div>
+
+                                    <div>
+                                        <InputLabel htmlFor="selected_movement" value="Type de mouvement" />
+                                        <select
+                                            name="selected_movement"
+                                            id="selected_movement"
+                                            value={data.selected_movement}
+                                            onChange={handleChange}
+                                            className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                        >
+                                            <option value="">Sélectionnez un mouvement</option>
+                                            {watches.find(watch => watch.id === data.watch_id).available_movements.map((movement, index) => (
+                                                <option key={index} value={movement}>{movement}</option>
+                                            ))}
+                                        </select>
+                                        {errors.selected_movement && <InputError message={errors.selected_movement} />}
                                     </div>
                                 </>
                             )}

@@ -13,7 +13,8 @@ class Watch extends Model
 
     protected $fillable = [
         'model',
-        'movement',
+        'available_movements',
+        'selected_movement',
         'image',
         'user_id',
         'available_straps',
@@ -27,6 +28,7 @@ class Watch extends Model
     protected $casts = [
         'available_straps' => 'array',
         'available_sizes' => 'array',
+        'available_movements' => 'array',
     ];
 
 

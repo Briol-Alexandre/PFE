@@ -10,7 +10,8 @@ import { useState, useEffect } from 'react';
 export default function Edit({ watch }) {
     const { data, setData, put, processing, errors, progress } = useForm({
         model: watch.model,
-        movement: watch.movement,
+        available_movements: watch.available_movements ? watch.available_movements.join(', ') : '',
+        selected_movement: watch.selected_movement || '',
         image: watch.image,
         user_id: usePage().props.auth.user.id,
         available_straps: watch.available_straps ? watch.available_straps.join(', ') : '',
@@ -107,19 +108,17 @@ export default function Edit({ watch }) {
                         </div>
 
                         <div>
-                            <InputLabel htmlFor="movement" value="Mouvement" />
-                            <select
-                                name="movement"
-                                value={data.movement}
+                            <InputLabel htmlFor="available_movements" value="Mouvements disponibles" />
+                            <TextInput
+                                id="available_movements"
+                                type="text"
+                                name="available_movements"
+                                value={data.available_movements}
                                 onChange={handleChange}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                            >
-                                <option value="">Sélectionnez un mouvement</option>
-                                <option value="quartz">Quartz</option>
-                                <option value="mechanique">Mécanique</option>
-                                <option value="automatique">Automatique</option>
-                            </select>
-                            {errors.movement && <InputError message={errors.movement} />}
+                                className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                placeholder="Entrez les mouvements disponibles séparés par des virgules (ex: Quartz, Automatique, Manuel)"
+                            />
+                            {errors.available_movements && <InputError message={errors.available_movements} />}
                         </div>
 
                         <div>

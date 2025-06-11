@@ -18,6 +18,7 @@ class CollectionUpdateRequest extends FormRequest
             'warranty_end_date' => 'required|date',
             'selected_strap' => 'required|string',
             'selected_size' => 'required|string',
+            'selected_movement' => 'required|string',
         ];
     }
 }

@@ -18,6 +18,7 @@ class Collection extends Model
         'warranty_image',
         'selected_strap',
         'selected_size',
+        'selected_movement',
     ];
 
     public function user(): BelongsTo

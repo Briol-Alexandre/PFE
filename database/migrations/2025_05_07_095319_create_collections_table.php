@@ -17,6 +17,7 @@ class CreateCollectionsTable extends Migration
             $table->string('warranty_image');
             $table->string('selected_strap');
             $table->string('selected_size');
+            $table->string('selected_movement');
             $table->timestamps();
             $table->unique(['user_id', 'watch_id']);
         });

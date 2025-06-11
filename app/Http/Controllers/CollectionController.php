@@ -62,7 +62,8 @@ class CollectionController extends Controller
             'purchase_date' => $request->purchase_date,
             'warranty_end_date' => $request->warranty_end_date,
             'selected_strap' => $request->selected_strap,
-            'selected_size' => $request->selected_size
+            'selected_size' => $request->selected_size,
+            'selected_movement' => $request->selected_movement
         ];
 
         if ($request->hasFile('warranty_image')) {

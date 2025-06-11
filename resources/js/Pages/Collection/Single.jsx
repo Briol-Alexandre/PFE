@@ -45,7 +45,7 @@ export default function Single({ collection, upcoming_repairs, past_repairs }) {
                         <p className="text-2xl">Informations</p>
                         <span>
                             <p>Type de mouvement</p>
-                            <p className="capitalize text-brand/80">{collection.watch.movement}</p>
+                            <p className="capitalize text-brand/80">{collection.selected_movement}</p>
                         </span>
                         <span>
                             <p>Bracelet</p>

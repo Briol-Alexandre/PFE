@@ -12,6 +12,7 @@ export default function Edit({ collection }) {
         user_id: collection.user_id,
         selected_strap: collection.selected_strap,
         selected_size: collection.selected_size,
+        selected_movement: collection.selected_movement,
     });
 
     const handleSubmit = (e) => {
@@ -70,6 +71,22 @@ export default function Edit({ collection }) {
                                 className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             />
                             {errors.warranty_end_date && <InputError message={errors.warranty_end_date} />}
+                        </div>
+
+                        <div>
+                            <InputLabel htmlFor="selected_movement" value="Type de mouvement choisi" />
+                            <select
+                                name="selected_movement"
+                                value={data.selected_movement}
+                                onChange={handleChange}
+                                className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            >
+                                <option value="">Sélectionnez un mouvement</option>
+                                {collection.watch.available_movements.map((movement) => (
+                                    <option key={movement} value={movement}>{movement}</option>
+                                ))}
+                            </select>
+                            {errors.selected_movement && <InputError message={errors.selected_movement} />}
                         </div>
 
                         <div>

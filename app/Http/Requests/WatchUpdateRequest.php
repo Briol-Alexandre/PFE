@@ -15,7 +15,8 @@ class WatchUpdateRequest extends FormRequest
     {
         $rules = [
             'model' => 'sometimes|string|max:255',
-            'movement' => 'sometimes|string|max:255',
+            'available_movements' => 'sometimes|nullable|string',
+            'selected_movement' => 'sometimes|nullable|string|max:255',
             'available_straps' => 'sometimes|nullable|string',
             'available_sizes' => 'sometimes|nullable|string',
             'user_id' => 'sometimes|exists:users,id',
