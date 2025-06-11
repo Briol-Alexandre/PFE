@@ -8,7 +8,7 @@ export default function CollectionCard({ collections }) {
                     <Link href={route('collection.show', { collection: collection.id })} className="flex flex-col gap-4">
                         <img src={collection.watch.image} alt={collection.watch.model} className="w-full aspect-square" />
                         <div className='flex flex-col'>
-                            <p className="text-lg text-gray-400 leading-5">{collection.watch.creator.name}</p>
+                            <p className="text-lg text-gray-400 leading-5">Col&MacArthur</p>
                             <p className="text-lg leading-5">{collection.watch.model}</p>
                             <div className="mt-4 space-y-1">
                                 <p className="text-sm text-gray-400">Acheté le : {!collection.purchase_date ? 'Non renseigné' : new Date(collection.purchase_date).toLocaleDateString()}</p>

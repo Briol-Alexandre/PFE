@@ -35,7 +35,7 @@ export default function Dashboard({ auth, watches, asked_repairs }) {
                                     userRole={user.role}
                                 />
                             ) : (
-                                <p className="text-gray-400">Aucune nouvelle demande</p>
+                                <p className="text-gray-400 text-center py-10">Aucune nouvelle demande</p>
                             );
                         })()}
                         <div className="p-6 pt-4 flex justify-center">

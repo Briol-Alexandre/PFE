@@ -1,5 +1,5 @@
 import { Link } from "@inertiajs/react";
-import WatchCard from "@/Components/Watch/Card";
+import WatchCardDashboard from "@/Components/Watch/CardDashboard";
 
 export default function DashboardLayoutWatch({ watches, userRole, isDashboard = false, isShowUser = false }) {
     return (
@@ -15,7 +15,7 @@ export default function DashboardLayoutWatch({ watches, userRole, isDashboard = 
             <div className="space-y-8">
                 {watches.length > 0 ? (
                     <div>
-                        <WatchCard watches={watches} userRole={userRole} />
+                        <WatchCardDashboard watches={watches} userRole={userRole} />
                     </div>
                 ) : (
                     <p className="text-gray-400">Vous n'avez pas encore de montres.</p>
