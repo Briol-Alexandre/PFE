@@ -17,7 +17,7 @@ class SendUpcomingRepairNotifications extends Command
         $tomorrow = Carbon::tomorrow();
         
         $repairs = Repair::where('status', 'accepted')
-            ->whereDate('date', $tomorrow->toDateString())
+            ->where('date', $tomorrow->toDateString())
             ->get();
 
         foreach ($repairs as $repair) {

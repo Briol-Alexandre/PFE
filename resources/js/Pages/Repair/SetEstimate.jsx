@@ -37,6 +37,15 @@ export default function SetEstimate({ repair }) {
     const updateDate = (index, value) => {
         console.log('Mise à jour de la date:', { index, value });
         const newDates = [...data.proposed_dates];
+        
+        // Vérifier si la date est dans le passé
+        const selectedDate = new Date(value);
+        const now = new Date();
+        
+        if (selectedDate < now) {
+            alert('Attention : La date sélectionnée est dans le passé');
+        }
+        
         newDates[index] = value;
         setData('proposed_dates', newDates);
         console.log('Nouvelles dates:', newDates);
@@ -48,6 +57,14 @@ export default function SetEstimate({ repair }) {
         // Vérifier qu'il y a au moins une date
         if (!data.proposed_dates.some(date => date)) {
             alert('Veuillez proposer au moins une date');
+            return;
+        }
+
+        // Vérifier que les dates ne sont pas dans le passé
+        const now = new Date();
+        const invalidDates = data.proposed_dates.filter(date => date && new Date(date) < now);
+        if (invalidDates.length > 0) {
+            alert('Les dates proposées ne peuvent pas être dans le passé');
             return;
         }
 
@@ -69,15 +86,11 @@ export default function SetEstimate({ repair }) {
             price: parseInt(data.price, 10) // Convertir le prix en nombre
         };
 
-        console.log('Données envoyées:', formData);
-
         patch(route('repair.update_estimate', repair.id), formData, {
             onSuccess: () => {
-                console.log('Succès!');
                 window.location.reload(); // Recharger la page en cas de succès
             },
             onError: (errors) => {
-                console.error('Erreurs:', errors);
                 if (errors && typeof errors === 'object') {
                     alert(Object.values(errors).join('\n')); // Afficher les erreurs
                 } else {

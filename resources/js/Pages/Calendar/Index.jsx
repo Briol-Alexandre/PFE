@@ -99,6 +99,8 @@ export default function RepairCalendar({ auth, repairs, userRole }) {
                                 eventPropGetter={eventStyleGetter}
                                 formats={formats}
                                 culture="fr"
+                                views={userRole === 'creator' ? ['month', 'week', 'day', 'agenda'] : ['agenda']}
+                                defaultView={userRole === 'creator' ? 'month' : 'agenda'}
                                 messages={{
                                     next: 'Suivant',
                                     previous: 'Précédent',
