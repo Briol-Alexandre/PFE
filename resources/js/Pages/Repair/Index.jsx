@@ -21,8 +21,8 @@ export default function Index({ repairs, asked_repairs, upcomming_repairs, past_
     return (
         <AuthenticatedLayout>
             <Head title="Réparations" />
-            <div>
-                <h1 className="title">Réparations</h1>
+            <section aria-labelledby="repair-title">
+                <h2 className="title" id="repair-title">Réparations</h2>
 
                 <Tab.Group>
                     <div className="w-full max-w-4xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -59,17 +59,17 @@ export default function Index({ repairs, asked_repairs, upcomming_repairs, past_
                         ))}
                     </Tab.Panels>
                 </Tab.Group>
-            </div>
+            </section>
             {usePage().props.auth.user.role !== 'creator' && (
                 <Link
                     href={route('repair.create')}
-                    className="hover-underline"
+                    className="hover-underline mx-auto my-10"
                 >
                     Créer une réparation
                 </Link>
             )}
             {usePage().props.auth.user.role === 'creator' && (
-                <div className="flex justify-center my-10">
+                <div className="flex justify-center my-10 mx-auto">
                     <Link
                         href={route('revision.index')}
                         className="hover-underline"

@@ -13,7 +13,9 @@ export default function AuthenticatedLayout({ header, children }) {
 
     return (
         <div className="min-h-screen text-white font-just-sans">
+            <h1 className="sr-only">Col&MacArthur-Maintenance</h1>
             <nav className="py-10">
+                <h2 className="sr-only">Navigation Principale</h2>
                 <div className="rl:mx-20 mx-5">
                     <div className="flex h-16 items-center justify-between">
                         <div className="flex w-full items-center">

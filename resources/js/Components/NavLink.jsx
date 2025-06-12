@@ -17,7 +17,6 @@ export default function NavLink({
                 className
             }
         >
-            <h2 className='sr-only'>Navigation Principale</h2>
             {children}
         </Link>
     );

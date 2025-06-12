@@ -11,7 +11,7 @@ export default function Index({ collections }) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <DashboardLayoutCollection collections={collections} userRole={userRole} />
+                    <DashboardLayoutCollection collections={collections} userRole={userRole} isDashboard={false} />
                 </div>
             </div>
         </AuthenticatedLayout>

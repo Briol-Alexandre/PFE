@@ -32,81 +32,99 @@ export default function Single({ collection, upcoming_repairs, past_repairs }) {
     return (
         <AuthenticatedLayout>
             <Head title={collection.watch.model} />
-            <section className="flex relative" aria-labelledby="collection-title">
+            <section className="relative" aria-labelledby="collection-title">
+                {/* Image floue en arrière-plan */}
                 <img
                     src={collection.watch.image}
-                    alt={collection.watch.model}
+                    alt=""
                     className="fixed -z-10 -top-40 left-1/2 -translate-x-1/2 blur-2xl opacity-50 scale-125 max-w-[500px]"
+                    aria-hidden="true"
                 />
-                <div className="text-white ml-20 mt-20 font-just-sans">
-                    <p className="text-4xl font-erstoria text-brand/70">{collection.watch.creator.name}</p>
-                    <h2 className="text-5xl mb-4 font-erstoria" id="collection-title">{collection.watch.model}</h2>
-                    <div className="flex flex-col gap-2">
-                        <p className="text-2xl">Informations</p>
-                        <span>
-                            <p>Type de mouvement</p>
-                            <p className="capitalize text-brand/80">{collection.selected_movement}</p>
-                        </span>
-                        <span>
-                            <p>Bracelet</p>
-                            <p className="capitalize text-brand/80">{collection.selected_strap}</p>
-                        </span>
-                        <span>
-                            <p>Taille du cadran</p>
-                            <p className="capitalize text-brand/80">{collection.selected_size}</p>
-                        </span>
-                        <span>
-                            <p>Date d'achat</p>
-                            <p className="text-brand/80">{!collection.purchase_date ? 'Non renseigné' : new Date(collection.purchase_date).toLocaleDateString()}</p>
-                        </span>
-                        <span>
-                            <p>Fin de garantie</p>
-                            <div className="flex items-center gap-2">
-                                <p className="text-brand/80">{!collection.warranty_end_date ? 'Non renseigné' : new Date(collection.warranty_end_date).toLocaleDateString()}</p>
-                                {collection.warranty_image && (
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowWarrantyImage(true)}
-                                        className="w-4 h-4 rounded-full border border-brand flex items-center justify-center hover:bg-brand hover:text-black transition-colors duration-300 text-xs"
-                                    >
-                                        ?
-                                    </button>
-                                )}
+
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex flex-col rg:flex-row rg:items-center rg:justify-between rg:space-x-8">
+                        {/* Informations */}
+                        <div className="w-full rg:w-1/2 text-white font-just-sans">
+                            <p className="text-3xl rg:text-4xl font-erstoria text-brand/70">{collection.watch.creator.name}</p>
+                            <h2 className="text-4xl rg:text-5xl mb-4 font-erstoria" id="collection-title">{collection.watch.model}</h2>
+
+                            {/* Image principale - visible uniquement sur mobile */}
+                            <div className="block rg:hidden mb-8">
+                                <img
+                                    src={collection.watch.image}
+                                    alt={collection.watch.model}
+                                    className="w-full max-w-[300px] mx-auto object-contain rounded-lg"
+                                />
                             </div>
-                        </span>
-                        <Link href={route('collection.edit', { collection: collection.id })} className="">
-                            <button
-                                type="button"
-                                className="px-4 py-2 rounded-md transition-colors duration-300 border border-brand hover:bg-brand hover:text-black text-white"
-                            >
-                                Modifier les informations
-                            </button>
-                        </Link>
-                        <form onSubmit={handleSubmit}>
-                            <button
-                                type="submit"
-                                className="px-4 py-2 rounded-md text-white transition-colors duration-300 hover:bg-brand-red border border-brand-red"
-                            >
-                                Supprimer de ma collection
-                            </button>
-                        </form>
+                            <div className="flex flex-col gap-4 mt-8">
+                                <p className="text-xl lg:text-2xl">Informations</p>
+                                <div className="space-y-4">
+                                    <div className="border-b border-brand/20 pb-2">
+                                        <p className="text-gray-400">Type de mouvement</p>
+                                        <p className="capitalize text-brand/80">{collection.selected_movement}</p>
+                                    </div>
+                                    <div className="border-b border-brand/20 pb-2">
+                                        <p className="text-gray-400">Bracelet</p>
+                                        <p className="capitalize text-brand/80">{collection.selected_strap}</p>
+                                    </div>
+                                    <div className="border-b border-brand/20 pb-2">
+                                        <p className="text-gray-400">Taille du cadran</p>
+                                        <p className="capitalize text-brand/80">{collection.selected_size}</p>
+                                    </div>
+                                    <div className="border-b border-brand/20 pb-2">
+                                        <p className="text-gray-400">Date d'achat</p>
+                                        <p className="text-brand/80">{!collection.purchase_date ? 'Non renseigné' : new Date(collection.purchase_date).toLocaleDateString()}</p>
+                                    </div>
+                                    <div className="border-b border-brand/20 pb-2">
+                                        <p className="text-gray-400">Fin de garantie</p>
+                                        <div className="flex items-center gap-2">
+                                            <p className="text-brand/80">{!collection.warranty_end_date ? 'Non renseigné' : new Date(collection.warranty_end_date).toLocaleDateString()}</p>
+                                            {collection.warranty_image && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setShowWarrantyImage(true)}
+                                                    className="w-4 h-4 rounded-full border border-brand flex items-center justify-center hover:bg-brand hover:text-black transition-colors duration-300 text-xs"
+                                                >
+                                                    ?
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                                    <Link
+                                        href={route('collection.edit', { collection: collection.id })}
+                                        className="inline-block px-6 py-3 rounded-md transition-colors duration-300 border border-brand hover:bg-brand hover:text-black text-white text-center"
+                                    >
+                                        Modifier les informations
+                                    </Link>
+                                    <form onSubmit={handleSubmit} className="inline-block">
+                                        <button
+                                            type="submit"
+                                            className="w-full px-6 py-3 rounded-md text-white transition-colors duration-300 hover:bg-brand-red border border-brand-red text-center"
+                                        >
+                                            Supprimer de ma collection
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Image principale - visible uniquement sur desktop */}
+                        <div className="hidden rg:block rg:w-1/2">
+                            <div className="sticky top-8">
+                                <img
+                                    src={collection.watch.image}
+                                    alt={collection.watch.model}
+                                    className="w-full max-w-[500px] ml-auto object-contain rounded-lg"
+                                />
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div
-                    className="fixed bottom-0 right-0 w-[600px] h-[600px] overflow-hidden transition-transform duration-300"
-                    style={{
-                        transform: `translateX(${Math.min(scrollOffset * 5, 1000)}px)`
-                    }}
-                >
-                    <img
-                        src={collection.watch.image}
-                        alt={collection.watch.model}
-                        className="w-full h-full object-contain select-none"
-                    />
                 </div>
             </section>
 
-            <section aria-labelledby="repairs-title" className="mt-40">
+            <section aria-labelledby="repairs-title" className="mt-16 rg:mt-40 max-w-7xl mx-auto px-4 sm:px-6 rg:px-8">
                 <h2 className="text-2xl font-semibold text-brand" id="repairs-title">Réparations</h2>
                 <div className="space-y-8">
                     {upcoming_repairs.length > 0 && (

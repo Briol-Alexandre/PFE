@@ -20,12 +20,12 @@ export default function Dashboard({ auth, upcoming_repairs, past_repairs }) {
             </div>
             <div className="pb-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <DashboardLayoutRepairs 
+                    <DashboardLayoutRepairs
                         upcoming_repairs={[...upcoming_repairs, ...past_repairs]
                             .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-                            .slice(0, 3)} 
-                        past_repairs={[]} 
-                        userRole={user.role} 
+                            .slice(0, 3)}
+                        past_repairs={[]}
+                        userRole={user.role}
                     />
                 </div>
             </div>

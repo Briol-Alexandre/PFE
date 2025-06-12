@@ -21,6 +21,9 @@ export default function Welcome({ auth }) {
             <ScrollbarCustom />
             <div className="min-h-screen flex flex-col items-center justify-center max-md:px-4">
                 <header className="flex flex-col items-center justify-center w-full">
+                    <h1 className="sr-only">
+                        Col&MacArthur-Maintenance
+                    </h1>
                     <img src="/img/logo.svg" alt="Col&MacArthur-Maintenance" className="xl:max-w-[900px] md:max-w-[600px] max-w-[400px] z-10" />
                     <p className="text-center xl:text-6xl rl:text-5xl md:text-4.5xl text-2xl max-rl:leading-tight font-erstoria text-brand pt-16 md:w-1/2">
                         Ne laissez pas le temps abîmer vos montres
