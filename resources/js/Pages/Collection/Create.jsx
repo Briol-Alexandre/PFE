@@ -53,12 +53,12 @@ export default function Create({ watches }) {
                                     name="watch_id"
                                     value={watches.find(watch => watch.id === data.watch_id) ? {
                                         value: data.watch_id,
-                                        label: `${watches.find(watch => watch.id === data.watch_id).creator.name} - ${watches.find(watch => watch.id === data.watch_id).model}`
+                                        label: `Col&MacArthur - ${watches.find(watch => watch.id === data.watch_id).model}`
                                     } : null}
                                     onChange={handleWatchSelect}
                                     options={watches.map(watch => ({
                                         value: watch.id,
-                                        label: `${watch.creator.name} - ${watch.model}`
+                                        label: `Col&MacArthur - ${watch.model}`
                                     }))}
                                     placeholder="Rechercher une montre..."
                                     isClearable

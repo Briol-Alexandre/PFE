@@ -124,17 +124,17 @@ export default function Single({ collection, upcoming_repairs, past_repairs }) {
                 </div>
             </section>
 
-            <section aria-labelledby="repairs-title" className="mt-16 rg:mt-40 max-w-7xl mx-auto px-4 sm:px-6 rg:px-8">
-                <h2 className="text-2xl font-semibold text-brand" id="repairs-title">Réparations</h2>
+            <section aria-labelledby="repairs-title" className="mt-16 rg:mt-40 max-w-7xl mx-auto px-4 sm:px-6 rg:px-8 text-center">
+                <h2 className="text-2xl font-semibold text-brand text-left" id="repairs-title">Réparations</h2>
                 <div className="space-y-8">
                     {upcoming_repairs.length > 0 && (
-                        <div>
-                            <h3 className="text-xl text-brand mb-4">Réparations à venir</h3>
+                        <div className="my-10">
+                            <h3 className="text-xl text-brand mb-4 text-left">Réparations à venir</h3>
                             <RepairCard repairs={upcoming_repairs} />
                         </div>
                     )}
                     {past_repairs.length > 0 && (
-                        <div>
+                        <div className="my-10">
                             <h3 className="text-xl text-brand mb-4">Réparations passées</h3>
                             <RepairCard repairs={past_repairs} />
                         </div>
