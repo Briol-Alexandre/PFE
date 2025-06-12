@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import ULTextSection from '../Components/welcome-page/ul-text-section';
 import ScrollbarCustom from '../Components/tools/ScrollBar';
 import ScrollImage from '../Components/welcome-page/Scroll-image';
-import Breakpoints from '../Components/tools/Breakpoints';
 
 export default function Welcome({ auth }) {
     useEffect(() => {

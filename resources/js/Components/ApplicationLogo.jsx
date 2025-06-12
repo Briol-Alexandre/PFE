@@ -6,7 +6,22 @@ export default function ApplicationLogo(props) {
                 <clipPath id="clippath">
                     <path d="M0 0h210.7v20H0z" style={{ fill: 'none' }} />
                 </clipPath>
-                <style>{`.cls-3 { fill: #fff; }`}</style>
+                <style>
+                    {`
+                        @font-face {
+                            font-family: 'Erstoria';
+                            src: url('/fonts/Erstoria.woff2') format('woff2'),
+                                 url('/fonts/Erstoria.woff') format('woff');
+                            font-weight: normal;
+                            font-style: normal;
+                        }
+                        .cls-3 { fill: #fff; }
+                        .logo-text { 
+                            font-family: 'Erstoria', sans-serif;
+                            fill: #fff;
+                        }
+                    `}
+                </style>
             </defs>
             <g style={{ clipPath: 'url(#clippath)' }}>
                 <path
@@ -16,18 +31,14 @@ export default function ApplicationLogo(props) {
             </g>
             <text
                 transform="translate(29 40.5)"
-                style={{
-                    fill: '#fff',
-                    fontFamily: 'FacultyGlyphic-Regular, "Faculty Glyphic"',
-                    fontSize: '19.2px',
-                }}
+                className="logo-text"
             >
                 <tspan x="0" y="0">M</tspan>
-                <tspan x="17.6" y="0" style={{ letterSpacing: 0 }}>A</tspan>
-                <tspan x="32.9" y="0" style={{ letterSpacing: 0 }}>INTEN</tspan>
-                <tspan x="95.1" y="0" style={{ letterSpacing: 0 }}>A</tspan>
+                <tspan x="17.6" y="0">A</tspan>
+                <tspan x="32.9" y="0">INTEN</tspan>
+                <tspan x="95.1" y="0">A</tspan>
                 <tspan x="110.4" y="0">N</tspan>
-                <tspan x="126" y="0" style={{ letterSpacing: 0 }}>C</tspan>
+                <tspan x="126" y="0">C</tspan>
                 <tspan x="140.5" y="0">E</tspan>
             </text>
         </svg>
