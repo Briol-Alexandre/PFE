@@ -56,7 +56,7 @@ export default function Create({ collections, revisions, watch_id }) {
                                     <option value="">Sélectionnez une montre</option>
                                     {collections.map(collection => (
                                         <option key={collection.id} value={collection.id}>
-                                            {collection.watch.creator.name} - {collection.watch.model}
+                                            Col&MacArthur - {collection.watch.model}
                                         </option>
                                     ))}
                                 </select>

@@ -45,7 +45,7 @@ export default function Single({ collection, upcoming_repairs, past_repairs }) {
                     <div className="flex flex-col rg:flex-row rg:items-center rg:justify-between rg:space-x-8">
                         {/* Informations */}
                         <div className="w-full rg:w-1/2 text-white font-just-sans">
-                            <p className="text-3xl rg:text-4xl font-erstoria text-brand/70">{collection.watch.creator.name}</p>
+                            <p className="text-3xl rg:text-4xl font-erstoria text-brand/70">Col&MacArthur</p>
                             <h2 className="text-4xl rg:text-5xl mb-4 font-erstoria" id="collection-title">{collection.watch.model}</h2>
 
                             {/* Image principale - visible uniquement sur mobile */}
