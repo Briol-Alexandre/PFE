@@ -55,6 +55,7 @@ class RepairStatusUpdated extends Notification
         switch ($this->repair->status) {
             case 'asked':
                 $message->line('Une nouvelle demande de réparation a été créée.')
+                    ->line('Client : ' . $this->repair->collection->user->name)
                     ->line('Montre : ' . $this->repair->collection->watch->model)
                     ->line('Description: ' . $this->repair->description);
 
@@ -70,7 +71,7 @@ class RepairStatusUpdated extends Notification
                 $message->line('La réparation de votre ' . $this->repair->collection->watch->model . ' a été évaluée.')
                     ->line('Prix estimé: ' . $this->repair->price . '€')
                     ->line('Dates proposées :');
-                
+
                 foreach ($this->repair->proposed_dates as $date) {
                     $message->line('- ' . (new \DateTime($date))->format('d/m/Y H:i'));
                 }

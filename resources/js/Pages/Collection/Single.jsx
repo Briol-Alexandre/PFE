@@ -124,7 +124,7 @@ export default function Single({ collection, upcoming_repairs, past_repairs }) {
                 </div>
             </section>
 
-            <section aria-labelledby="repairs-title" className="mt-16 rg:mt-40 max-w-7xl mx-auto px-4 sm:px-6 rg:px-8 text-center">
+            <section aria-labelledby="repairs-title" className="mt-16 rg:mt-40 max-w-7xl mx-auto px-4 sm:px-6 rg:px-8 text-center mb-10">
                 <h2 className="text-2xl font-semibold text-brand text-left" id="repairs-title">Réparations</h2>
                 <div className="space-y-8">
                     {upcoming_repairs.length > 0 && (
@@ -140,7 +140,7 @@ export default function Single({ collection, upcoming_repairs, past_repairs }) {
                         </div>
                     )}
                     {!upcoming_repairs.length && !past_repairs.length && (
-                        <p className="text-gray-400">Vous n'avez pas encore de réparations.</p>
+                        <p className="text-gray-400 my-10">Vous n'avez pas encore de réparations.</p>
                     )}
                 </div>
                 <Link href={route('repair.create', { watch_id: collection.watch.id })} className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200 mx-auto mt-8">

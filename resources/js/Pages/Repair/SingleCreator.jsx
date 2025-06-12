@@ -94,7 +94,7 @@ export default function SingleCreator({ repair }) {
                                         href={route('repair.modify_price_and_date', repair.id)}
                                         className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200"
                                     >
-                                        Modifier le prix et/ou la date
+                                        Modifier le devis
                                     </Link>
                                 )}
                                 {repair.status === 'accepted' && isSameDay(new Date(repair.date), new Date()) && (
