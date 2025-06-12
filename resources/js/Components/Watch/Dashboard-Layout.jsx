@@ -7,7 +7,7 @@ export default function DashboardLayoutWatch({ watches, userRole, isDashboard = 
             <div className={isDashboard ? 'flex items-center mb-8 justify-between' : 'flex items-center mb-8 justify-center'}>
                 <h3 className={isDashboard ? "text-2xl font-semibold text-brand" : isShowUser ? "hidden" : "title text-center"} id="watches-title">Vos montres</h3>
                 {isDashboard && userRole === 'creator' && (
-                    <Link href={route('watch.create')} className="px-4 py-2 bg-transparent border border-brand text-brand rounded-md hover:bg-brand hover:text-black transition-colors duration-200">
+                    <Link href={route('watch.create')} className="hover-underline">
                         Ajouter une montre
                     </Link>
                 )}
@@ -18,7 +18,7 @@ export default function DashboardLayoutWatch({ watches, userRole, isDashboard = 
                         <WatchCardDashboard watches={watches} userRole={userRole} />
                     </div>
                 ) : (
-                    <p className="text-gray-400">Vous n'avez pas encore de montres.</p>
+                    <p className="text-gray-400 text-center">Vous n'avez pas encore de montres.</p>
                 )}
             </div>
         </section>
