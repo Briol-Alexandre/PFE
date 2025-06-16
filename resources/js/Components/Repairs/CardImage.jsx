@@ -2,7 +2,7 @@ import { Link } from "@inertiajs/react";
 import { getRepairStatusInFrench, getRepairStatusColor } from "@/Utils/repairStatus";
 import { useState } from 'react';
 
-export default function RepairCardImage({ repairs, userRole, searchTerm = '', showSearch = false, setSearchTerm = () => { }, checkUser = true }) {
+export default function RepairCardImage({ repairs, userRole, searchTerm = '', showSearch = false, setSearchTerm = () => { }, checkUser = true, isDashboard = false }) {
     const repairRoute = userRole === 'creator' ? 'repair.show_creator' : 'repair.show';
 
     const filteredRepairs = repairs.filter(repair => {
@@ -77,7 +77,7 @@ export default function RepairCardImage({ repairs, userRole, searchTerm = '', sh
                     <p className="text-sm text-brand rounded-full w-fit px-2 py-1 absolute top-4 right-4" style={{ background: getRepairStatusColor(repair.status) }}>
                         {getRepairStatusInFrench(repair.status)}
                     </p>
-                    <img src={repair.collection.watch.image} alt={repair.collection.watch.model} className="w-full aspect-square" />
+                    <img src={repair.collection.watch.image} alt={repair.collection.watch.model} className="w-full aspect-square mb-4" />
                     <div className='flex flex-col'>
                         <p className="text-lg text-gray-400 leading-5">Col&MacArthur</p>
                         <p className="text-lg leading-5">{repair.collection.watch.model}</p>
@@ -94,7 +94,7 @@ export default function RepairCardImage({ repairs, userRole, searchTerm = '', sh
 
     if (userRole === 'creator') {
         return (
-            <div className="w-full max-w-4xl mx-auto px-2 md:px-6 lg:px-8">
+            <div className={`w-full ${isDashboard ? 'max-w-4xl' : ''} mx-auto px-2 md:px-6 lg:px-8`}>
                 {showSearch && (
                     <div className="mb-4">
                         <input

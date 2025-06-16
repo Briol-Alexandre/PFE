@@ -43,7 +43,8 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            'role' => 'required|string|in:user,creator'
+            'role' => 'required|string|in:user,creator',
+            'skip_watch_addition' => 'boolean'
         ]);
 
         $user = User::create([
@@ -53,6 +54,10 @@ class UserController extends Controller
             'password' => bcrypt($validated['password']),
             'role' => $validated['role']
         ]);
+
+        if ($user->isUser() && !($request->skip_watch_addition ?? false)) {
+            return redirect()->route('collection.create')->with('newUserId', $user->id);
+        }
 
         return redirect()->route('users.index')->with('success', 'Utilisateur créé avec succès.');
     }

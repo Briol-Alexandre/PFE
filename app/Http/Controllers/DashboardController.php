@@ -6,6 +6,7 @@ use App\Models\Watch;
 use App\Models\Repair;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Notifications\DatabaseNotification;
 
 class DashboardController extends Controller
 {
@@ -33,12 +34,27 @@ class DashboardController extends Controller
                 ->take(3)
                 ->get();
 
+            // Récupérer les notifications non lues pour le créateur
+            $notifications = $user->notifications()
+                ->orderBy('created_at', 'desc')
+                ->take(5)
+                ->get()
+                ->map(function ($notification) {
+                    return [
+                        'id' => $notification->id,
+                        'data' => $notification->data,
+                        'read_at' => $notification->read_at,
+                        'created_at' => $notification->created_at
+                    ];
+                });
+
             return Inertia::render('Dashboard-creator', [
                 'auth' => [
                     'user' => $user
                 ],
                 'watches' => $watches,
-                'asked_repairs' => $asked_repairs
+                'asked_repairs' => $asked_repairs,
+                'notifications' => $notifications
             ]);
         }
 

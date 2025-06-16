@@ -8,7 +8,7 @@ export default function DashboardLayoutCollection({ collections, isDashboard }) 
                 {isDashboard ? (
                     <h3 className="sub-title" id="collection-title">Votre collection</h3>
                 ) : (
-                    <h2 className="sub-title" id="collection-title">Votre collections</h2>
+                    <h2 className="sub-title" id="collection-title">Votre collection</h2>
                 )}
                 <Link
                     href={route('collection.create')}

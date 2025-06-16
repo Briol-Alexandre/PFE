@@ -14,7 +14,7 @@ export default function Single({ watch }) {
     return (
         <AuthenticatedLayout>
             <Head title={watch.model} />
-            <div className="relative">
+            <div className="relative mt-20">
                 {/* Image floue en arrière-plan */}
                 <img
                     src={watch.image}

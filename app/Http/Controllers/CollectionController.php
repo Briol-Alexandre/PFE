@@ -34,8 +34,11 @@ class CollectionController extends Controller
     {
         $this->authorize('create', Collection::class);
 
+        // Récupérer l'ID de l'utilisateur de la session si disponible (cas d'un nouvel utilisateur créé)
+        $userId = session('newUserId', auth()->id());
+
         // Récupérer les IDs des montres déjà dans la collection de l'utilisateur
-        $userWatchIds = Collection::where('user_id', auth()->id())
+        $userWatchIds = Collection::where('user_id', $userId)
             ->pluck('watch_id')
             ->toArray();
 
@@ -46,6 +49,7 @@ class CollectionController extends Controller
 
         return Inertia::render('Collection/Create', [
             'watches' => $watches,
+            'targetUserId' => $userId, // Passer l'ID de l'utilisateur cible à la vue
         ]);
     }
 
@@ -56,8 +60,11 @@ class CollectionController extends Controller
     {
         $this->authorize('create', Collection::class);
 
+        // Utiliser l'ID utilisateur fourni dans la requête ou l'ID de l'utilisateur authentifié
+        $userId = $request->user_id ?? auth()->id();
+
         $data = [
-            'user_id' => auth()->id(),
+            'user_id' => $userId,
             'watch_id' => $request->watch_id,
             'purchase_date' => $request->purchase_date,
             'warranty_end_date' => $request->warranty_end_date,
@@ -71,7 +78,12 @@ class CollectionController extends Controller
             $data['warranty_image'] = $path;
         }
 
-        Collection::create($data);
+        $collection = Collection::create($data);
+
+        // Si l'utilisateur qui a créé la collection n'est pas l'utilisateur authentifié
+        if ($userId != auth()->id()) {
+            return redirect()->route('users.show', $userId)->with('success', 'Montre ajoutée à la collection avec succès.');
+        }
 
         return redirect()->route('collection.index');
     }

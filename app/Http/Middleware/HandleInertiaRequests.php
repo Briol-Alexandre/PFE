@@ -29,11 +29,32 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+        $notifications = [];
+        
+        // Si l'utilisateur est authentifié et est un créateur, récupérer ses notifications
+        if ($user && $user->role === 'creator') {
+            $notifications = $user->notifications()
+                ->orderBy('created_at', 'desc')
+                ->take(5)
+                ->get()
+                ->map(function ($notification) {
+                    return [
+                        'id' => $notification->id,
+                        'data' => $notification->data,
+                        'read_at' => $notification->read_at,
+                        'created_at' => $notification->created_at
+                    ];
+                })
+                ->toArray();
+        }
+        
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user,
             ],
+            'notifications' => $notifications,
         ];
     }
 }

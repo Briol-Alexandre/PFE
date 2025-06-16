@@ -4,13 +4,14 @@ import InputLabel from '@/Components/InputLabel';
 import InputError from '@/Components/InputError';
 import Select from 'react-select';
 
-export default function Create({ watches }) {
+export default function Create({ watches, targetUserId }) {
+    // Utiliser l'ID de l'utilisateur cible s'il est fourni, sinon utiliser l'ID de l'utilisateur authentifié
     const { data, setData, post, processing, errors } = useForm({
         watch_id: '',
         purchase_date: '',
         warranty_end_date: '',
         warranty_image: null,
-        user_id: usePage().props.auth.user.id,
+        user_id: targetUserId || usePage().props.auth.user.id,
         selected_strap: '',
         selected_size: '',
         selected_movement: '',
@@ -43,7 +44,11 @@ export default function Create({ watches }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-black/20 backdrop-blur-3xl overflow-hidden shadow-sm sm:rounded-lg p-6">
                         <div className="flex justify-between items-start mb-8 border-b border-brand-green pb-4">
-                            <h2 className="text-4xl font-erstoria text-brand" id="collection-title">Ajouter une montre à ma collection</h2>
+                            <h2 className="text-4xl font-erstoria text-brand" id="collection-title">
+                                {targetUserId && targetUserId !== usePage().props.auth.user.id 
+                                    ? "Ajouter une montre à la collection de l'utilisateur" 
+                                    : "Ajouter une montre à ma collection"}
+                            </h2>
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
