@@ -9,6 +9,7 @@ use App\Http\Requests\CollectionStoreRequest;
 use App\Http\Requests\CollectionUpdateRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\Repair;
+use Illuminate\Support\Facades\Storage;
 
 class CollectionController extends Controller
 {
@@ -70,8 +71,16 @@ class CollectionController extends Controller
         ];
 
         if ($request->hasFile('warranty_image')) {
-            $path = $request->file('warranty_image')->store('warranty_images', 'public');
-            $data['warranty_image'] = $path;
+            // Déterminer le disque à utiliser en fonction de l'environnement
+            $disk = env('APP_ENV') === 'production' ? 's3' : 'public';
+            $path = $request->file('warranty_image')->store('warranty_images', $disk);
+            
+            // Générer l'URL appropriée selon le disque
+            if ($disk === 's3') {
+                $data['warranty_image'] = Storage::disk('s3')->url($path);
+            } else {
+                $data['warranty_image'] = $path;
+            }
         }
 
         $collection = Collection::create($data);

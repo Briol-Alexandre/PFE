@@ -15,7 +15,7 @@ export default function Dashboard({ auth, upcoming_repairs, past_repairs }) {
             <Head title="Dashboard" />
             <div className="pb-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <DashboardLayoutCollection collections={user.collection} />
+                    <DashboardLayoutCollection collections={user.collection} isDashboard={true} />
                 </div>
             </div>
             <div className="pb-12">
