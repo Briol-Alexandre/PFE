@@ -39,14 +39,45 @@ class WatchController extends Controller
         $validated = $request->validated();
 
         if ($request->hasFile('image')) {
-            // Déterminer le disque à utiliser en fonction de l'environnement
-            $disk = env('APP_ENV') === 'production' ? 's3' : 'public';
-            $path = $request->file('image')->store('watches', $disk);
+            try {
+                // Débogage de la configuration S3
+                \Log::debug('AWS Config', [
+                    'region' => config('filesystems.disks.s3.region'),
+                    'bucket' => config('filesystems.disks.s3.bucket'),
+                    'url' => config('filesystems.disks.s3.url'),
+                    'endpoint' => config('filesystems.disks.s3.endpoint'),
+                    'app_env' => env('APP_ENV'),
+                    'filesystem_disk' => env('FILESYSTEM_DISK'),
+                ]);
 
-            // Générer l'URL appropriée selon le disque
-            if ($disk === 's3') {
-                $validated['image'] = Storage::disk('s3')->url($path);
-            } else {
+                // Déterminer le disque à utiliser en fonction de l'environnement
+                $disk = env('APP_ENV') === 'production' ? 's3' : 'public';
+                
+                // Débogage du fichier
+                \Log::debug('File Info', [
+                    'file_name' => $request->file('image')->getClientOriginalName(),
+                    'file_size' => $request->file('image')->getSize(),
+                    'disk' => $disk
+                ]);
+
+                $path = $request->file('image')->store('watches', $disk);
+                \Log::debug('Path after store', ['path' => $path]);
+
+                // Générer l'URL appropriée selon le disque
+                if ($disk === 's3') {
+                    $validated['image'] = Storage::disk('s3')->url($path);
+                    \Log::debug('S3 URL', ['url' => $validated['image']]);
+                } else {
+                    $validated['image'] = Storage::url($path);
+                }
+            } catch (\Exception $e) {
+                \Log::error('S3 Error', [
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                
+                // Fallback au stockage local en cas d'erreur
+                $path = $request->file('image')->store('watches', 'public');
                 $validated['image'] = Storage::url($path);
             }
         }
