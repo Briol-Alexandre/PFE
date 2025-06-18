@@ -71,14 +71,45 @@ class CollectionController extends Controller
         ];
 
         if ($request->hasFile('warranty_image')) {
-            // Déterminer le disque à utiliser en fonction de l'environnement
-            $disk = env('APP_ENV') === 'production' ? 's3' : 'public';
-            $path = $request->file('warranty_image')->store('warranty_images', $disk);
-            
-            // Générer l'URL appropriée selon le disque
-            if ($disk === 's3') {
-                $data['warranty_image'] = Storage::disk('s3')->url($path);
-            } else {
+            try {
+                // Débogage de la configuration S3
+                \Log::debug('AWS Config (Collection)', [
+                    'region' => config('filesystems.disks.s3.region'),
+                    'bucket' => config('filesystems.disks.s3.bucket'),
+                    'url' => config('filesystems.disks.s3.url'),
+                    'endpoint' => config('filesystems.disks.s3.endpoint'),
+                    'app_env' => env('APP_ENV'),
+                    'filesystem_disk' => env('FILESYSTEM_DISK'),
+                ]);
+
+                // Déterminer le disque à utiliser en fonction de l'environnement
+                $disk = env('APP_ENV') === 'production' ? 's3' : 'public';
+                
+                // Débogage du fichier
+                \Log::debug('Warranty File Info', [
+                    'file_name' => $request->file('warranty_image')->getClientOriginalName(),
+                    'file_size' => $request->file('warranty_image')->getSize(),
+                    'disk' => $disk
+                ]);
+
+                $path = $request->file('warranty_image')->store('warranty_images', $disk);
+                \Log::debug('Warranty path after store', ['path' => $path]);
+
+                // Générer l'URL appropriée selon le disque
+                if ($disk === 's3') {
+                    $data['warranty_image'] = Storage::disk('s3')->url($path);
+                    \Log::debug('S3 URL for warranty', ['url' => $data['warranty_image']]);
+                } else {
+                    $data['warranty_image'] = $path;
+                }
+            } catch (\Exception $e) {
+                \Log::error('S3 Error in Collection', [
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                
+                // Fallback au stockage local en cas d'erreur
+                $path = $request->file('warranty_image')->store('warranty_images', 'public');
                 $data['warranty_image'] = $path;
             }
         }
