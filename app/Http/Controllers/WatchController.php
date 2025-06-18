@@ -38,11 +38,12 @@ class WatchController extends Controller
     {
         $validated = $request->validated();
 
+
         if ($request->hasFile('image')) {
             // Déterminer le disque à utiliser en fonction de l'environnement
             $disk = env('APP_ENV') === 'production' ? 's3' : 'public';
             $path = $request->file('image')->store('watches', $disk);
-            
+
             // Générer l'URL appropriée selon le disque
             if ($disk === 's3') {
                 $validated['image'] = Storage::disk('s3')->url($path);
@@ -113,7 +114,7 @@ class WatchController extends Controller
             // Déterminer le disque à utiliser en fonction de l'environnement
             $disk = env('APP_ENV') === 'production' ? 's3' : 'public';
             $path = $request->file('image')->store('watches', $disk);
-            
+
             // Générer l'URL appropriée selon le disque
             if ($disk === 's3') {
                 $data['image'] = Storage::disk('s3')->url($path);
