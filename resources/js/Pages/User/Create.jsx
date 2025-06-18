@@ -10,6 +10,7 @@ export default function Create() {
         email: '',
         password: '',
         role: 'user',
+        skip_watch_addition: false,
     });
 
     const submit = (e) => {
@@ -101,6 +102,21 @@ export default function Create() {
                                 </select>
                                 <InputError message={errors.role} className="mt-2" />
                             </div>
+                            {data.role === 'user' && (
+                                <div className="flex items-center mt-4">
+                                    <input
+                                        type="checkbox"
+                                        id="skip_watch_addition"
+                                        name="skip_watch_addition"
+                                        checked={data.skip_watch_addition}
+                                        onChange={(e) => setData('skip_watch_addition', e.target.checked)}
+                                        className="rounded border-brand bg-transparent text-brand-green focus:ring-brand-green"
+                                    />
+                                    <label htmlFor="skip_watch_addition" className="ml-2 text-brand">
+                                        Ne pas ajouter de montre à la collection après la création
+                                    </label>
+                                </div>
+                            )}
 
                             <div className="flex items-center justify-end">
                                 <button

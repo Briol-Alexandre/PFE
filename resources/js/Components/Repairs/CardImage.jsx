@@ -2,7 +2,7 @@ import { Link } from "@inertiajs/react";
 import { getRepairStatusInFrench, getRepairStatusColor } from "@/Utils/repairStatus";
 import { useState } from 'react';
 
-export default function RepairCardImage({ repairs, userRole, searchTerm = '', showSearch = false, setSearchTerm = () => { }, checkUser = true }) {
+export default function RepairCardImage({ repairs, userRole, searchTerm = '', showSearch = false, setSearchTerm = () => { }, checkUser = true, isDashboard = false }) {
     const repairRoute = userRole === 'creator' ? 'repair.show_creator' : 'repair.show';
 
     const filteredRepairs = repairs.filter(repair => {
@@ -68,7 +68,7 @@ export default function RepairCardImage({ repairs, userRole, searchTerm = '', sh
     };
 
     const ClientCard = ({ repair }) => (
-        <li key={repair.id} className="bg-black/20 backdrop-blur-3xl max-w-[400px] aspect-square p-10 rounded-3xl hover:bg-white/20 transition-colors duration-300">
+        <li key={repair.id} className="bg-black/20 backdrop-blur-3xl max-w-[400px] p-10 rounded-3xl hover:bg-white/20 transition-colors duration-300">
             <Link href={route(repairRoute, { repair: repair.id })} className="flex flex-col gap-4">
                 <article aria-labelledby="repair-card">
                     <h3 id="repair-card" className="sr-only">
@@ -77,7 +77,7 @@ export default function RepairCardImage({ repairs, userRole, searchTerm = '', sh
                     <p className="text-sm text-brand rounded-full w-fit px-2 py-1 absolute top-4 right-4" style={{ background: getRepairStatusColor(repair.status) }}>
                         {getRepairStatusInFrench(repair.status)}
                     </p>
-                    <img src={repair.collection.watch.image} alt={repair.collection.watch.model} className="w-full aspect-square" />
+                    <img src={repair.collection.watch.image} alt={repair.collection.watch.model} className="w-full aspect-square mb-4" />
                     <div className='flex flex-col'>
                         <p className="text-lg text-gray-400 leading-5">Col&MacArthur</p>
                         <p className="text-lg leading-5">{repair.collection.watch.model}</p>
@@ -94,7 +94,7 @@ export default function RepairCardImage({ repairs, userRole, searchTerm = '', sh
 
     if (userRole === 'creator') {
         return (
-            <div className="w-full max-w-4xl mx-auto px-2 md:px-6 lg:px-8">
+            <div className={`w-full ${isDashboard ? 'max-w-4xl' : ''} mx-auto px-2 md:px-6 lg:px-8`}>
                 {showSearch && (
                     <div className="mb-4">
                         <input
@@ -119,7 +119,7 @@ export default function RepairCardImage({ repairs, userRole, searchTerm = '', sh
     }
 
     return (
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:px-10">
+        <ul className="md:grid flex flex-col items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:px-10">
             {repairs.map((repair) => (
                 <ClientCard repair={repair} key={repair.id} />
             ))}

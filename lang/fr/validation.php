@@ -6,6 +6,7 @@ return [
     'email' => 'Le champ :attribute doit être une adresse email valide.',
     'max' => [
         'string' => 'Le champ :attribute ne doit pas dépasser :max caractères.',
+        'file' => 'Le fichier :attribute ne doit pas dépasser :max kilo-octets.',
     ],
     'unique' => 'Cette valeur de :attribute est déjà utilisée.',
     'confirmed' => 'La confirmation du :attribute ne correspond pas.',
@@ -14,7 +15,6 @@ return [
     ],
     'lowercase' => 'Le champ :attribute doit être en minuscules.',
 
-    // Attributs personnalisés
     'attributes' => [
         'name' => 'nom',
         'first_name' => 'prénom',

@@ -6,8 +6,9 @@ use App\Models\Repair;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class RepairStatusUpdated extends Notification
+class RepairStatusUpdated extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -17,14 +18,35 @@ class RepairStatusUpdated extends Notification
 
     public function via($notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
+    }
+
+    /**
+     * Get the array representation of the notification for database storage.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function toDatabase($notifiable)
+    {
+        $isCreator = $notifiable->id === $this->repair->collection->watch->creator_id;
+        $repairRoute = $isCreator ? 'repair.show_creator' : 'repair.show';
+
+        $data = [
+            'repair_id' => $this->repair->id,
+            'status' => $this->repair->status,
+            'client_name' => $this->repair->collection->user->first_name . ' ' . $this->repair->collection->user->name,
+            'watch_model' => $this->repair->collection->watch->model,
+            'repair_route' => $repairRoute,
+        ];
+
+        return $data;
     }
 
     public function toMail($notifiable): MailMessage
     {
-        // Déterminer si le destinataire est le créateur ou l'utilisateur
         $isCreator = $notifiable->id === $this->repair->collection->watch->creator_id;
-        $repairRoute = $isCreator ? 'repair.show.creator' : 'repair.show';
+        $repairRoute = $isCreator ? 'repair.show_creator' : 'repair.show';
 
         $message = (new MailMessage)
             ->from(config('mail.from.address'), config('mail.from.name'))
@@ -55,16 +77,15 @@ class RepairStatusUpdated extends Notification
         switch ($this->repair->status) {
             case 'asked':
                 $message->line('Une nouvelle demande de réparation a été créée.')
-                    ->line('Client : ' . $this->repair->collection->user->name)
+                    ->line('Client : ' . $this->repair->collection->user->first_name . ' ' . $this->repair->collection->user->name)
                     ->line('Montre : ' . $this->repair->collection->watch->model)
                     ->line('Description: ' . $this->repair->description);
 
-                // Afficher les types de réparations demandés
                 $message->line('Réparations demandées :');
                 foreach ($this->repair->revisions as $revision) {
                     $message->line('- ' . $revision['name']);
                 }
-                $message->action('Voir la réparation', route($repairRoute, $this->repair->id));
+                $message->action('Voir la réparation', route('repair.show_creator', $this->repair->id));
                 break;
 
             case 'pending':

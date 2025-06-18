@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const ScrollbarCustom = () => {
     const [scrollPos, setScrollPos] = useState(0);
-    const linesCount = 80; // nombre de lignes affichées (plus = plus fluide)
+    const linesCount = 100;
 
     useEffect(() => {
         const handleScroll = () => {

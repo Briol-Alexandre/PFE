@@ -2,8 +2,9 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import DashboardLayoutWatch from '@/Components/Watch/Dashboard-Layout';
 import RepairCardImage from '@/Components/Repairs/CardImage';
+import NotificationsList from '@/Components/Notifications/NotificationsList';
 
-export default function Dashboard({ auth, watches, asked_repairs }) {
+export default function Dashboard({ auth, watches, asked_repairs, notifications }) {
     const user = auth.user;
     return (
         <AuthenticatedLayout
@@ -14,9 +15,9 @@ export default function Dashboard({ auth, watches, asked_repairs }) {
 
             <div className="pb-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <DashboardLayoutWatch watches={watches} userRole={user.role} isDashboard={true} />
+                    <NotificationsList notifications={notifications || []} />
 
-                    <section aria-labelledby="repair-title" className="overflow-hidden shadow-sm sm:rounded-lg">
+                    <section aria-labelledby="repair-title" className="overflow-hidden shadow-sm sm:rounded-lg mt-6">
                         <div className="p-6 pb-4 flex justify-between items-center">
                             <h3 className="sub-title" id="repair-title">Dernières demandes</h3>
                             <Link href={route('revision.create')} className="hover-underline">

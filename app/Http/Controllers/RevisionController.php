@@ -51,7 +51,6 @@ class RevisionController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        // Générer le type à partir du nom (remplacer les espaces par _, enlever les caractères spéciaux)
         $type = strtolower(preg_replace('/[^a-zA-Z0-9]+/', '_', $validated['name']));
         $validated['type'] = trim($type, '_');
 
@@ -105,7 +104,6 @@ class RevisionController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        // Générer le type à partir du nom (remplacer les espaces par _, enlever les caractères spéciaux)
         $type = strtolower(preg_replace('/[^a-zA-Z0-9]+/', '_', $validated['name']));
         $validated['type'] = trim($type, '_');
 

@@ -23,7 +23,7 @@ class WatchUpdateRequest extends FormRequest
         ];
 
         if ($this->hasFile('image')) {
-            $rules['image'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['image'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2000';
         }
 
         return $rules;

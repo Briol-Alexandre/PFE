@@ -14,13 +14,13 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('model');
-            $table->json('available_movements')->nullable(); // Mouvements disponibles
-            $table->string('selected_movement')->nullable(); // Mouvement sélectionné par l'utilisateur
+            $table->json('available_movements')->nullable();
+            $table->string('selected_movement')->nullable();
             $table->string('image')->nullable();
-            $table->json('available_straps')->nullable(); // Bracelets disponibles
-            $table->json('available_sizes')->nullable(); // Tailles de cadran disponibles
-            $table->string('selected_strap')->nullable(); // Bracelet sélectionné par l'utilisateur
-            $table->string('selected_size')->nullable(); // Taille sélectionnée par l'utilisateur
+            $table->json('available_straps')->nullable();
+            $table->json('available_sizes')->nullable();
+            $table->string('selected_strap')->nullable();
+            $table->string('selected_size')->nullable();
             $table->timestamps();
         });
     }

@@ -30,10 +30,24 @@ class DatabaseSeeder extends Seeder
             'role' => User::ROLE_CREATOR,
         ]);
 
+        User::factory()->create([
+            'name' => '',
+            'first_name' => 'Admin',
+            'email' => 'admin@domain.com',
+            'role' => User::ROLE_CREATOR,
+        ]);
+
+        User::factory()->create([
+            'name' => '',
+            'first_name' => 'User',
+            'email' => 'user@domain.com',
+            'role' => User::ROLE_USER,
+        ]);
+
         Revisions::factory()->createMany([
             [
                 'type' => 'bracelet',
-                'name' => 'Changement du bracelet (spécifier la couleur)',
+                'name' => 'Changement du bracelet',
             ],
             [
                 'type' => 'glass',
@@ -50,10 +64,6 @@ class DatabaseSeeder extends Seeder
             [
                 'type' => 'battery',
                 'name' => 'Changement de la batterie (uniquement pour les montres à mouvement quartz)',
-            ],
-            [
-                'type' => 'cleaning',
-                'name' => 'Nettoyage complet',
             ],
         ]);
 

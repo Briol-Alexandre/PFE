@@ -2,17 +2,24 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import ScrollBar from '@/Components/tools/ScrollBar';
+import NotificationBadge from '@/Components/Notifications/NotificationBadge';
 import { Link, usePage } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
+import Breakpoints from '@/Components/tools/Breakpoints';
 
 export default function AuthenticatedLayout({ header, children }) {
-    const user = usePage().props.auth.user;
+    const { auth, notifications } = usePage().props;
+    const user = auth.user;
+
+    const unreadNotificationsCount = user.role === 'creator' && notifications && Array.isArray(notifications) ?
+        notifications.filter(notification => notification.read_at === null).length : 0;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
     return (
         <div className="min-h-screen text-white font-just-sans">
+            <Breakpoints />
             <h1 className="sr-only">Col&MacArthur-Maintenance</h1>
             <nav className="py-10">
                 <h2 className="sr-only">Navigation Principale</h2>
@@ -87,6 +94,27 @@ export default function AuthenticatedLayout({ header, children }) {
                                         Vos réparations
                                     </div>
                                 </div>
+
+                                {user.role === 'creator' && (
+                                    <div className="group relative">
+                                        <NavLink
+                                            href={route('notifications.index')}
+                                            active={route().current('notifications.index')}
+                                        >
+                                            <div className="relative">
+                                                <img
+                                                    src={`/img/svg/nav/notifications/${route().current('notifications.index') ? 'full' : 'empty'}.svg`}
+                                                    alt="Notifications"
+                                                    className="w-6 h-6"
+                                                />
+                                                <NotificationBadge count={unreadNotificationsCount} />
+                                            </div>
+                                        </NavLink>
+                                        <div className="absolute left-1/2 -translate-x-1/2 -bottom-8 hidden group-hover:block bg-black/80 backdrop-blur-lg text-white text-sm py-1 px-2 rounded whitespace-nowrap">
+                                            Notifications
+                                        </div>
+                                    </div>
+                                )}
 
                                 <div className="group relative">
                                     <NavLink
@@ -241,6 +269,26 @@ export default function AuthenticatedLayout({ header, children }) {
                         >
                             Vos réparations
                         </ResponsiveNavLink>
+                        {user.role === 'creator' && (
+                            <ResponsiveNavLink
+                                href={route('notifications.index')}
+                                active={route().current('notifications.index')}
+                            >
+                                Notifications {unreadNotificationsCount > 0 && (
+                                    <span className="ml-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+                                        {unreadNotificationsCount}
+                                    </span>
+                                )}
+                            </ResponsiveNavLink>
+                        )}
+                        {user.role === 'creator' && (
+                            <ResponsiveNavLink
+                                href={route('users.index')}
+                                active={route().current('users.index')}
+                            >
+                                Utilisateurs
+                            </ResponsiveNavLink>
+                        )}
                         <ResponsiveNavLink
                             href={route('calendar.index')}
                             active={route().current('calendar.index')}

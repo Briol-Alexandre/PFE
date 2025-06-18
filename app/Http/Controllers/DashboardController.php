@@ -6,6 +6,7 @@ use App\Models\Watch;
 use App\Models\Repair;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Notifications\DatabaseNotification;
 
 class DashboardController extends Controller
 {
@@ -18,7 +19,6 @@ class DashboardController extends Controller
                 ->with('creator')
                 ->get();
 
-            // Récupérer les IDs des montres du créateur
             $watchIds = $watches->pluck('id');
 
             $asked_repairs = Repair::whereHas('collection.watch', function ($query) use ($watchIds) {
@@ -33,19 +33,31 @@ class DashboardController extends Controller
                 ->take(3)
                 ->get();
 
+            $notifications = $user->notifications()
+                ->orderBy('created_at', 'desc')
+                ->take(5)
+                ->get()
+                ->map(function ($notification) {
+                    return [
+                        'id' => $notification->id,
+                        'data' => $notification->data,
+                        'read_at' => $notification->read_at,
+                        'created_at' => $notification->created_at
+                    ];
+                });
+
             return Inertia::render('Dashboard-creator', [
                 'auth' => [
                     'user' => $user
                 ],
                 'watches' => $watches,
-                'asked_repairs' => $asked_repairs
+                'asked_repairs' => $asked_repairs,
+                'notifications' => $notifications
             ]);
         }
 
-        // Obtenir les IDs des éléments de collection de l'utilisateur
         $collectionIds = $user->collection->pluck('id');
 
-        // Réparations à venir
         $upcoming_repairs = Repair::whereIn('collection_id', $collectionIds)
             ->where(function ($query) {
                 $query->whereNull('date')
@@ -55,7 +67,6 @@ class DashboardController extends Controller
             ->get();
 
 
-        // Réparations passées
         $past_repairs = Repair::whereIn('collection_id', $collectionIds)
             ->whereNotNull('date')
             ->where('date', '<', now())

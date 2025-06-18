@@ -39,11 +39,18 @@ class WatchController extends Controller
         $validated = $request->validated();
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('watches', 'public');
-            $validated['image'] = Storage::url($path);
+            // Déterminer le disque à utiliser en fonction de l'environnement
+            $disk = env('APP_ENV') === 'production' ? 's3' : 'public';
+            $path = $request->file('image')->store('watches', $disk);
+            
+            // Générer l'URL appropriée selon le disque
+            if ($disk === 's3') {
+                $validated['image'] = Storage::disk('s3')->url($path);
+            } else {
+                $validated['image'] = Storage::url($path);
+            }
         }
 
-        // Conversion des champs string en array
         $validated['available_straps'] = array_map('trim', explode(',', $validated['available_straps']));
         $validated['available_sizes'] = array_map('trim', explode(',', $validated['available_sizes']));
         $validated['available_movements'] = array_map('trim', explode(',', $validated['available_movements']));
@@ -85,35 +92,50 @@ class WatchController extends Controller
         $data = $request->validated();
         \Log::info('Données validées:', $data);
 
-        // Gestion de l'image
         if ($request->hasFile('image')) {
-            // Supprimer l'ancienne image si elle existe
+            // Supprimer l'ancienne image
             if ($watch->image) {
-                $oldPath = str_replace('/storage/', '', $watch->image);
-                Storage::disk('public')->delete($oldPath);
+                // Déterminer si l'image est sur S3 ou en local
+                if (strpos($watch->image, 'amazonaws.com') !== false || strpos($watch->image, env('AWS_URL', '')) !== false) {
+                    // Image sur S3
+                    $oldPath = parse_url($watch->image, PHP_URL_PATH);
+                    if ($oldPath) {
+                        $oldPath = preg_replace('/^.*?watches\//', 'watches/', ltrim($oldPath, '/'));
+                        Storage::disk('s3')->delete($oldPath);
+                    }
+                } else {
+                    // Image locale
+                    $oldPath = str_replace('/storage/', '', $watch->image);
+                    Storage::disk('public')->delete($oldPath);
+                }
             }
 
-            // Sauvegarder la nouvelle image
-            $path = $request->file('image')->store('watches', 'public');
-            $data['image'] = '/storage/' . $path;
+            // Déterminer le disque à utiliser en fonction de l'environnement
+            $disk = env('APP_ENV') === 'production' ? 's3' : 'public';
+            $path = $request->file('image')->store('watches', $disk);
+            
+            // Générer l'URL appropriée selon le disque
+            if ($disk === 's3') {
+                $data['image'] = Storage::disk('s3')->url($path);
+            } else {
+                $data['image'] = '/storage/' . $path;
+            }
         }
-
-        // Conversion des champs string en array
         if ($request->has('available_straps')) {
-            $data['available_straps'] = $request->input('available_straps') ? 
-                array_values(array_filter(array_map('trim', explode(',', $request->input('available_straps'))))) : 
+            $data['available_straps'] = $request->input('available_straps') ?
+                array_values(array_filter(array_map('trim', explode(',', $request->input('available_straps'))))) :
                 [];
         }
 
         if ($request->has('available_sizes')) {
-            $data['available_sizes'] = $request->input('available_sizes') ? 
-                array_values(array_filter(array_map('trim', explode(',', $request->input('available_sizes'))))) : 
+            $data['available_sizes'] = $request->input('available_sizes') ?
+                array_values(array_filter(array_map('trim', explode(',', $request->input('available_sizes'))))) :
                 [];
         }
 
         if ($request->has('available_movements')) {
-            $data['available_movements'] = $request->input('available_movements') ? 
-                array_values(array_filter(array_map('trim', explode(',', $request->input('available_movements'))))) : 
+            $data['available_movements'] = $request->input('available_movements') ?
+                array_values(array_filter(array_map('trim', explode(',', $request->input('available_movements'))))) :
                 [];
         }
 
@@ -130,8 +152,19 @@ class WatchController extends Controller
     {
         $watch = Watch::with('creator')->findOrFail($id);
         if ($watch->image) {
-            $path = str_replace('/storage/', '', $watch->image);
-            Storage::disk('public')->delete($path);
+            // Déterminer si l'image est sur S3 ou en local
+            if (strpos($watch->image, 'amazonaws.com') !== false || strpos($watch->image, env('AWS_URL', '')) !== false) {
+                // Image sur S3
+                $oldPath = parse_url($watch->image, PHP_URL_PATH);
+                if ($oldPath) {
+                    $oldPath = preg_replace('/^.*?watches\//', 'watches/', ltrim($oldPath, '/'));
+                    Storage::disk('s3')->delete($oldPath);
+                }
+            } else {
+                // Image locale
+                $path = str_replace('/storage/', '', $watch->image);
+                Storage::disk('public')->delete($path);
+            }
         }
         $watch->delete();
         return Inertia::location(route('watch.index'));

@@ -22,7 +22,7 @@ export default function Index({ repairs, asked_repairs, upcomming_repairs, past_
         <AuthenticatedLayout>
             <Head title="Réparations" />
             <section aria-labelledby="repair-title">
-                <h2 className="title" id="repair-title">Réparations</h2>
+                <h2 className="title mb-5" id="repair-title">Réparations</h2>
 
                 <Tab.Group>
                     <div className="w-full max-w-4xl mx-auto px-2 sm:px-6 lg:px-8">

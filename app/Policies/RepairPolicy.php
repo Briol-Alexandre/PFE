@@ -21,7 +21,6 @@ class RepairPolicy
      */
     public function view(User $user, Repair $repair): bool
     {
-        // Seul l'utilisateur normal peut voir la vue normale
         if ($user->role === 'creator') {
             return false;
         }
@@ -33,7 +32,6 @@ class RepairPolicy
      */
     public function viewCreator(User $user, Repair $repair): bool
     {
-        // Seul le créateur de la montre peut voir la vue créateur
         if ($user->role !== 'creator') {
             return false;
         }

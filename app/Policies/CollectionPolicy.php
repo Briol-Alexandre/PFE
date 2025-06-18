@@ -49,7 +49,7 @@ class CollectionPolicy
     public function create(User $user, ?Watch $watch = null): bool
     {
         if (!$user->isUser()) {
-            return false;
+            return true;
         }
 
         if ($watch) {
@@ -66,7 +66,7 @@ class CollectionPolicy
      */
     public function addWatch(User $user, Watch $watch): bool
     {
-        return $user->isUser() && !$user->collection()->where('watch_id', $watch->id)->exists();
+        return !$user->collection()->where('watch_id', $watch->id)->exists();
     }
 
     /**

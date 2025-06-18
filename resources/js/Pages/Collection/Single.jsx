@@ -179,15 +179,15 @@ export default function Single({ collection, upcoming_repairs, past_repairs }) {
             <Modal
                 show={showWarrantyImage}
                 onClose={() => setShowWarrantyImage(false)}
-                className="bg-black/75 max-w-2xl mx-auto border border-white/10 flex flex-col justify-around text-white p-6"
+                className="bg-black/75 max-w-lg mx-auto border border-white/10 flex flex-col justify-around text-white p-6"
             >
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col items-center gap-4">
                     <div className="flex justify-between items-center">
                         <p className="text-2xl">Image de la garantie</p>
                         <button
                             type="button"
                             onClick={() => setShowWarrantyImage(false)}
-                            className="text-white/50 hover:text-white transition-colors duration-300"
+                            className="text-white/50 hover:text-white transition-colors duration-300 absolute top-4 right-4"
                         >
                             ✕
                         </button>
@@ -195,7 +195,7 @@ export default function Single({ collection, upcoming_repairs, past_repairs }) {
                     <img
                         src={`/storage/${collection.warranty_image}`}
                         alt="Image de la garantie"
-                        className="max-w-full h-auto rounded-lg"
+                        className="max-w-sm h-auto rounded-lg"
                     />
                 </div>
             </Modal>

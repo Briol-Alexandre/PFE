@@ -9,6 +9,7 @@ use App\Http\Requests\CollectionStoreRequest;
 use App\Http\Requests\CollectionUpdateRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\Repair;
+use Illuminate\Support\Facades\Storage;
 
 class CollectionController extends Controller
 {
@@ -34,18 +35,19 @@ class CollectionController extends Controller
     {
         $this->authorize('create', Collection::class);
 
-        // Récupérer les IDs des montres déjà dans la collection de l'utilisateur
-        $userWatchIds = Collection::where('user_id', auth()->id())
+        $userId = session('newUserId', auth()->id());
+
+        $userWatchIds = Collection::where('user_id', $userId)
             ->pluck('watch_id')
             ->toArray();
 
-        // Récupérer toutes les montres sauf celles déjà dans la collection
         $watches = Watch::with('creator')
             ->whereNotIn('id', $userWatchIds)
             ->get();
 
         return Inertia::render('Collection/Create', [
             'watches' => $watches,
+            'targetUserId' => $userId,
         ]);
     }
 
@@ -56,8 +58,10 @@ class CollectionController extends Controller
     {
         $this->authorize('create', Collection::class);
 
+        $userId = $request->user_id ?? auth()->id();
+
         $data = [
-            'user_id' => auth()->id(),
+            'user_id' => $userId,
             'watch_id' => $request->watch_id,
             'purchase_date' => $request->purchase_date,
             'warranty_end_date' => $request->warranty_end_date,
@@ -67,11 +71,23 @@ class CollectionController extends Controller
         ];
 
         if ($request->hasFile('warranty_image')) {
-            $path = $request->file('warranty_image')->store('warranty_images', 'public');
-            $data['warranty_image'] = $path;
+            // Déterminer le disque à utiliser en fonction de l'environnement
+            $disk = env('APP_ENV') === 'production' ? 's3' : 'public';
+            $path = $request->file('warranty_image')->store('warranty_images', $disk);
+            
+            // Générer l'URL appropriée selon le disque
+            if ($disk === 's3') {
+                $data['warranty_image'] = Storage::disk('s3')->url($path);
+            } else {
+                $data['warranty_image'] = $path;
+            }
         }
 
-        Collection::create($data);
+        $collection = Collection::create($data);
+
+        if ($userId != auth()->id()) {
+            return redirect()->route('users.show', $userId)->with('success', 'Montre ajoutée à la collection avec succès.');
+        }
 
         return redirect()->route('collection.index');
     }
@@ -83,7 +99,6 @@ class CollectionController extends Controller
     {
         $collection = Collection::with('watch.creator')->findOrFail($id);
 
-        // Réparations à venir
         $upcoming_repairs = Repair::where('collection_id', $id)
             ->where(function ($query) {
                 $query->whereNull('date')
@@ -92,7 +107,6 @@ class CollectionController extends Controller
             ->with('collection.watch')
             ->get();
 
-        // Réparations passées
         $past_repairs = Repair::where('collection_id', $id)
             ->whereNotNull('date')
             ->where('date', '<', now())

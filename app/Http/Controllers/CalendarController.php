@@ -38,15 +38,11 @@ class CalendarController extends Controller
                 $description .= "Réparation(s) : {$name}\n";
                 $description .= "État : {$this->translateStatus($repair->status)}";
 
-                // Utiliser la date et l'heure exactes de la réparation
                 $startDate = Carbon::parse($repair->date ?? $repair->created_at);
 
-                // Si une heure est spécifiée dans la date
                 if ($repair->date && $repair->date->format('H:i:s') !== '00:00:00') {
-                    // Utiliser l'heure spécifiée + 1 heure pour la fin
                     $endDate = Carbon::parse($startDate)->addHour();
                 } else {
-                    // Par défaut, utiliser toute la journée
                     $startDate = $startDate->startOfDay();
                     $endDate = $startDate->copy()->endOfDay();
                 }
