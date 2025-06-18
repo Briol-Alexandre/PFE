@@ -54,8 +54,8 @@ export default function SingleCreator({ repair }) {
             <div className="py-12">
                 <section className="max-w-7xl mx-auto sm:px-6 lg:px-8" aria-labelledby='repair-info'>
                     <div className="bg-black/20 backdrop-blur-3xl overflow-hidden shadow-sm sm:rounded-lg p-6">
-                        <div className="flex justify-between items-start mb-8 border-b border-white/50 pb-4">
-                            <div className="flex gap-4 items-center">
+                        <div className="flex justify-between md:items-start items-center mb-8 border-b border-white/50 pb-4">
+                            <div className="flex max-md:flex-col-reverse gap-4 max-md:items-start items-center">
                                 <div>
                                     <p className="text-xl text-gray-400">Col&MacArthur</p>
                                     <h2 className="text-4xl font-erstoria text-brand" id='repair-info'>{repair.collection.watch.model}</h2>
@@ -123,7 +123,7 @@ export default function SingleCreator({ repair }) {
                                                 <div className="text-brand/80">
                                                     {repair.revisions.map(revision => (
                                                         <p key={revision.id}>{revision.name}
-                                                            {repair.revisions.some(revision => revision.name.toLowerCase().includes('bracelet')) && (
+                                                            {revision.name.toLowerCase().includes('bracelet') && (
                                                                 <span className="text-brand/80 italic font-semibold"> {repair.collection.selected_strap || 'Non spécifiée'}</span>
                                                             )}
                                                         </p>

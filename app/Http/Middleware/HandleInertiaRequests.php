@@ -31,8 +31,7 @@ class HandleInertiaRequests extends Middleware
     {
         $user = $request->user();
         $notifications = [];
-        
-        // Si l'utilisateur est authentifié et est un créateur, récupérer ses notifications
+
         if ($user && $user->role === 'creator') {
             $notifications = $user->notifications()
                 ->orderBy('created_at', 'desc')
@@ -48,7 +47,7 @@ class HandleInertiaRequests extends Middleware
                 })
                 ->toArray();
         }
-        
+
         return [
             ...parent::share($request),
             'auth' => [

@@ -19,7 +19,7 @@ class CollectionStoreRequest extends FormRequest
             'warranty_end_date' => 'required|date',
             'watch_id' => 'required|exists:watches,id',
             'user_id' => 'required|exists:users,id',
-            'warranty_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'warranty_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2000',
             'selected_strap' => 'required|string',
             'selected_size' => 'required|string',
             'selected_movement' => 'required|string',

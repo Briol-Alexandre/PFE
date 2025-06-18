@@ -34,22 +34,19 @@ class CollectionController extends Controller
     {
         $this->authorize('create', Collection::class);
 
-        // Récupérer l'ID de l'utilisateur de la session si disponible (cas d'un nouvel utilisateur créé)
         $userId = session('newUserId', auth()->id());
 
-        // Récupérer les IDs des montres déjà dans la collection de l'utilisateur
         $userWatchIds = Collection::where('user_id', $userId)
             ->pluck('watch_id')
             ->toArray();
 
-        // Récupérer toutes les montres sauf celles déjà dans la collection
         $watches = Watch::with('creator')
             ->whereNotIn('id', $userWatchIds)
             ->get();
 
         return Inertia::render('Collection/Create', [
             'watches' => $watches,
-            'targetUserId' => $userId, // Passer l'ID de l'utilisateur cible à la vue
+            'targetUserId' => $userId,
         ]);
     }
 
@@ -60,7 +57,6 @@ class CollectionController extends Controller
     {
         $this->authorize('create', Collection::class);
 
-        // Utiliser l'ID utilisateur fourni dans la requête ou l'ID de l'utilisateur authentifié
         $userId = $request->user_id ?? auth()->id();
 
         $data = [
@@ -80,7 +76,6 @@ class CollectionController extends Controller
 
         $collection = Collection::create($data);
 
-        // Si l'utilisateur qui a créé la collection n'est pas l'utilisateur authentifié
         if ($userId != auth()->id()) {
             return redirect()->route('users.show', $userId)->with('success', 'Montre ajoutée à la collection avec succès.');
         }
@@ -95,7 +90,6 @@ class CollectionController extends Controller
     {
         $collection = Collection::with('watch.creator')->findOrFail($id);
 
-        // Réparations à venir
         $upcoming_repairs = Repair::where('collection_id', $id)
             ->where(function ($query) {
                 $query->whereNull('date')
@@ -104,7 +98,6 @@ class CollectionController extends Controller
             ->with('collection.watch')
             ->get();
 
-        // Réparations passées
         $past_repairs = Repair::where('collection_id', $id)
             ->whereNotNull('date')
             ->where('date', '<', now())

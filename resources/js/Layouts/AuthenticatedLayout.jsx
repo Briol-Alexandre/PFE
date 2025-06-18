@@ -5,12 +5,12 @@ import ScrollBar from '@/Components/tools/ScrollBar';
 import NotificationBadge from '@/Components/Notifications/NotificationBadge';
 import { Link, usePage } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
+import Breakpoints from '@/Components/tools/Breakpoints';
 
 export default function AuthenticatedLayout({ header, children }) {
     const { auth, notifications } = usePage().props;
     const user = auth.user;
 
-    // Calculer le nombre de notifications non lues
     const unreadNotificationsCount = user.role === 'creator' && notifications && Array.isArray(notifications) ?
         notifications.filter(notification => notification.read_at === null).length : 0;
 
@@ -19,6 +19,7 @@ export default function AuthenticatedLayout({ header, children }) {
 
     return (
         <div className="min-h-screen text-white font-just-sans">
+            <Breakpoints />
             <h1 className="sr-only">Col&MacArthur-Maintenance</h1>
             <nav className="py-10">
                 <h2 className="sr-only">Navigation Principale</h2>
@@ -278,6 +279,14 @@ export default function AuthenticatedLayout({ header, children }) {
                                         {unreadNotificationsCount}
                                     </span>
                                 )}
+                            </ResponsiveNavLink>
+                        )}
+                        {user.role === 'creator' && (
+                            <ResponsiveNavLink
+                                href={route('users.index')}
+                                active={route().current('users.index')}
+                            >
+                                Utilisateurs
                             </ResponsiveNavLink>
                         )}
                         <ResponsiveNavLink

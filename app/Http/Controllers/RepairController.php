@@ -23,10 +23,8 @@ class RepairController extends Controller
         $this->authorize('viewAny', Repair::class);
         $user = auth()->user();
 
-        // Charge les relations pour toutes les requêtes
         $with = ['collection.watch.creator', 'collection.user'];
 
-        // Requête de base selon le rôle
         $baseQuery = Repair::with($with);
         if ($user->role === 'creator') {
             $baseQuery->whereHas('collection.watch', function ($query) use ($user) {
@@ -38,36 +36,27 @@ class RepairController extends Controller
             });
         }
 
-        // Récupère toutes les réparations avec les relations
         $repairs = (clone $baseQuery)->get();
 
-        // Réparations demandées
         $asked_repairs = (clone $baseQuery)
             ->where('status', 'asked')
             ->get();
 
-        // Réparations à venir (acceptées et date future)
         $upcomming_repairs = (clone $baseQuery)
             ->where('status', 'accepted')
             ->where('date', '>', now())
             ->get();
 
-        // Réparations passées (complétées)
         $past_repairs = (clone $baseQuery)
             ->where('status', 'completed')
             ->get();
-
-        // Réparations refusées
         $rejected_repairs = (clone $baseQuery)
             ->where('status', 'rejected')
             ->get();
 
-        // Réparations en cours
         $in_progress_repairs = (clone $baseQuery)
             ->where('status', 'in_progress')
             ->get();
-
-        // Réparations en attente
         $pending_repairs = (clone $baseQuery)
             ->where('status', 'pending')
             ->get();
@@ -90,12 +79,9 @@ class RepairController extends Controller
     {
         $this->authorize('create', Repair::class);
 
-        // Récupérer les montres de la collection de l'utilisateur
         $collections = Collection::where('user_id', auth()->id())
             ->with('watch.creator')
             ->get();
-
-        // Récupérer toutes les révisions disponibles
         $revisions = Revisions::all();
 
         return Inertia::render('Repair/Create', [
@@ -113,7 +99,6 @@ class RepairController extends Controller
 
         $validated = $request->validated();
 
-        // Récupérer les informations complètes des révisions
         $revisions = Revisions::whereIn('id', $validated['revision_ids'])->get()
             ->map(function ($revision) {
                 return [
@@ -123,7 +108,6 @@ class RepairController extends Controller
                 ];
             })->toArray();
 
-        // Créer la réparation avec les données validées et les révisions
         $repair = Repair::create(array_merge(
             $validated,
             ['revisions' => $revisions]
@@ -163,12 +147,9 @@ class RepairController extends Controller
         $repair = Repair::with('collection.watch.creator')->findOrFail($id);
         $this->authorize('update', $repair);
 
-        // Récupérer les montres de la collection de l'utilisateur
         $collections = Collection::where('user_id', auth()->id())
             ->with('watch.creator')
             ->get();
-
-        // Récupérer toutes les révisions disponibles
         $revisions = Revisions::all();
 
         return Inertia::render('Repair/Edit', [
@@ -203,26 +184,24 @@ class RepairController extends Controller
     {
         $repair = Repair::findOrFail($id);
         $this->authorize('edit_estimate', $repair);
-        
+
         $validated = $request->validated();
-        
+
         \Log::info('Données reçues dans update_estimate:', [
             'validated' => $validated,
             'repair_id' => $id
         ]);
-        
-        // Si le statut est 'pending', on s'assure que les dates proposées sont présentes
+
         if ($validated['status'] === 'pending' && empty($validated['proposed_dates'])) {
             \Log::error('Dates proposées manquantes');
             return back()->withErrors(['proposed_dates' => 'Vous devez proposer au moins une date']);
         }
-        
-        // Si le statut est 'modified', on ne modifie que le prix
+
         if ($validated['status'] === 'modified') {
             unset($validated['date']);
             unset($validated['proposed_dates']);
         }
-        
+
         try {
             $repair->update($validated);
             \Log::info('Réparation mise à jour avec succès', ['repair_id' => $repair->id]);
@@ -240,49 +219,46 @@ class RepairController extends Controller
     {
         $repair = Repair::findOrFail($id);
         $this->authorize('accept', $repair);
-        
+
         $validated = $request->validated();
-        
+
         \Log::info('Accept repair - Données reçues:', [
             'status' => $repair->status,
             'date_choisie' => $validated['date'],
             'dates_proposées' => $repair->proposed_dates
         ]);
-        
-        // Si le statut est 'modified', on accepte directement avec la date existante
+
         if ($repair->status === 'modified') {
             $repair->update([
                 'status' => 'accepted'
             ]);
-            
+
             \Log::info('Réparation modifiée acceptée avec succès', ['repair_id' => $repair->id]);
             return redirect()->route('repair.show', $repair);
         }
-        
-        // Pour les autres statuts, on vérifie la date choisie
-        // Normaliser les dates pour la comparaison
+
         $chosenDate = new \DateTime($validated['date']);
-        $proposedDates = array_map(function($date) {
+        $proposedDates = array_map(function ($date) {
             return (new \DateTime($date))->format('Y-m-d\TH:i:s.u\Z');
         }, $repair->proposed_dates);
-        
+
         $normalizedChosenDate = $chosenDate->format('Y-m-d\TH:i:s.u\Z');
-        
+
         \Log::info('Dates normalisées:', [
             'date_choisie' => $normalizedChosenDate,
             'dates_proposées' => $proposedDates
         ]);
-        
+
         if (!in_array($normalizedChosenDate, $proposedDates)) {
             \Log::error('Date non trouvée dans les dates proposées');
             return back()->withErrors(['date' => 'La date choisie doit faire partie des dates proposées']);
         }
-        
+
         $repair->update([
             'status' => 'accepted',
             'date' => $normalizedChosenDate
         ]);
-        
+
         \Log::info('Réparation acceptée avec succès', ['repair_id' => $repair->id]);
         return redirect()->route('repair.show', $repair);
     }
@@ -346,16 +322,15 @@ class RepairController extends Controller
     {
         $repair = Repair::findOrFail($id);
         $this->authorize('modify_price_and_date', $repair);
-        
+
         $validated = $request->validated();
-        
-        // Ne permettre que la modification du prix
+
         $repair->update([
             'price' => $validated['price'],
             'status' => 'modified',
             'modify_reason' => $validated['modify_reason'] ?? null
         ]);
-        
+
         return redirect()->route('repair.show_creator', $repair);
     }
 }

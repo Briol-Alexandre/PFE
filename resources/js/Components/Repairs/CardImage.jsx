@@ -68,7 +68,7 @@ export default function RepairCardImage({ repairs, userRole, searchTerm = '', sh
     };
 
     const ClientCard = ({ repair }) => (
-        <li key={repair.id} className="bg-black/20 backdrop-blur-3xl max-w-[400px] aspect-square p-10 rounded-3xl hover:bg-white/20 transition-colors duration-300">
+        <li key={repair.id} className="bg-black/20 backdrop-blur-3xl max-w-[400px] p-10 rounded-3xl hover:bg-white/20 transition-colors duration-300">
             <Link href={route(repairRoute, { repair: repair.id })} className="flex flex-col gap-4">
                 <article aria-labelledby="repair-card">
                     <h3 id="repair-card" className="sr-only">
@@ -119,7 +119,7 @@ export default function RepairCardImage({ repairs, userRole, searchTerm = '', sh
     }
 
     return (
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:px-10">
+        <ul className="md:grid flex flex-col items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:px-10">
             {repairs.map((repair) => (
                 <ClientCard repair={repair} key={repair.id} />
             ))}

@@ -2,9 +2,9 @@ import { Link } from "@inertiajs/react";
 
 export default function CollectionCard({ collections }) {
     return (
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:px-10">
+        <ul className="md:grid flex flex-col items-center md:grid-cols-2 lg:grid-cols-3 gap-4 md:px-10">
             {collections.map((collection) => (
-                <li key={collection.id} className="bg-black/20 backdrop-blur-3xl lg:max-w-[400px] aspect-square py-5 px-10 rounded-3xl hover:bg-white/20 transition-colors duration-300">
+                <li key={collection.id} className="bg-black/20 backdrop-blur-3xl max-w-[400px] py-5 px-10 rounded-3xl hover:bg-white/20 transition-colors duration-300">
                     <Link href={route('collection.show', { collection: collection.id })} className="flex flex-col gap-4">
                         <img src={collection.watch.image} alt={collection.watch.model} className="w-full aspect-square" />
                         <div className='flex flex-col'>

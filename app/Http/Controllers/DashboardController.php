@@ -19,7 +19,6 @@ class DashboardController extends Controller
                 ->with('creator')
                 ->get();
 
-            // Récupérer les IDs des montres du créateur
             $watchIds = $watches->pluck('id');
 
             $asked_repairs = Repair::whereHas('collection.watch', function ($query) use ($watchIds) {
@@ -34,7 +33,6 @@ class DashboardController extends Controller
                 ->take(3)
                 ->get();
 
-            // Récupérer les notifications non lues pour le créateur
             $notifications = $user->notifications()
                 ->orderBy('created_at', 'desc')
                 ->take(5)
@@ -58,10 +56,8 @@ class DashboardController extends Controller
             ]);
         }
 
-        // Obtenir les IDs des éléments de collection de l'utilisateur
         $collectionIds = $user->collection->pluck('id');
 
-        // Réparations à venir
         $upcoming_repairs = Repair::whereIn('collection_id', $collectionIds)
             ->where(function ($query) {
                 $query->whereNull('date')
@@ -71,7 +67,6 @@ class DashboardController extends Controller
             ->get();
 
 
-        // Réparations passées
         $past_repairs = Repair::whereIn('collection_id', $collectionIds)
             ->whereNotNull('date')
             ->where('date', '<', now())
