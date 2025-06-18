@@ -193,7 +193,7 @@ export default function Single({ collection, upcoming_repairs, past_repairs }) {
                         </button>
                     </div>
                     <img
-                        src={collection.warranty_image.startsWith('http') ? collection.warranty_image : `/storage/${collection.warranty_image}`}
+                        src={collection.warranty_image}
                         alt="Image de la garantie"
                         className="max-w-sm h-auto rounded-lg"
                     />

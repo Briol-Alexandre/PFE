@@ -100,9 +100,8 @@ class CollectionController extends Controller
                     $data['warranty_image'] = Storage::disk('s3')->url($path);
                     \Log::debug('S3 URL for warranty', ['url' => $data['warranty_image']]);
                 } else {
-                    // Ne pas préfixer avec /storage/ car c'est fait côté frontend
-                    $data['warranty_image'] = $path;
-                    \Log::debug('Local path for warranty', ['path' => $path]);
+                    $data['warranty_image'] = Storage::url($path);
+                    \Log::debug('Local URL for warranty', ['url' => $data['warranty_image']]);
                 }
             } catch (\Exception $e) {
                 \Log::error('S3 Error in Collection', [
@@ -112,7 +111,8 @@ class CollectionController extends Controller
                 
                 // Fallback au stockage local en cas d'erreur
                 $path = $request->file('warranty_image')->store('warranty_images', 'public');
-                $data['warranty_image'] = $path;
+                $data['warranty_image'] = Storage::url($path);
+                \Log::debug('Fallback URL for warranty', ['url' => $data['warranty_image']]);
             }
         }
 
