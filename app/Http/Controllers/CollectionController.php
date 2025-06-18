@@ -100,7 +100,9 @@ class CollectionController extends Controller
                     $data['warranty_image'] = Storage::disk('s3')->url($path);
                     \Log::debug('S3 URL for warranty', ['url' => $data['warranty_image']]);
                 } else {
+                    // Ne pas préfixer avec /storage/ car c'est fait côté frontend
                     $data['warranty_image'] = $path;
+                    \Log::debug('Local path for warranty', ['path' => $path]);
                 }
             } catch (\Exception $e) {
                 \Log::error('S3 Error in Collection', [

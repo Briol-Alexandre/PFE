@@ -244,7 +244,7 @@ export default function SingleCreator({ repair }) {
                 className='bg-black/75 h-[300px] border border-white/10 flex flex-col justify-around text-white px-10'
             >
                 <img
-                    src={`/storage/${repair.collection.warranty_image}`}
+                    src={repair.collection.warranty_image.startsWith('http') ? repair.collection.warranty_image : `/storage/${repair.collection.warranty_image}`}
                     alt="Image de garantie"
                     className="w-full h-full object-contain"
                 />
