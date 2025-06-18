@@ -38,7 +38,6 @@ class WatchController extends Controller
     {
         $validated = $request->validated();
 
-
         if ($request->hasFile('image')) {
             // Déterminer le disque à utiliser en fonction de l'environnement
             $disk = env('APP_ENV') === 'production' ? 's3' : 'public';

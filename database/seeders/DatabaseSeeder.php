@@ -19,14 +19,14 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Briol',
             'first_name' => 'Alexandre',
-            'email' => 'user@domain.com',
+            'email' => 'alexandre.briol@gmail.com',
             'role' => User::ROLE_USER,
         ]);
 
         User::factory()->create([
             'name' => 'Doe',
             'first_name' => 'John',
-            'email' => 'admin@domain.com',
+            'email' => 'watchout.maintenance@gmail.com',
             'role' => User::ROLE_CREATOR,
         ]);
 
